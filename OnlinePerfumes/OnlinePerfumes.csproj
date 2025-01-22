@@ -19,4 +19,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OnlinePerfumes.Core\OnlinePerfumes.Core.csproj" />
+    <ProjectReference Include="..\OnlinePerfumes.DataAccess\OnlinePerfumes.DataAccess.csproj" />
+    <ProjectReference Include="..\OnlinePerfumes.Models\OnlinePerfumes.Models.csproj" />
+    <ProjectReference Include="..\OnlinePerfumes.Utility\OnlinePerfumes.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OnlinePerfumes.Models\OnlinePerfumes.Models.csproj" />
+    <ProjectReference Include="..\OnlinePerfumes.Utility\OnlinePerfumes.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
