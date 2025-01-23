@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Models
 {
-    public class User
+    public class ApplicationUser
     {
         [Key]
         public int Id { get; set; }
