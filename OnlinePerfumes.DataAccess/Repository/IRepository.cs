@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.DataAccess.Repository
 {
-    internal interface IRepository
+    public interface IRepository<T> where T : class
     {
+        void Add(T entity);
+        void Update(T entity);
+        void Delete(int id);
+        IEnumerable<T> GetAll();
+        T Get(int id);
     }
 }

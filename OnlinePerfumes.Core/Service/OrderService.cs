@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
-    internal class OrderService
+    public class OrderService
     {
     }
 }
