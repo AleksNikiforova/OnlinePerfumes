@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.IServices
 {
-    public interface IOrderProduct:IService<OrderProduct>
+    public interface IOrderProductService:IService<OrderProduct>
     {
         void Add(OrderProduct orderProduct);
         void Delete(int id);

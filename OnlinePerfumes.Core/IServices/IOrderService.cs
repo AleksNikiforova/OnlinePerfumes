@@ -12,7 +12,7 @@ namespace OnlinePerfumes.Core.IServices
         void Add(Order order);
         void Delete(int id);
         void Update(Order order);
-        IEnumerable<OrderProduct> GetAll();
-        OrderProduct Get(int id);
+        IEnumerable<Order> GetAll();
+        Order Get(int id);
     }
 }
