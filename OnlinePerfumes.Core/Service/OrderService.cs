@@ -33,7 +33,7 @@ namespace OnlinePerfumes.Core.Service
                 return true;
             }
         }
-            
+
         public void Add(Order order)
         {
             if (ValidateOrder(order) == true)
@@ -76,7 +76,7 @@ namespace OnlinePerfumes.Core.Service
             return _repo.GetAll();
 
         }
-       public  Order Get(int id)
+        public Order Get(int id)
         {
             return _repo.Get(id);
         }
