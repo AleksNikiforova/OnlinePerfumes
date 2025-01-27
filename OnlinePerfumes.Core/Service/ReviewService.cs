@@ -1,4 +1,5 @@
 ﻿using OnlinePerfumes.Core.IServices;
+using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +10,40 @@ namespace OnlinePerfumes.Core.Service
 {
     public class ReviewService:IReviewService
     {
+    
         public void Add(Review review)
         {
-
+            throw new NotImplementedException();
         }
-        public void Delete(int id)
-        {
 
-        }
         public void Update(Review review)
         {
-
+            throw new NotImplementedException();
         }
-        public IEnumerable<Review> GetAll()
-        {
 
+        IEnumerable<Review> IReviewService.GetAll()
+        {
+            throw new NotImplementedException();
         }
-        public Review Get(int id)
-        {
 
+        Review IReviewService.Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Review GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Review> IService<Review>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

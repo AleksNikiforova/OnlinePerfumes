@@ -1,5 +1,7 @@
 ﻿using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Validators;
+using OnlinePerfumes.DataAccess.Repository;
+using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +68,11 @@ namespace OnlinePerfumes.Core.Service
         public Product Get(int id)
         {
             return _repo.Get(id);
+        }
+
+        public Product GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

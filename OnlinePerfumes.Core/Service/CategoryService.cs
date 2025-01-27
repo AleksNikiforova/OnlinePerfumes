@@ -1,5 +1,7 @@
 ﻿using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Validators;
+using OnlinePerfumes.DataAccess.Repository;
+using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace OnlinePerfumes.Core.Service
         }
         public void Add(Category category)
         {
-            if (CategoryValidator.ValidateInput(category.Name))
+            if (CategoryValidator.ValidateInput(category.CategoryName))
             {
                 _repo.Add(category);
             }
@@ -52,6 +54,11 @@ namespace OnlinePerfumes.Core.Service
        public  Category Get(int id)
         {
             return _repo.Get(id);
+        }
+
+        public Category GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

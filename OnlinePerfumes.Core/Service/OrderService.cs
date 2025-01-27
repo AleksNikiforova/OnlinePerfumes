@@ -1,5 +1,7 @@
 ﻿using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Validators;
+using OnlinePerfumes.DataAccess.Repository;
+using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,7 @@ namespace OnlinePerfumes.Core.Service
                     return false;
                 }
             }
-            if (!OrderValidator.ValidateInput(order.OrderDate))
+            if (!OrderValidator.ValidateInput(order.OrederDate))
             {
                 return false;
             }
@@ -79,6 +81,11 @@ namespace OnlinePerfumes.Core.Service
         public Order Get(int id)
         {
             return _repo.Get(id);
+        }
+
+        public Order GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
