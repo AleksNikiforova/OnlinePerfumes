@@ -11,6 +11,10 @@ namespace OnlinePerfumes
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Service.AddScoped(typeof(IRepository<>), typeof(Repository));
+            builder.Service.AddScoped(typeof(IProduct), typeof(ProductService));
+            builder.Service.AddScoped(typeof(IOrder), typeof(Order));
+            builder.Service.AddScoped(typeof(ICategory), typeof(Category));
             builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),b=>b.MigrationsAssembly("OnlinePerfumes.DataAccess")));
 
             var app = builder.Build();
