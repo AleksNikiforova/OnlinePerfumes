@@ -10,7 +10,7 @@ namespace OnlinePerfumes.Models
     public class ApplicationUser
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string FirstName {  get; set; }  
         [Required]
@@ -25,5 +25,7 @@ namespace OnlinePerfumes.Models
         public int PhoneNumber {  get; set; }
         [Required]
         public DateTime DateCreated {  get; set; }
+
+        public ICollection<Review> Reviews = new List<Review>();
     }
 }

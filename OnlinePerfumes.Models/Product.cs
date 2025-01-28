@@ -28,5 +28,6 @@ namespace OnlinePerfumes.Models
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection<OrderProduct> Orders=new List<OrderProduct>();
+        public ICollection<Review> Reviews=new List<Review>();
     }
 }

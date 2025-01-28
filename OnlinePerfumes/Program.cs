@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Service;
 using OnlinePerfumes.DataAccess;
@@ -16,9 +17,10 @@ namespace OnlinePerfumes
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
-            builder.Services.AddScoped(typeof(IOrderService), typeof(Order));
-            builder.Services.AddScoped(typeof(ICategoryService), typeof(Category));
+            builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),b=>b.MigrationsAssembly("OnlinePerfumes.DataAccess")));
 
             var app = builder.Build();
