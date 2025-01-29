@@ -29,6 +29,7 @@ namespace OnlinePerfumes.DataAccess.Repository
         {
             T obj=dbset.Find(id);
             dbset.Remove(obj);
+            _context.SaveChanges();
         }
 
         public T Get(int id)
@@ -45,6 +46,7 @@ namespace OnlinePerfumes.DataAccess.Repository
         public void Update(T entity)
         {
            dbset.Update(entity);
+           _context.SaveChanges();
         }
     }
 }

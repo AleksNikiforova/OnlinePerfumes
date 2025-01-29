@@ -12,8 +12,8 @@ using OnlinePerfumes.DataAccess;
 namespace OnlinePerfumes.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250128134917_Initial")]
-    partial class Initial
+    [Migration("20250129061522_updt")]
+    partial class updt
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
