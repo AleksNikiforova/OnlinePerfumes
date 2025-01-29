@@ -23,13 +23,13 @@ namespace OnlinePerfumes.Models
         [Range(0.01,100000,ErrorMessage ="Price must be between 0.01 and 100000")]
         public decimal Price {  get; set; }
         [Required]
-        public int StockQuantity { get; set; }
+        public int StockQuantity { get; set; } = 0;
         [Required]
-        public DateTime DateAdded { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.Now;
         [Required]
-        public string Slug {  get; set; }
+        public string Slug { get; set; } = "";
         [ForeignKey(nameof(Category))]
-        public int CategoryId { get; set; }
+        public int CategoryId { get; set; } 
         public Category Category { get; set; }
         public ICollection<OrderProduct> Orders=new List<OrderProduct>();
         public ICollection<Review> Reviews=new List<Review>();

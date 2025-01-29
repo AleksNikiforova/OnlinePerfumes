@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Models;
 
@@ -7,34 +8,40 @@ namespace OnlinePerfumes.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        public ProductController(IProductService productService)
+        private readonly ICategoryService _categoryService;
+        public ProductController(IProductService productService,ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
         public async Task<IActionResult> Index()
         {
             var list=await _productService.GetAll();
             return View(list);  
         }
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            var categories = await _categoryService.GetAll();
+            ViewBag.Categories = new SelectList(categories,"Id","CategoryName");
             return View();
+
         }
         [HttpPost]
         public async Task<IActionResult>Add(Product product)
         {
-            if(ModelState.IsValid)
-            {
+           
+            //if (ModelState.IsValid)
+            //{
                 await _productService.Add(product);
                 return RedirectToAction("Index");
-            }
-            return View();
+            //}
+            //return View();
            
         }
-        public async Task<IActionResult>Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var product=await _productService.Get(id);
-            return View(product);
+            var entity = await _productService.GetById(id);
+            return View(entity);
         }
         [HttpPost]
         public async Task<IActionResult>Update(Product product)
@@ -44,7 +51,7 @@ namespace OnlinePerfumes.Controllers
                 await _productService.Update(product);
                 return RedirectToAction("Index");
             }
-            return View(product);
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult>Delete(int id)

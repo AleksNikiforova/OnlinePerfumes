@@ -4,59 +4,51 @@
 @{
 }
 @model OnlinePerfumes.Models.Product
+
 @{
-    ViewBag.Title = "Add Product";
+    ViewBag.Title = "Update Product";
 }
-<h2>Add New Product</h2>
-<form action="/Product/Add" method="post" class="form-horizontal" role="form">
+
+<h2>Update Product</h2>
+
+<form action="/Product/Update" method="post" class="form-horizontal" role="form">
+   
+
+    <input type="hidden" asp-for="Id" />
+
     <div class="form-group">
-        <label asp-for="Name" class="control-lable col-md-2"></label>
+        <label asp-for="Name" class="control-label col-md-2"></label>
         <div class="col-md-10">
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group">
 
+    <div class="form-group">
         <label asp-for="Description" class="control-label col-md-2"></label>
-
         <div class="col-md-10">
-
             <textarea asp-for="Description" class="form-control"></textarea>
-
             <span asp-validation-for="Description" class="text-danger"></span>
-
         </div>
-
     </div>
-    <div class="form-group">
 
+    <div class="form-group">
         <label asp-for="Price" class="control-label col-md-2"></label>
-
         <div class="col-md-10">
-
             <input asp-for="Price" class="form-control" type="number" step="0.01" />
-
             <span asp-validation-for="Price" class="text-danger"></span>
-
         </div>
-
     </div>
+
     <div class="form-group">
-
-        <label class="form-label fw-semibold">Category</label>
-        <div class="col-md-10">
-            <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-select">
-                <option value="">Изберете категория</option>
-            </select>
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update Product" class="btn btn-primary" />
         </div>
-
     </div>
-
-    <button asp-action="Add" asp-controller="Product" type="submit" class="btn btn-primary" formmethod="post">
-        Submit
+    <button type="submit" class="btn btn-primary" formmethod="post">
+        Update
     </button>
 
 </form>
-    
+
 
