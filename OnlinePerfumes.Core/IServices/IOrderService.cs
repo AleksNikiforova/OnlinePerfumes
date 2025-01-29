@@ -9,10 +9,10 @@ namespace OnlinePerfumes.Core.IServices
 {
     public interface IOrderService:IService<Order>
     {
-        void Add(Order order);
-        void Delete(int id);
-        void Update(Order order);
-        IEnumerable<Order> GetAll();
-        Order Get(int id);
+        Task Add(Order order);
+        Task Delete(int id);
+        Task Update(Order order);
+        Task<IEnumerable<Order>> GetAll();
+        Task<Order> GetById(int id);
     }
 }

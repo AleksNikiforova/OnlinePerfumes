@@ -9,10 +9,10 @@ namespace OnlinePerfumes.Core.IServices
 {
     public interface IProductService:IService<Product>
     {
-        void Add(Product product);
-        void Delete(int id);
-        void Update(Product product);
-        IEnumerable<Product> GetAll();
-        Product Get(int id);
+        Task Add(Product product);
+        Task Delete(int id);
+        Task Update(Product product);
+        Task<IEnumerable<Product>> GetAll();
+        Task<Product> GetById(int id);
     }
 }

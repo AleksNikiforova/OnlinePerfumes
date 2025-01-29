@@ -8,10 +8,11 @@ namespace OnlinePerfumes.DataAccess.Repository
 {
     public interface IRepository<T> where T : class
     {
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(int id);
-        IEnumerable<T> GetAll();
-        T Get(int id);
+        Task Add(T entity);
+        Task Update(T entity);
+        Task Delete(int id);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetById(int id);
+
     }
 }

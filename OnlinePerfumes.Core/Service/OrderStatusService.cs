@@ -8,39 +8,29 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
-    public class OrderStatusService:IOrderStatusService
+    public class OrderStatusService : IOrderStatusService
     {
-        public void Add(OrderStatus orderStatus)
+        public async Task Add(OrderStatus orderStatus)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(OrderStatus orderStatus)
+        public async Task Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<OrderStatus> IOrderStatusService.GetAll()
+        public async Task<IEnumerable<OrderStatus>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        OrderStatus IOrderStatusService.Get(int id)
+        public async Task<OrderStatus> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public OrderStatus GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<OrderStatus> IService<OrderStatus>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
+        public async Task Update(OrderStatus orderStatus)
         {
             throw new NotImplementedException();
         }

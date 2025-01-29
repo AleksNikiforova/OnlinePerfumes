@@ -8,40 +8,29 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
-    public class ReviewService:IReviewService
+    public class ReviewService : IReviewService
     {
-    
-        public void Add(Review review)
+        public async  Task Add(Review review)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Review review)
+        public async Task Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<Review> IReviewService.GetAll()
+        public async Task<IEnumerable<Review>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        Review IReviewService.Get(int id)
+        public async Task<Review> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Review GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<Review> IService<Review>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
+        public async Task Update(Review review)
         {
             throw new NotImplementedException();
         }

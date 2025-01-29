@@ -11,18 +11,46 @@ namespace OnlinePerfumes.Controllers
         {
             _productService = productService;
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult<Product>>Add(Product product)
+        public async Task<IActionResult> Index()
         {
-           if(ModelState.IsValid)
-           {
-                _productService.Add(product);
-           }
+            var list=await _productService.GetAll();
+            return View(list);  
         }
-        public IActionResult Index()
+        public IActionResult Add()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult>Add(Product product)
+        {
+            if(ModelState.IsValid)
+            {
+                await _productService.Add(product);
+                return RedirectToAction("Index");
+            }
+            return View();
+           
+        }
+        public async Task<IActionResult>Update(int id)
+        {
+            var product=await _productService.Get(id);
+            return View(product);
+        }
+        [HttpPost]
+        public async Task<IActionResult>Update(Product product)
+        {
+            if(ModelState.IsValid)
+            {
+                await _productService.Update(product);
+                return RedirectToAction("Index");
+            }
+            return View(product);
+        }
+        [HttpPost]
+        public async Task<IActionResult>Delete(int id)
+        {
+            await _productService.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

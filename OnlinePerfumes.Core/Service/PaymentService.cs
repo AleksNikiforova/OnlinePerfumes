@@ -10,32 +10,27 @@ namespace OnlinePerfumes.Core.Service
 {
     public class PaymentService : IPaymentService
     {
-        public void Add(Payment payment)
+        public async Task Add(Payment payment)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Payment Get(int id)
+        public async Task<IEnumerable<Payment>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Payment> GetAll()
+        public async Task<Payment> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Payment GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Payment payment)
+        public async Task Update(Payment payment)
         {
             throw new NotImplementedException();
         }

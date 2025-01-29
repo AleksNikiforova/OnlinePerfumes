@@ -9,10 +9,10 @@ namespace OnlinePerfumes.Core.IServices
 {
     public interface IPaymentService:IService<Payment>
     {
-        void Add(Payment payment);
-        void Delete(int id);
-        void Update(Payment payment);
-        IEnumerable<Payment> GetAll();
-        Payment Get(int id);
+        Task Add(Payment payment);
+        Task Delete(int id);
+        Task Update(Payment payment);
+        Task<IEnumerable<Payment>> GetAll();
+        Task<Payment> GetById(int id);
     }
 }

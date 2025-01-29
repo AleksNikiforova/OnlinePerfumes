@@ -9,10 +9,10 @@ namespace OnlinePerfumes.Core.IServices
 {
     public interface ICategoryService:IService<Category>
     {
-        void Add(Category category);
-        void Delete(int id);
-        void Update(Category category);
-        IEnumerable<Category> GetAll();
-        Category Get(int id);
+        Task Add(Category category);
+        Task Delete(int id);
+        Task Update(Category category);
+        Task<IEnumerable<Category>> GetAll();
+        Task<Category> GetById(int id);
     }
 }

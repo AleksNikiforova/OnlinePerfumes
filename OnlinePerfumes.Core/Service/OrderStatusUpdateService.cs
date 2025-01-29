@@ -10,32 +10,27 @@ namespace OnlinePerfumes.Core.Service
 {
     public class OrderStatusUpdateService : IOrderStatusUpdateService
     {
-        public void Add(OrderStatusUpdate orderStatusUpdate)
+        public async Task Add(OrderStatusUpdate orderStatusUpdate)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public OrderStatusUpdate Get(int id)
+        public async Task<IEnumerable<OrderStatusUpdate>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<OrderStatusUpdate> GetAll()
+        public async Task<OrderStatusUpdate> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public OrderStatusUpdate GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(OrderStatusUpdate orderStatusUpdate)
+        public async Task Update(OrderStatusUpdate orderStatusUpdate)
         {
             throw new NotImplementedException();
         }

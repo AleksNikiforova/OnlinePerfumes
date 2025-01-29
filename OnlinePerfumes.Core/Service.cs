@@ -14,29 +14,29 @@ namespace OnlinePerfumes.Core
         {
             this._repo = repo;
         }
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
-            _repo.Add(entity);
+            await _repo.Add(entity);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-             _repo.Delete(id);
+           await _repo.Delete(id);
         }
 
-        public IEnumerable<T> GetAll()
-        {
-            return _repo.GetAll();
-        }
+       public  async  Task<IEnumerable<T>> GetAll()
+       {
+           return await _repo.GetAll();
+       }
 
-        public T GetById(int id)
-        {
-            return _repo.Get(id);
-        }
+       public async Task<T> GetById(int id)
+       {
+            return await _repo.GetById(id);
+       }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
-            _repo.Update(entity);
+            await _repo.Update(entity);
         }
     }
 }

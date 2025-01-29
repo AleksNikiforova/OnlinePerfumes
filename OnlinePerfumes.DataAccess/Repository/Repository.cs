@@ -18,35 +18,44 @@ namespace OnlinePerfumes.DataAccess.Repository
             this._context = context;
             this.dbset = _context.Set<T>();
         }
-
-        public void Add(T entity)
+        public async Task Add(T entity)
         {
-            dbset.Add(entity);
-            _context.SaveChanges();
+            await dbset.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            T obj=dbset.Find(id);
-            dbset.Remove(obj);
-            _context.SaveChanges();
+           var entity = await dbset.FindAsync(id);
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity is null");
+            }
+            dbset.Remove(entity);
+            await this._context.SaveChangesAsync();
         }
 
-        public T Get(int id)
+        public async Task<T> GetById(int id)
         {
-            T obj=dbset.Find(id);
-            return obj;
+            var entity=await dbset.FindAsync(id);
+            if(entity == null)
+            {
+                throw new ArgumentException("id is null");
+            }
+            return entity;
+
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return dbset.ToList();
+            return await dbset.ToListAsync();
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
-           dbset.Update(entity);
-           _context.SaveChanges();
+           dbset.Update(entity);  
+           await _context.SaveChangesAsync();
+
         }
     }
 }

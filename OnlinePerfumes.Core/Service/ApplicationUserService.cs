@@ -10,28 +10,27 @@ namespace OnlinePerfumes.Core.Service
 {
     public class ApplicationUserService : IApplicationUserService
     {
-        public void Add(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public void Update(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
-        public IEnumerable<ApplicationUser> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-        public ApplicationUser Get(int id)
+        public async Task Add(ApplicationUser user)
         {
             throw new NotImplementedException();
         }
 
-        public ApplicationUser GetById(int id)
+        public async Task Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ApplicationUser> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Update(ApplicationUser user)
         {
             throw new NotImplementedException();
         }

@@ -17,48 +17,32 @@ namespace OnlinePerfumes.Core.Service
         {
             this._repo = repo;
         }
-        public void Add(Category category)
+        
+        public async Task Add(Category category)
         {
-            if (CategoryValidator.ValidateInput(category.CategoryName))
-            {
-                _repo.Add(category);
-            }
-            else
-            {
-                throw new ArgumentException("The category already exists!");
-            }
-        }
-        public void Delete(int id)
-        {
-            if (CategoryValidator.CategoryExist(id))
-            {
-                _repo.Delete(id);
-            }
-            else
-            {
-                throw new ArgumentException("The category already exists!");
-            }
-        }
-        public void Update(Category category)
-        {
-            if (!CategoryValidator.CategoryExist(category.Id))
-            {
-                throw new ArgumentException("The category is not valid!");
-            }
-            _repo.Update(category);
-        }
-        public IEnumerable<Category> GetAll()
-        {
-            return _repo.GetAll();
-        }
-       public  Category Get(int id)
-        {
-            return _repo.Get(id);
+            await _repo.Add(category);
         }
 
-        public Category GetById(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await _repo.Delete(id);
         }
+
+        public async Task Update(Category category)
+        {
+            await _repo.Update(category);
+        }
+
+        public async Task<IEnumerable<Category>> GetAll()
+        {
+            return await _repo.GetAll();
+        }
+
+        public async Task<Category> GetById(int id)
+        {
+            return await _repo.GetById(id);
+        }
+
+        
     }
 }

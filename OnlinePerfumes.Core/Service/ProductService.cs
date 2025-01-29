@@ -17,7 +17,7 @@ namespace OnlinePerfumes.Core.Service
         {
             this._repo = repo;
         }
-        private bool ValidateProduct(Product Product)
+        /*private bool ValidateProduct(Product Product)
         {
             if (!ProductValidator.ValidateInput(Product.Name, Product.Price))
             {
@@ -31,48 +31,33 @@ namespace OnlinePerfumes.Core.Service
             {
                 return true;
             }
-        }
-        public void Add(Product product)
+        }*/
+
+
+        public async Task Add(Product product)
         {
-            if (!ValidateProduct(product))
-            {
-                throw new ArgumentException("The product is not valid");
-            }
-            else
-            {
-                _repo.Add(product);
-            }
-        }
-        public void Delete(int id)
-        {
-            if (ProductValidator.ProductExists(id))
-            {
-                _repo.Delete(id);
-            }
-        }
-        public void Update(Product product)
-        {
-            if (!ValidateProduct(product))
-            {
-                throw new ArgumentException("The product is not valid");
-            }
-            else
-            {
-                _repo.Update(product);
-            }
-        }
-        public IEnumerable<Product> GetAll()
-        {
-            return _repo.GetAll();
-        }
-        public Product Get(int id)
-        {
-            return _repo.Get(id);
+            await _repo.Add(product);
         }
 
-        public Product GetById(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await _repo.Delete(id);
+        }
+
+        public async Task Update(Product product)
+        {
+            await _repo.Update(product);
+        }
+
+        public async Task<IEnumerable<Product>> GetAll()
+        {
+           return await _repo.GetAll();
+        }
+
+
+        public async Task<Product> GetById(int id)
+        {
+            return await _repo.GetById(id);
         }
     }
 }

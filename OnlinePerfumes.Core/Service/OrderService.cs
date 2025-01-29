@@ -17,7 +17,8 @@ namespace OnlinePerfumes.Core.Service
         {
             this._repo = repo;
         }
-        public bool ValidateOrder(Order order)
+
+       /* public bool ValidateOrder(Order order)
         {
             foreach (var item in order.Products)
             {
@@ -34,58 +35,31 @@ namespace OnlinePerfumes.Core.Service
             {
                 return true;
             }
+        }*/
+
+        public async Task Add(Order order)
+        {
+            await _repo.Add(order);
         }
 
-        public void Add(Order order)
+        public async Task Delete(int id)
         {
-            if (ValidateOrder(order) == true)
-            {
-                _repo.Add(order);
-            }
-            else
-            {
-                throw new ArgumentException("Validation didn't pass!");
-            }
-        }
-        public void Delete(int id)
-        {
-            if (OrderValidator.OrderExist(id))
-            {
-                _repo.Delete(id);
-            }
-            else
-            {
-                throw new ArgumentException("This order doesn't exist.");
-            }
-        }
-        public void Update(Order order)
-        {
-            if (!ValidateOrder(order))
-            {
-                throw new ArgumentException("Validation didn't pass!");
-            }
-            if (!OrderValidator.OrderExist(order.Id))
-            {
-                throw new ArgumentException("Order doesn't exist.");
-            }
-            else
-            {
-                _repo.Update(order);
-            }
-        }
-        public IEnumerable<Order> GetAll()
-        {
-            return _repo.GetAll();
-
-        }
-        public Order Get(int id)
-        {
-            return _repo.Get(id);
+            await _repo.Delete(id);
         }
 
-        public Order GetById(int id)
+        public async Task Update(Order order)
         {
-            throw new NotImplementedException();
+            await _repo.Update(order);
+        }
+
+        public async Task<IEnumerable<Order>> GetAll()
+        {
+            return await _repo.GetAll();
+        }
+
+        public async Task<Order> GetById(int id)
+        {
+            return await _repo.GetById(id);
         }
     }
 }
