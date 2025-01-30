@@ -13,5 +13,6 @@ namespace OnlinePerfumes.Models
         public int Id {  get; set; }
         [Required]
         public string StatusDescription {  get; set; }
+        
     }
 }

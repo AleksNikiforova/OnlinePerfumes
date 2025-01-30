@@ -45,6 +45,17 @@ namespace OnlinePerfumes.DataAccess
                   .HasForeignKey(x=>x.CategoryId)
                   .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<OrderProduct>().HasKey(x => new {x.ProductId,x.OrderId});
+            builder.Entity<OrderProduct>().HasOne(x=>x.Order)
+                .WithMany(x=>x.Products)
+                .HasForeignKey(x=>x.OrderId)
+                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<OrderProduct>().HasOne(x => x.Product)
+                .WithMany(x => x.Orders)
+                .HasForeignKey(x => x.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+
         }
     }
 }
