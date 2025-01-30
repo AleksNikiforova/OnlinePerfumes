@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Models;
@@ -10,7 +11,7 @@ namespace OnlinePerfumes.Controllers
     {
         private readonly IProductService _productService;
         private readonly IService<Category>_categoryService;
-        public ProductController(IProductService productService,ICategoryService categoryService)
+        public ProductController(IProductService productService,IService<Category> categoryService)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -18,7 +19,7 @@ namespace OnlinePerfumes.Controllers
         
         public async Task<IActionResult> Index(ProductFilterViewModel? filter)
         {
-            var prods = _productService.Find(filter).AsQuerable();
+            var prods = (await _productService.GetAll()).AsQueryable();
             if (filter == null)
             {
                 var prodList = prods.AsQueryable();
@@ -42,13 +43,21 @@ namespace OnlinePerfumes.Controllers
             }
             if (!string.IsNullOrEmpty(filter.SearchName))
             {
-                query=query.Where(p=>p.SearchName.Contains(filter.SearchName));
+                query=query.Where(p=>p.Name.Contains(filter.SearchName));
             }
-            var productList = await query.ToListAsync(); 
+            var productList =  query.ToList();
 
-            return View(productList);
-            // var list=await _productService.GetAll();
-            // return View(list);  
+            // return View(productList);
+            var model = new ProductFilterViewModel
+            {
+                CategoryId = filter.CategoryId,
+                MinPrice = filter.MinPrice,
+                MaxPrice = filter.MaxPrice,
+                SearchName = filter.SearchName,
+                Categories = new SelectList((System.Collections.IEnumerable)_categoryService.GetAll(), "CategoryId", "Name"),
+                Products = query.Include(p => p.Category).ToList()
+            };
+            return View(model);
         }
 
 

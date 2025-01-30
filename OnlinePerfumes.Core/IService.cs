@@ -14,7 +14,7 @@ namespace OnlinePerfumes.Core
         Task Update(T entity);
         Task Delete(int id);
         Task<T>GetById(int id);
-        Task<IEnumerable<T>> GetAll();
+        Task<List<T>> GetAll();
         Task<List<T>> Find(Expression<Func<T, bool>> filter);
     }
 }

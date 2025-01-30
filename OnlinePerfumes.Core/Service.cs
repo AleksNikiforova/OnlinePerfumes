@@ -31,7 +31,7 @@ namespace OnlinePerfumes.Core
             return await _repo.Find(filter);
         }
 
-        public  async  Task<IEnumerable<T>> GetAll()
+        public  async  Task<List<T>> GetAll()
         {
            return await _repo.GetAll();
         }
@@ -45,5 +45,9 @@ namespace OnlinePerfumes.Core
         {
             await _repo.Update(entity);
         }
+
+        
+
+       
     }
 }

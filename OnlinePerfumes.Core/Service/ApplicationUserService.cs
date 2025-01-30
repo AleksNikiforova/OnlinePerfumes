@@ -26,7 +26,7 @@ namespace OnlinePerfumes.Core.Service
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ApplicationUser>> GetAll()
+        public async Task<List<ApplicationUser>> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -40,5 +40,7 @@ namespace OnlinePerfumes.Core.Service
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

@@ -50,7 +50,7 @@ namespace OnlinePerfumes.Core.Service
             await _repo.Update(product);
         }
 
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<List<Product>> GetAll()
         {
            return await _repo.GetAll();
         }

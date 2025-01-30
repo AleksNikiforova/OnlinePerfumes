@@ -47,7 +47,7 @@ namespace OnlinePerfumes.DataAccess.Repository
 
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
             return await dbset.ToListAsync();
         }

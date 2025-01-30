@@ -26,7 +26,7 @@ namespace OnlinePerfumes.Core.Service
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<OrderStatus>> GetAll()
+        public async Task<List<OrderStatus>> GetAll()
         {
             throw new NotImplementedException();
         }

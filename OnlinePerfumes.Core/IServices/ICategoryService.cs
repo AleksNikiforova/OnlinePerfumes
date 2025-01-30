@@ -13,7 +13,7 @@ namespace OnlinePerfumes.Core.IServices
         Task Add(Category category);
         Task Delete(int id);
         Task Update(Category category);
-        Task<IEnumerable<Category>> GetAll();
+        Task<List<Category>> GetAll();
         Task<Category> GetById(int id);
         Task<List<Category>> Find(Expression<Func<Category, bool>> filter);
     }
