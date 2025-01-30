@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.DataAccess
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext: IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         DbSet<ApplicationUser> ApplicationUsers { get; set; }
@@ -38,6 +38,13 @@ namespace OnlinePerfumes.DataAccess
                 .WithMany(x => x.Reviews)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Product>().HasKey(x => new { x.CategoryId });
+            builder.Entity<Product>().HasOne(x=>x.Category)
+                  .WithMany(x=>x.Products)
+                  .HasForeignKey(x=>x.CategoryId)
+                  .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

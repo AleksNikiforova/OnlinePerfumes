@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -56,6 +57,11 @@ namespace OnlinePerfumes.DataAccess.Repository
            dbset.Update(entity);  
            await _context.SaveChangesAsync();
 
+        }
+
+        public async Task<List<T>> Find(Expression<Func<T, bool>> filter)
+        {
+           return await dbset.Where(filter).ToListAsync();
         }
     }
 }

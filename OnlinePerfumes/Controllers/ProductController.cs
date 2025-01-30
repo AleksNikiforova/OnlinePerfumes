@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Models;
 
@@ -8,17 +9,49 @@ namespace OnlinePerfumes.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly ICategoryService _categoryService;
+        private readonly IService<Category>_categoryService;
         public ProductController(IProductService productService,ICategoryService categoryService)
         {
             _productService = productService;
             _categoryService = categoryService;
         }
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(ProductFilterViewModel? filter)
         {
-            var list=await _productService.GetAll();
-            return View(list);  
+            var prods = _productService.Find(filter).AsQuerable();
+            if (filter == null)
+            {
+                var prodList = prods.AsQueryable();
+                return View(prods);
+            }
+
+            //var prods = await _productService.GetAll();
+            var query = prods.AsQueryable();
+            //var query = await _productService.GetAll().AsQueryable();
+            if (filter.CategoryId != null)
+            {
+                query=query.Where(p=>p.CategoryId == filter.CategoryId.Value);
+            }
+            if(filter.MinPrice != null)
+            {
+                query=query.Where(p=>p.Price>=filter.MinPrice.Value);
+            }
+            if(filter.MaxPrice != null)
+            {
+                query=query.Where(p=>p.Price<=filter.MaxPrice.Value);
+            }
+            if (!string.IsNullOrEmpty(filter.SearchName))
+            {
+                query=query.Where(p=>p.SearchName.Contains(filter.SearchName));
+            }
+            var productList = await query.ToListAsync(); 
+
+            return View(productList);
+            // var list=await _productService.GetAll();
+            // return View(list);  
         }
+
+
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryService.GetAll();

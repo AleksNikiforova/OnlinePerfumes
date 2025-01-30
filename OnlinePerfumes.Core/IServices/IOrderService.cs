@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,5 +15,6 @@ namespace OnlinePerfumes.Core.IServices
         Task Update(Order order);
         Task<IEnumerable<Order>> GetAll();
         Task<Order> GetById(int id);
+        Task<List<Order>> Find(Expression<Func<Order, bool>> filter);
     }
 }

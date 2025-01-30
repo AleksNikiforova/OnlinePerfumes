@@ -5,6 +5,7 @@ using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,6 +59,11 @@ namespace OnlinePerfumes.Core.Service
         public async Task<Product> GetById(int id)
         {
             return await _repo.GetById(id);
+        }
+
+        public async Task<List<Product>> Find(Expression<Func<Product, bool>> filter)
+        {
+            return await _repo.Find(filter);
         }
     }
 }

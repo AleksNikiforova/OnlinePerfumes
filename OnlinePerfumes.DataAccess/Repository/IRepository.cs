@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace OnlinePerfumes.DataAccess.Repository
         Task Delete(int id);
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(int id);
+        Task<List<T>> Find(Expression<Func<T, bool>> filter);
 
     }
 }

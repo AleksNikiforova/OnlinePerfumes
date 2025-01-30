@@ -1,7 +1,9 @@
-﻿using OnlinePerfumes.DataAccess.Repository;
+﻿using Microsoft.Identity.Client;
+using OnlinePerfumes.DataAccess.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,10 +26,15 @@ namespace OnlinePerfumes.Core
            await _repo.Delete(id);
         }
 
-       public  async  Task<IEnumerable<T>> GetAll()
-       {
+        public async Task<List<T>> Find(Expression<Func<T, bool>> filter)
+        {
+            return await _repo.Find(filter);
+        }
+
+        public  async  Task<IEnumerable<T>> GetAll()
+        {
            return await _repo.GetAll();
-       }
+        }
 
        public async Task<T> GetById(int id)
        {
