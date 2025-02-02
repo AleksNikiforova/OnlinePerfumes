@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.DataAccess
 {
-    public class ApplicationDbContext: IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext: DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         DbSet<ApplicationUser> ApplicationUsers { get; set; }
