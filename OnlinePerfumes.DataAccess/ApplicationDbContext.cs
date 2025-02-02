@@ -5,6 +5,7 @@ using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,14 +48,31 @@ namespace OnlinePerfumes.DataAccess
 
             builder.Entity<OrderProduct>().HasKey(x => new {x.ProductId,x.OrderId});
             builder.Entity<OrderProduct>().HasOne(x=>x.Order)
-                .WithMany(x=>x.Products)
+                .WithMany(x=>x.OrderProducts)
                 .HasForeignKey(x=>x.OrderId)
                 .OnDelete(DeleteBehavior.NoAction);
+
             builder.Entity<OrderProduct>().HasOne(x => x.Product)
-                .WithMany(x => x.Orders)
+                .WithMany(x => x.OrderProducts)
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+            builder.Entity<Order>().HasKey(x => new { x.OrderStatusId });
+            builder.Entity<Order>()
+            .HasOne(o => o.OrderStatus)
+            .WithMany(s => s.Orders)
+            .HasForeignKey(o => o.OrderStatusId);
+
+            builder.Entity<OrderStatusUpdate>().HasKey(x => new { x.OrderId, x.OrderStatusId });
+            builder.Entity<OrderStatusUpdate>()
+                .HasOne(u => u.Order)
+            .WithMany(o => o.StatusUpdates)
+            .HasForeignKey(u => u.OrderId);
+
+            builder.Entity<OrderStatusUpdate>()
+                .HasOne(u => u.OrderStatus)
+                .WithMany(s => s.OrderStatusUpdates)
+                .HasForeignKey(u => u.OrderStatusId);
+
 
         }
     }

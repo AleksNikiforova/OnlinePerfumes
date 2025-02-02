@@ -31,7 +31,7 @@ namespace OnlinePerfumes.Models
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; } 
         public Category Category { get; set; }
-        public ICollection<OrderProduct> Orders=new List<OrderProduct>();
+        public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
         public ICollection<Review> Reviews=new List<Review>();
     }
 }

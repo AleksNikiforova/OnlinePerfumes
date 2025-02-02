@@ -13,6 +13,8 @@ namespace OnlinePerfumes.Models
         public int Id {  get; set; }
         [Required]
         public string StatusDescription {  get; set; }
-        
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<OrderStatusUpdate> OrderStatusUpdates { get; set; }
+
     }
 }

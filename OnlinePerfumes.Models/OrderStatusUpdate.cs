@@ -19,5 +19,7 @@ namespace OnlinePerfumes.Models
         [ForeignKey(nameof(Order))]
         public int OrderId { get; set; }
         public Order Order { get; set; }
+        public int OrderStatusId { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 }

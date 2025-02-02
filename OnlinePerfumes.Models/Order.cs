@@ -13,7 +13,7 @@ namespace OnlinePerfumes.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public DateTime OrederDate { get; set; }
+        public DateTime OrderDate { get; set; }
         [Required]
         public int TotalAmount { get; set; }
         [Required]
@@ -23,6 +23,7 @@ namespace OnlinePerfumes.Models
         public OrderStatus OrderStatus { get; set; }
         [ForeignKey(nameof(Payment))]
         public int OrderPaymentId { get; set; }
-        public ICollection<OrderProduct> Products=new List<OrderProduct>();
+        public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
+        public ICollection<OrderStatusUpdate> StatusUpdates { get; set; }
     }
 }
