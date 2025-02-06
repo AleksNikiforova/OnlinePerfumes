@@ -13,7 +13,7 @@ namespace OnlinePerfumes.Core.IServices
         Task Add(Order order);
         Task Delete(int id);
         Task Update(Order order);
-        IQueryable<IOrderService> GetAll();
+        IQueryable<Order> GetAll();
         Task<Order> GetById(int id);
         Task<List<Order>> Find(Expression<Func<Order, bool>> filter);
     }

@@ -65,7 +65,7 @@ namespace OnlinePerfumes.Core.Service
             return _repo.Find(filter);  
         }
 
-        public IQueryable<IOrderService> GetAll()
+        public IQueryable<Order> GetAll()
         {
            return _repo.GetAll();
         }

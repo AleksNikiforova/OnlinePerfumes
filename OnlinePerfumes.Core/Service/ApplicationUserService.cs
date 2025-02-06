@@ -1,4 +1,5 @@
 ﻿using OnlinePerfumes.Core.IServices;
+using OnlinePerfumes.DataAccess.Repository;
 using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
@@ -11,34 +12,40 @@ namespace OnlinePerfumes.Core.Service
 {
     public class ApplicationUserService : IApplicationUserService
     {
+        private readonly IRepository<ApplicationUser> _repo; 
+        public ApplicationUserService(IRepository<ApplicationUser> repo)
+        {
+            _repo = repo;
+        }
+
         public async Task Add(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            await _repo.Add(user);
         }
 
         public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await _repo.Delete(id);
         }
 
-        public Task<List<ApplicationUser>> Find(Expression<Func<ApplicationUser, bool>> filter)
+        public async Task<List<ApplicationUser>> Find(Expression<Func<ApplicationUser, bool>> filter)
         {
-            throw new NotImplementedException();
+           return await _repo.Find(filter);
         }
 
         public IQueryable<ApplicationUser> GetAll()
         {
-            throw new NotImplementedException();
+            return _repo.GetAll();
         }
 
         public async Task<ApplicationUser> GetById(int id)
         {
-            throw new NotImplementedException();
+           return await _repo.GetById(id);
         }
 
         public async Task Update(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            await _repo.Update(user);
         }
 
        

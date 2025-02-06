@@ -1,4 +1,5 @@
 ﻿using OnlinePerfumes.Core.IServices;
+using OnlinePerfumes.DataAccess.Repository;
 using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
@@ -11,34 +12,40 @@ namespace OnlinePerfumes.Core.Service
 {
     public class OrderStatusUpdateService : IOrderStatusUpdateService
     {
+        private readonly IRepository<OrderStatusUpdate> _repo;
+        public OrderStatusUpdateService(IRepository<OrderStatusUpdate> repo)
+        {
+            _repo = repo;
+        }
+
         public async Task Add(OrderStatusUpdate orderStatusUpdate)
         {
-            throw new NotImplementedException();
+            await _repo.Add(orderStatusUpdate);
         }
 
         public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await _repo.Delete(id);
         }
 
-        public Task<List<OrderStatusUpdate>> Find(Expression<Func<OrderStatusUpdate, bool>> filter)
+        public async Task<List<OrderStatusUpdate>> Find(Expression<Func<OrderStatusUpdate, bool>> filter)
         {
-            throw new NotImplementedException();
+            return await _repo.Find(filter);
         }
 
         public IQueryable<OrderStatusUpdate> GetAll()
         {
-            throw new NotImplementedException();
+            return _repo.GetAll();
         }
 
         public async Task<OrderStatusUpdate> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _repo.GetById(id);
         }
 
         public async Task Update(OrderStatusUpdate orderStatusUpdate)
         {
-            throw new NotImplementedException();
+            await _repo.Update(orderStatusUpdate);
         }
     }
 }

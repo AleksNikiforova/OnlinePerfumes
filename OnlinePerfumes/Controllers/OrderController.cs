@@ -11,32 +11,32 @@ namespace OnlinePerfumes.Controllers
     {
         private readonly IOrderService _orderservice;
         private readonly IService<Product> _productservice;
+
         public OrderController(IOrderService orderservice,IService<Product> productservice)
         {
             _orderservice = orderservice;
             _productservice = productservice;
         }
-        /*public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add()
         {
-            var products = await _productservice.GetAll();
-            ViewBag.Products = new SelectList(products, "Id", "Name");
-            return View();
-
-        }*/
-        [HttpPost]
-        public async Task<IActionResult> Add(Order order, int[]selectedProducts)
-        {
-            var products = await _productservice.GetAll();
-            ViewBag.Products = new SelectList(products, "Id", "Name");
-            return View(order);
-            order.OrderProducts = selectedProducts.Select(productId => new OrderProduct
+            var products =  _orderservice.GetAll();
+            var model = new OrderViewModel()
             {
-                ProductId = productId
-            }).ToList();
+                Products = products.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    //Text=x.Name
+                    
+                }).ToList()
+            };
+            return View(model);
 
-            await _orderservice.Add(order);
-            return RedirectToAction("Index");
         }
+        /*[HttpPost]
+        public async Task<IActionResult> Add(OrderViewModel model)
+        {
+            
+        }*/
 
    
         public async Task<IActionResult> Update(int id)
@@ -58,7 +58,7 @@ namespace OnlinePerfumes.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var list = await _orderservice.GetAll();
+            var list = _orderservice.GetAll();
             return View(list);
         }
     }

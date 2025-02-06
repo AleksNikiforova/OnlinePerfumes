@@ -15,7 +15,7 @@ namespace OnlinePerfumes.Controllers
         }
         public async Task<IActionResult> Index()
         {
-           var list=await _categoryService.GetAll();
+           var list= _categoryService.GetAll();
            return View(list);
         }
         public async Task<IActionResult> Add()

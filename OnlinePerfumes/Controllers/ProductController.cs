@@ -11,16 +11,19 @@ namespace OnlinePerfumes.Controllers
     {
         private readonly IProductService _productService;
         private readonly IService<Category>_categoryService;
-        public ProductController(IProductService productService,IService<Category> categoryService)
+        private readonly IService<Order> _orderService;
+        public ProductController(IProductService productService,IService<Category> categoryService,IService<Order> orderService)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _orderService = orderService;
         }
         
         public async Task<IActionResult> Index(ProductFilterViewModel? filter)
         {
-           
-            var query = await _productService.GetAll().AsQueryable();
+
+            var products =  _productService.GetAll();
+            var query = products.AsQueryable();
             if (filter.CategoryId != null)
             {
                 query=query.Where(p=>p.CategoryId == filter.CategoryId.Value);
@@ -53,24 +56,17 @@ namespace OnlinePerfumes.Controllers
         }
 
 
-        public async Task<IActionResult> Add()
+       /* public async Task<IActionResult> Add()
         {
-            var categories = await _categoryService.GetAll();
-            ViewBag.Categories = new SelectList(categories,"Id","CategoryName");
-            return View();
+           
+           
 
         }
         [HttpPost]
-        public async Task<IActionResult>Add(Product product)
+        public async Task<IActionResult>Add(ProductViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            await _productService.Add(product);
-                return RedirectToAction("Index");
-            //}
-            //return View();
-           
-        }
+            
+        }*/
         public async Task<IActionResult> Update(int id)
         {
             var entity = await _productService.GetById(id);

@@ -10,7 +10,7 @@ namespace OnlinePerfumes.Models
     public class ApplicationUser
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string FirstName {  get; set; }  
         [Required]

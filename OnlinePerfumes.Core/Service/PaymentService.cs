@@ -1,4 +1,5 @@
 ﻿using OnlinePerfumes.Core.IServices;
+using OnlinePerfumes.DataAccess.Repository;
 using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
@@ -11,34 +12,40 @@ namespace OnlinePerfumes.Core.Service
 {
     public class PaymentService : IPaymentService
     {
+        private readonly IRepository<Payment> _repo;
+        public PaymentService(IRepository<Payment> repo)
+        {
+            _repo = repo;
+        }
+
         public async Task Add(Payment payment)
         {
-            throw new NotImplementedException();
+            await _repo.Add(payment);
         }
 
         public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+           await _repo.Delete(id);
         }
 
-        public Task<List<Payment>> Find(Expression<Func<Payment, bool>> filter)
+        public async Task<List<Payment>> Find(Expression<Func<Payment, bool>> filter)
         {
-            throw new NotImplementedException();
+            return await _repo.Find(filter);
         }
 
         public IQueryable<Payment> GetAll()
         {
-            throw new NotImplementedException();
+           return _repo.GetAll();
         }
 
         public async Task<Payment> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _repo.GetById(id);
         }
 
         public async Task Update(Payment payment)
         {
-            throw new NotImplementedException();
+            await _repo.Update(payment);
         }
     }
 }
