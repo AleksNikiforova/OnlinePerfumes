@@ -13,7 +13,7 @@ namespace OnlinePerfumes.Core.IServices
         Task Add(Payment payment);
         Task Delete(int id);
         Task Update(Payment payment);
-        Task<List<Payment>> GetAll();
+        IQueryable<Payment> GetAll();
         Task<Payment> GetById(int id);
         Task<List<Payment>> Find(Expression<Func<Payment, bool>> filter);
     }

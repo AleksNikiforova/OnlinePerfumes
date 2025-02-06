@@ -13,7 +13,7 @@ namespace OnlinePerfumes.Core.IServices
         Task Add(ApplicationUser user);
         Task Delete(int id);
         Task Update(ApplicationUser user);
-        Task<List<ApplicationUser>> GetAll();
+        IQueryable<ApplicationUser> GetAll();
         Task<ApplicationUser> GetById(int id);
         Task<List<ApplicationUser>> Find(Expression<Func<ApplicationUser, bool>> filter);
     }

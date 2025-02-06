@@ -47,9 +47,9 @@ namespace OnlinePerfumes.DataAccess.Repository
 
         }
 
-        public async Task<List<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return await dbset.ToListAsync();
+            return  dbset.AsQueryable();
         }
 
         public async Task Update(T entity)

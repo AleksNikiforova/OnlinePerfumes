@@ -19,16 +19,8 @@ namespace OnlinePerfumes.Controllers
         
         public async Task<IActionResult> Index(ProductFilterViewModel? filter)
         {
-            var prods = (await _productService.GetAll()).AsQueryable();
-            if (filter == null)
-            {
-                var prodList = prods.AsQueryable();
-                return View(prods);
-            }
-
-            //var prods = await _productService.GetAll();
-            var query = prods.AsQueryable();
-            //var query = await _productService.GetAll().AsQueryable();
+           
+            var query = await _productService.GetAll().AsQueryable();
             if (filter.CategoryId != null)
             {
                 query=query.Where(p=>p.CategoryId == filter.CategoryId.Value);
@@ -71,10 +63,9 @@ namespace OnlinePerfumes.Controllers
         [HttpPost]
         public async Task<IActionResult>Add(Product product)
         {
-           
             //if (ModelState.IsValid)
             //{
-                await _productService.Add(product);
+            await _productService.Add(product);
                 return RedirectToAction("Index");
             //}
             //return View();

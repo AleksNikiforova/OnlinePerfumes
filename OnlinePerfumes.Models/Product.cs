@@ -12,6 +12,7 @@ namespace OnlinePerfumes.Models
     public class Product
     {
         [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id {  get; set; }
         [Required(ErrorMessage = "Name is mandatory")]
         [StringLength(50,ErrorMessage ="Name must be 50 letters")]
@@ -29,7 +30,7 @@ namespace OnlinePerfumes.Models
         [Required]
         public string Slug { get; set; } = "";
         [ForeignKey(nameof(Category))]
-        public int CategoryId { get; set; } 
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
         public ICollection<Review> Reviews=new List<Review>();

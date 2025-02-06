@@ -14,7 +14,7 @@ namespace OnlinePerfumes.Core.IServices
         Task Add(OrderStatus orderStatus);
         Task Delete(int id);
         Task  Update(OrderStatus orderStatus);
-        Task<List<OrderStatus>> GetAll();
+         IQueryable<OrderStatus> GetAll();
         Task<OrderStatus> GetById(int id);
         Task<List<OrderStatus>> Find(Expression<Func<OrderStatus, bool>> filter);
     }

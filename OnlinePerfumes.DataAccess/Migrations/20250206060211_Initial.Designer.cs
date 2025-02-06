@@ -12,8 +12,8 @@ using OnlinePerfumes.DataAccess;
 namespace OnlinePerfumes.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250129061522_updt")]
-    partial class updt
+    [Migration("20250206060211_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,8 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -80,20 +81,17 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
             modelBuilder.Entity("OnlinePerfumes.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderPaymentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("OrderStatusId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OrederDate")
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderPaymentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
@@ -102,38 +100,31 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.Property<int>("TotalAmount")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderStatusId");
+                    b.HasKey("OrderStatusId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("OnlinePerfumes.Models.OrderProduct", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrdersProducts");
                 });
@@ -157,25 +148,25 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
             modelBuilder.Entity("OnlinePerfumes.Models.OrderStatusUpdate", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("OrderStatusId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId", "OrderStatusId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderStatusId");
 
                     b.ToTable("OrderStatusUpdate");
                 });
@@ -203,12 +194,6 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
             modelBuilder.Entity("OnlinePerfumes.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -217,11 +202,16 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -233,9 +223,7 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -264,7 +252,7 @@ namespace OnlinePerfumes.DataAccess.Migrations
             modelBuilder.Entity("OnlinePerfumes.Models.Order", b =>
                 {
                     b.HasOne("OnlinePerfumes.Models.OrderStatus", "OrderStatus")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("OrderStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -275,15 +263,15 @@ namespace OnlinePerfumes.DataAccess.Migrations
             modelBuilder.Entity("OnlinePerfumes.Models.OrderProduct", b =>
                 {
                     b.HasOne("OnlinePerfumes.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("OnlinePerfumes.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("OrderProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -294,20 +282,28 @@ namespace OnlinePerfumes.DataAccess.Migrations
             modelBuilder.Entity("OnlinePerfumes.Models.OrderStatusUpdate", b =>
                 {
                     b.HasOne("OnlinePerfumes.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("StatusUpdates")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OnlinePerfumes.Models.OrderStatus", "OrderStatus")
+                        .WithMany("OrderStatusUpdates")
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("OrderStatus");
                 });
 
             modelBuilder.Entity("OnlinePerfumes.Models.Product", b =>
                 {
                     b.HasOne("OnlinePerfumes.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -337,8 +333,29 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.Navigation("Reviews");
                 });
 
+            modelBuilder.Entity("OnlinePerfumes.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("OnlinePerfumes.Models.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
+
+                    b.Navigation("StatusUpdates");
+                });
+
+            modelBuilder.Entity("OnlinePerfumes.Models.OrderStatus", b =>
+                {
+                    b.Navigation("OrderStatusUpdates");
+
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("OnlinePerfumes.Models.Product", b =>
                 {
+                    b.Navigation("OrderProducts");
+
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618

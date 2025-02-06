@@ -53,10 +53,7 @@ namespace OnlinePerfumes.Core.Service
             await _repo.Update(order);
         }
 
-        public async Task<List<Order>> GetAll()
-        {
-            return await _repo.GetAll();
-        }
+        
 
         public async Task<Order> GetById(int id)
         {
@@ -67,5 +64,12 @@ namespace OnlinePerfumes.Core.Service
         {
             return _repo.Find(filter);  
         }
+
+        public IQueryable<IOrderService> GetAll()
+        {
+           return _repo.GetAll();
+        }
+
+        
     }
 }

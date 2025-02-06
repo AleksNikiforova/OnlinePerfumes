@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
-    public class ProductService:IProductService 
+    public class ProductService : IProductService
     {
         private readonly IRepository<Product> _repo;
         public ProductService(IRepository<Product> repo)
@@ -50,11 +50,6 @@ namespace OnlinePerfumes.Core.Service
             await _repo.Update(product);
         }
 
-        public async Task<List<Product>> GetAll()
-        {
-           return await _repo.GetAll();
-        }
-
 
         public async Task<Product> GetById(int id)
         {
@@ -64,6 +59,11 @@ namespace OnlinePerfumes.Core.Service
         public async Task<List<Product>> Find(Expression<Func<Product, bool>> filter)
         {
             return await _repo.Find(filter);
+        }
+
+        public IQueryable<Product> GetAll()
+        {
+            return _repo.GetAll();
         }
     }
 }

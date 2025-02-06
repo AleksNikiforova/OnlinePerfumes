@@ -34,10 +34,7 @@ namespace OnlinePerfumes.Core.Service
             await _repo.Update(category);
         }
 
-        public async Task<List<Category>> GetAll()
-        {
-            return await _repo.GetAll();
-        }
+      
 
         public async Task<Category> GetById(int id)
         {
@@ -47,6 +44,11 @@ namespace OnlinePerfumes.Core.Service
         public async Task<List<Category>> Find(Expression<Func<Category, bool>> filter)
         {
             return await _repo.Find(filter);
+        }
+
+        public IQueryable<Category> GetAll()
+        {
+           return _repo.GetAll();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace OnlinePerfumes.Core.IServices
         Task Add(Review review);
         Task Delete(int id);
         Task Update(Review review);
-        Task<List<Review>> GetAll();
+        IQueryable<Review> GetAll();
         Task<Review> GetById(int id);
         Task<List<Review>> Find(Expression<Func<Review, bool>> filter);
     }

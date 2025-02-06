@@ -26,7 +26,7 @@ namespace OnlinePerfumes.Core.Service
             throw new NotImplementedException();
         }
 
-        public async Task<List<ApplicationUser>> GetAll()
+        public IQueryable<ApplicationUser> GetAll()
         {
             throw new NotImplementedException();
         }
