@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Models;
+using OnlinePerfumes.Models.ViewModels;
 
 namespace OnlinePerfumes.Controllers
 {
@@ -56,14 +57,17 @@ namespace OnlinePerfumes.Controllers
         }
 
 
-       /* public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
            
-           
+           var model=new ProductViewModel
+           {
+               Orders=_productService.
+           }
 
         }
         [HttpPost]
-        public async Task<IActionResult>Add(ProductViewModel model)
+        /*public async Task<IActionResult>Add(ProductViewModel model)
         {
             
         }*/

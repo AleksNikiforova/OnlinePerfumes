@@ -16,5 +16,8 @@ namespace OnlinePerfumes.Core.IServices
         IQueryable<Order> GetAll();
         Task<Order> GetById(int id);
         Task<List<Order>> Find(Expression<Func<Order, bool>> filter);
+        Task AddProductToOrder(int orderId, int productId, int quantity);
+        Task<Order> GetOrderWithProductsById(int orderId);
+
     }
 }

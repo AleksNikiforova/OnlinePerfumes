@@ -4,6 +4,7 @@ using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Service;
 using OnlinePerfumes.Models;
+using OnlinePerfumes.Models.ViewModels;
 
 namespace OnlinePerfumes.Controllers
 {
@@ -25,7 +26,7 @@ namespace OnlinePerfumes.Controllers
                 Products = products.Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
-                    //Text=x.Name
+                    
                     
                 }).ToList()
             };
