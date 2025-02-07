@@ -5,6 +5,7 @@ namespace OnlinePerfumes.Models.ViewModels
 {
     public class OrderViewModel
     {
+        public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         
         public int TotalAmount { get; set; }
@@ -15,6 +16,6 @@ namespace OnlinePerfumes.Models.ViewModels
         public List<int>? SelectedProductIds { get; set; }
 
         
-        public List<SelectListItem> Products { get; set; }
+        public List<ProductViewModel> Products { get; set; }
     }
 }

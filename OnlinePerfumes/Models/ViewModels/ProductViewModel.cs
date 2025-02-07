@@ -6,19 +6,18 @@ namespace OnlinePerfumes.Models.ViewModels
 {
     public class ProductViewModel
     {
-        public string Name { get; set; }=string.Empty;
         
-        public string Description { get; set; } = string.Empty;
         
-        public decimal Price { get; set; }
+            public int Id { get; set; }  // Product ID
+            public string Name { get; set; }  // Product name
+            public string Description { get; set; } = string.Empty;  // Product description
+            public decimal Price { get; set; }  // Product price
+            public int Quantity { get; set; }  // Quantity of the product available
+            public DateTime DateAdded { get; set; } = DateTime.Now;  // Date the product was added
+            public string Slug { get; set; } = "";  // URL-friendly name for the product
+            public int CategoryId { get; set; }  // Category ID the product belongs to
+            public string CategoryName { get; set; }  // Category name
         
-        public int StockQuantity { get; set; } = 0;
-        
-        public DateTime DateAdded { get; set; } = DateTime.Now;
-        
-        public string Slug { get; set; } = "";
-       
-        public List<int>? SelectedOrderIds { get; set; }
-        public List<SelectListItem>Orders { get; set; }
+
     }
 }

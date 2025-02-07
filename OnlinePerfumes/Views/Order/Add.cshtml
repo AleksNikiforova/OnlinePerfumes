@@ -5,22 +5,32 @@
 }
 @model Order
 
-<h2>Създай поръчка</h2>
+<h2>Create New Order</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="CreateOrder" method="post">
     <div class="form-group">
-        <label>Дата</label>
-        <input asp-for="OrderDate" class="form-control" type="date" />
+        <label for="orderDate">Order Date</label>
+        <input type="date" name="orderDate" class="form-control" />
     </div>
 
-    <div class="form-group">
-        <label>Продукти</label>
-        <select name="selectedProducts" class="form-control" multiple>
-            @foreach (var product in ViewBag.Products)
-            {
-                <option value="@product.Id">@product.Name</option>
-            }
-        </select>
+    <!-- Секция за добавяне на продукти към новата поръчка -->
+    <h4>Add Products</h4>
+    <div id="product-section">
+        @* Формата, която даде *@
+        <div class="form-group">
+            <label for="productId">Product</label>
+            <select name="productId" class="form-control">
+                @foreach (var product in ViewBag.Products)
+                {
+                    <option value="@product.ProductId">@product.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" name="quantity" class="form-control" min="1" />
+        </div>
     </div>
 
     <button asp-action="Add" asp-controller="Order" type="submit" class="btn btn-primary" formmethod="post">

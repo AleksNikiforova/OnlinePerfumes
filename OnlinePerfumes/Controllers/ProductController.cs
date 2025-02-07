@@ -11,19 +11,29 @@ namespace OnlinePerfumes.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly IService<Category>_categoryService;
+        private readonly ICategoryService _categoryService;
         private readonly IService<Order> _orderService;
-        public ProductController(IProductService productService,IService<Category> categoryService,IService<Order> orderService)
+        public ProductController(IProductService productService,ICategoryService categoryService,IService<Order> orderService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _orderService = orderService;
         }
         
-        public async Task<IActionResult> Index(ProductFilterViewModel? filter)
+        public async Task<IActionResult> Index()
         {
-
-            var products =  _productService.GetAll();
+           
+            var products=await _productService.GetAll().ToListAsync();
+            var viewModel=products.Select(x=>new ProductViewModel
+            {
+                Id=x.Id,
+                Name=x.Name,
+                Price=x.Price,
+                Description=x.Description,
+                Quantity=x.StockQuantity,
+            }).ToList();
+            return View(viewModel);
+            /*var products =  _productService.GetAll();
             var query = products.AsQueryable();
             if (filter.CategoryId != null)
             {
@@ -53,42 +63,85 @@ namespace OnlinePerfumes.Controllers
                 Categories = new SelectList((System.Collections.IEnumerable)_categoryService.GetAll(), "CategoryId", "Name"),
                 Products = query.Include(p => p.Category).ToList()
             };
-            return View(model);
+            return View(model);*/
         }
 
 
         public IActionResult Add()
         {
-           
-           var model=new ProductViewModel
-           {
-               Orders=_productService.
-           }
-
+            var categories =  _categoryService.GetAll();
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
+            return View();
         }
         [HttpPost]
-        /*public async Task<IActionResult>Add(ProductViewModel model)
-        {
-            
-        }*/
-        public async Task<IActionResult> Update(int id)
-        {
-            var entity = await _productService.GetById(id);
-            return View(entity);
-        }
-        [HttpPost]
-        public async Task<IActionResult>Update(Product product)
+        public async Task<IActionResult>Add(ProductViewModel model)
         {
             if(ModelState.IsValid)
             {
+                var product = new Product
+                {
+                    Name = model.Name,
+                    Price = model.Price,
+                    Description = model.Description,
+                    StockQuantity = model.Quantity,
+                    CategoryId=model.CategoryId
+                };
+                await _productService.Add(product);
+                return RedirectToAction("Index");
+            }
+            var categories=await _categoryService.GetAll().ToListAsync();
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
+            return View(model);
+        }
+        public async Task<IActionResult> Update(int id)
+        {
+            var product = await _productService.GetById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                Quantity = product.StockQuantity,
+                CategoryId=product.CategoryId
+            };
+            var categories = await _categoryService.GetAll().ToListAsync();
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name", product.CategoryId);
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult>Update(ProductViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var product=await _productService.GetById(model.Id);
+                if(product == null)
+                {
+                    return NotFound();
+                }
+                product.Name = model.Name;
+                product.Price = model.Price;
+                product.Description = model.Description;
+                product.StockQuantity = model.Quantity;
                 await _productService.Update(product);
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult>Delete(int id)
         {
+            var product = await _productService.GetById(id);
+            if(product == null)
+            {
+                return NotFound();
+            }
             await _productService.Delete(id);
             return RedirectToAction("Index");
         }

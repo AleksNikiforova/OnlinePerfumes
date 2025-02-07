@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Service;
@@ -11,35 +12,53 @@ namespace OnlinePerfumes.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderservice;
-        private readonly IService<Product> _productservice;
+        private readonly IProductService _productservice;
 
-        public OrderController(IOrderService orderservice,IService<Product> productservice)
+        public OrderController(IOrderService orderservice,IProductService productservice)
         {
             _orderservice = orderservice;
             _productservice = productservice;
         }
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Details(int id)
         {
-            var products =  _orderservice.GetAll();
-            var model = new OrderViewModel()
+            var order=await _orderservice.GetOrderWithProductsById(id);
+            if(order == null)
             {
-                Products = products.Select(x => new SelectListItem
+                return NotFound();
+            }
+            var viewModel = new OrderViewModel
+            {
+                Id = order.Id,
+                OrderDate = order.OrderDate,
+                Products = order.OrderProducts.Select(op => new ProductViewModel
                 {
-                    Value = x.Id.ToString(),
-                    
-                    
+                    Id = op.ProductId,
+                    Name = op.Product.Name,
+                    Price = op.Product.Price,
+                    Quantity = op.Quantity
                 }).ToList()
             };
-            return View(model);
+            return View(viewModel);
 
         }
-        /*[HttpPost]
-        public async Task<IActionResult> Add(OrderViewModel model)
+        public async Task<IActionResult> Add()
         {
-            
-        }*/
+            var products = await _productservice.GetAll().ToListAsync();
+            if (products == null || !products.Any())
+            {
+                throw new ArgumentException("No found products");
+            }
 
-   
+            ViewBag.Products = products;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProduct(int orderid,int productid,int quantity)
+        {
+            await _orderservice.AddProductToOrder(orderid, productid, quantity);
+            return RedirectToAction("Details", new { id = orderid, });
+        }
         public async Task<IActionResult> Update(int id)
         {
             var order = await _orderservice.GetById(id);
