@@ -10,16 +10,11 @@ namespace OnlinePerfumes.Models
 {
     public class OrderProduct
     {
-        [Key]
-        public int Id {  get; set; }
-        [Required]
-        public int Quantity {  get; set; }
-        [Required]
-        public decimal Price {  get; set; }
-        [ForeignKey(nameof(Order))]
+       
+       
         public int OrderId {  get; set; }
         public Order Order { get; set; }
-        [ForeignKey(nameof(Product))]
+       
         public int ProductId { get; set; }
         public Product Product { get; set; }
 

@@ -15,12 +15,7 @@ namespace OnlinePerfumes.Models
         public int Id {  get; set; }
         [Required]
         public int Grade {  get; set; }
-        [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; }
-        public int UserId { get; set; }
-        [ForeignKey(nameof(Product))]
-        public int ProductId { get; set; }
-        public Product Product{ get; set; }
+      
 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlinePerfumes.DataAccess;
 
@@ -11,9 +12,11 @@ using OnlinePerfumes.DataAccess;
 namespace OnlinePerfumes.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250210062453_SchoolMig")]
+    partial class SchoolMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,6 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderStatusId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -170,8 +170,6 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.HasKey("OrderId", "OrderStatusId");
 
                     b.HasIndex("OrderStatusId");
-
-                    b.HasIndex("OrderStatusId1");
 
                     b.ToTable("OrderStatusUpdate");
                 });
@@ -230,9 +228,6 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
 
@@ -295,18 +290,14 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.HasOne("OnlinePerfumes.Models.Order", "Order")
                         .WithMany("StatusUpdates")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("OnlinePerfumes.Models.OrderStatus", "OrderStatus")
-                        .WithMany()
-                        .HasForeignKey("OrderStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlinePerfumes.Models.OrderStatus", null)
+                    b.HasOne("OnlinePerfumes.Models.OrderStatus", "OrderStatus")
                         .WithMany("OrderStatusUpdates")
-                        .HasForeignKey("OrderStatusId1");
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 

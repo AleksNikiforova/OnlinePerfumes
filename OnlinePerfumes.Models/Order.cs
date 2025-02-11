@@ -18,12 +18,8 @@ namespace OnlinePerfumes.Models
         public int TotalAmount { get; set; }
         [Required]
         public string ShippingAddress {  get; set; }
-        [ForeignKey(nameof(OrderStatus))]
-        public int OrderStatusId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-        [ForeignKey(nameof(Payment))]
-        public int OrderPaymentId { get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
-        public ICollection<OrderStatusUpdate> StatusUpdates { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

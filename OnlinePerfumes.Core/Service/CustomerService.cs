@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
-    public class ApplicationUserService : IApplicationUserService
+    public class CustomerService : ICustomerrService
     {
-        private readonly IRepository<ApplicationUser> _repo; 
-        public ApplicationUserService(IRepository<ApplicationUser> repo)
+        private readonly IRepository<Customer> _repo; 
+        public CustomerService(IRepository<Customer> repo)
         {
             _repo = repo;
         }
 
-        public async Task Add(ApplicationUser user)
+        public async Task Add(Customer user)
         {
             await _repo.Add(user);
         }
@@ -28,22 +28,22 @@ namespace OnlinePerfumes.Core.Service
             await _repo.Delete(id);
         }
 
-        public async Task<List<ApplicationUser>> Find(Expression<Func<ApplicationUser, bool>> filter)
+        public async Task<List<Customer>> Find(Expression<Func<Customer, bool>> filter)
         {
            return await _repo.Find(filter);
         }
 
-        public IQueryable<ApplicationUser> GetAll()
+        public IQueryable<Customer> GetAll()
         {
             return _repo.GetAll();
         }
 
-        public async Task<ApplicationUser> GetById(int id)
+        public async Task<Customer> GetById(int id)
         {
            return await _repo.GetById(id);
         }
 
-        public async Task Update(ApplicationUser user)
+        public async Task Update(Customer user)
         {
             await _repo.Update(user);
         }
