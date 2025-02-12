@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Models
 {
-    public class Customer
+    public class Customer 
     {
         [Key]
         public int Id { get; set; }
@@ -29,7 +30,7 @@ namespace OnlinePerfumes.Models
         //public ICollection<Review> Reviews = new List<Review>();
         ICollection<Order>Orders { get; set; }
         //Swurzwane s identityuser
-      //  public string UserId {  get; set; }
-      //  public IdentityUser User { get; set; }
+        public string UserId {  get; set; }
+        public IdentityUser User { get; set; }
     }
 }
