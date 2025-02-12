@@ -19,12 +19,12 @@ namespace OnlinePerfumes.Controllers
             _orderservice = orderservice;
             _productservice = productservice;
         }
-        [HttpGet]
+        /*[HttpGet]
         public IActionResult Details(int id)
         {
-            var model=_orderservice.GetAll().Where()
+           
 
-        }
+        }*/
         public async Task<IActionResult> Add()
         {
             var products = await _productservice.GetAll().ToListAsync();
@@ -37,27 +37,17 @@ namespace OnlinePerfumes.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddProduct(int orderid,int productid,int quantity)
-        {
-            await _orderservice.AddProductToOrder(orderid, productid, quantity);
-            return RedirectToAction("Details", new { id = orderid, });
-        }
-        public async Task<IActionResult> Update(int id)
-        {
-            var order = await _orderservice.GetById(id);
-            return View(order);
-        }
+        
         [HttpPost]
         public async Task<IActionResult>Update(Order order)
         {
-            await _orderservice.Update(order);
+            await _orderservice.UpdateAsync(order);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult>Delete(int id)
         {
-            await _orderservice.Delete(id);
+            await _orderservice.DeleteAsync(id);
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Index()

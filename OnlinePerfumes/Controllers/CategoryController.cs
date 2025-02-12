@@ -27,14 +27,14 @@ namespace OnlinePerfumes.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _categoryService.Add(category);
+                await _categoryService.AddAsync(category);
                 return RedirectToAction("Index");
             }
             return View();
         }
         public async Task<IActionResult> Update(int id)
         {
-            var category = await _categoryService.GetById(id);
+            var category = await _categoryService.GetByIdAsync(id);
             return View(category);
         }
         [HttpPost]
@@ -42,7 +42,7 @@ namespace OnlinePerfumes.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.Update(category);
+                await _categoryService.UpdateAsync(category);
                 return RedirectToAction("Index");
             }
             return View();
@@ -50,7 +50,7 @@ namespace OnlinePerfumes.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await _categoryService.Delete(id);
+            await _categoryService.DeleteAsync(id);
             return RedirectToAction("Index");
         }
 

@@ -10,10 +10,10 @@
 <h2>Add New Product</h2>
 <form action="/Product/Add" method="post" class="form-horizontal" role="form">
     <div class="form-group">
-        <label asp-for="CategoryName" class="control-lable col-md-2"></label>
+        <label asp-for="Name" class="control-lable col-md-2"></label>
         <div class="col-md-10">
-            <input asp-for="CategoryName" class="form-control" />
-            <span asp-validation-for="CategoryName" class="text-danger"></span>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
     </div>
    <button asp-action="Add" asp-controller="Category" type="submit" class="btn btn-primary" formmethod="post">

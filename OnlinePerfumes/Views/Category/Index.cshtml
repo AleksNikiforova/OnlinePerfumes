@@ -24,7 +24,7 @@
         {
             <tr>
                 <td>@category.Id</td>
-                <td>@category.CategoryName</td>
+                <td>@category.Name</td>
                 <td>
                     <a type="button" class="btn btn-success" asp-action="Update" asp-controller="Category" asp-route-id="@category.Id">Update</a>
                     <form method="post" asp-controller="Category" asp-action="Delete">

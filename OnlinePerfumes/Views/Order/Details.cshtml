@@ -10,14 +10,12 @@
     <tr>
         <th>Product</th>
         <th>Price</th>
-        <th>Quantity</th>
     </tr>
     @foreach (var product in Model.Products)
     {
         <tr>
             <td>@product.Name</td>
-            <td>@product.Price.ToString("C")</td>
-            <td>@product.Quantity</td>
+            <td>@product.Price.ToString("C")</td>        
         </tr>
     }
 </table>

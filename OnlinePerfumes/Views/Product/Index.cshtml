@@ -16,8 +16,6 @@
         <tr>
             <th>Name</th>
             <th>Price</th>
-            <th>Description</th>
-            <th>Quantity</th>
             <th>Category</th>
         </tr>
     </thead>
@@ -27,8 +25,6 @@
             <tr>
                 <td>@product.Name</td>
                 <td>@product.Price.ToString("C")</td>
-                <td>@product.Description</td>
-                <td>@product.Quantity</td>
                 <td>@product.CategoryName</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-sm btn-warning">Edit</a>

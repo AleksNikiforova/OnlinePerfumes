@@ -81,11 +81,9 @@ namespace OnlinePerfumes.Controllers
                 {
                     Name = model.Name,
                     Price = model.Price,
-                    Description = model.Description,
-                    StockQuantity = model.Quantity,
                     CategoryId=model.CategoryId
                 };
-                await _productService.Add(product);
+                await _productService.AddAsync(product);
                 return RedirectToAction("Index");
             }
             var categories=await _categoryService.GetAll().ToListAsync();
@@ -94,7 +92,7 @@ namespace OnlinePerfumes.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
-            var product = await _productService.GetById(id);
+            var product = await _productService.GetByIdAsync(id);
             if (product == null)
             {
                 return NotFound();
@@ -105,8 +103,6 @@ namespace OnlinePerfumes.Controllers
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
-                Description = product.Description,
-                Quantity = product.StockQuantity,
                 CategoryId=product.CategoryId
             };
             var categories = await _categoryService.GetAll().ToListAsync();
@@ -119,16 +115,14 @@ namespace OnlinePerfumes.Controllers
         {
             if(ModelState.IsValid)
             {
-                var product=await _productService.GetById(model.Id);
+                var product=await _productService.GetByIdAsync(model.Id);
                 if(product == null)
                 {
                     return NotFound();
                 }
                 product.Name = model.Name;
                 product.Price = model.Price;
-                product.Description = model.Description;
-                product.StockQuantity = model.Quantity;
-                await _productService.Update(product);
+                await _productService.UpdateAsync(product);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -136,12 +130,12 @@ namespace OnlinePerfumes.Controllers
         [HttpPost]
         public async Task<IActionResult>Delete(int id)
         {
-            var product = await _productService.GetById(id);
+            var product = await _productService.GetByIdAsync(id);
             if(product == null)
             {
                 return NotFound();
             }
-            await _productService.Delete(id);
+            await _productService.DeleteAsync(id);
             return RedirectToAction("Index");
         }
     }
