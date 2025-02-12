@@ -14,41 +14,47 @@ namespace OnlinePerfumes.Core.Service
     public class CategoryService:ICategoryService
     {
         private readonly IRepository<Category> _repo;
-        public CategoryService(IRepository<Category> repo)
+
+        public async Task AddAsync(Category category)
         {
-            this._repo = repo;
-        }
-        
-        public async Task Add(Category category)
-        {
-            await _repo.Add(category);
+           await _repo.AddAsync(category);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            await _repo.Delete(id);
-        }
-
-        public async Task Update(Category category)
-        {
-            await _repo.Update(category);
-        }
-
-      
-
-        public async Task<Category> GetById(int id)
-        {
-            return await _repo.GetById(id);
-        }
-
-        public async Task<List<Category>> Find(Expression<Func<Category, bool>> filter)
-        {
-            return await _repo.Find(filter);
+            await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
         }
 
         public IQueryable<Category> GetAll()
         {
-           return _repo.GetAll();
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Category>> GetAllAsync()
+        {
+            return await _repo.GetAllAsync();
+        }
+
+        public Category GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            return await _repo.GetByIdAsync(id);
+        }
+
+        public async Task<Category> GetCategoryByName(string name)
+        {
+            IEnumerable<Category> all = await _repo.GetAllAsync();
+            Category category = all.Where(x => x.Name == name).FirstOrDefault();
+            return category;
+        }
+
+        public async Task UpdateAsync(Category category)
+        {
+            await _repo.UpdateAsync(category);
         }
     }
 }

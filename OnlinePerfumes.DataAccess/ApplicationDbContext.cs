@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.DataAccess
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext: IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         DbSet<Customer> Customer { get; set; }
@@ -19,7 +19,7 @@ namespace OnlinePerfumes.DataAccess
         DbSet<Order> Orders { get; set; }
         DbSet<OrderProduct>OrdersProducts { get; set; }
         DbSet<Product> Products { get; set; }
-        DbSet<Review> Reviews { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,10 +42,10 @@ namespace OnlinePerfumes.DataAccess
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Order>()
+           /* builder.Entity<Order>()
             .HasOne(o => o.Customer)
             .WithMany(c => c.Orders)
-            .HasForeignKey(o => o.CustomerId);
+            .HasForeignKey(o => o.CustomerId);*/
 
 
 

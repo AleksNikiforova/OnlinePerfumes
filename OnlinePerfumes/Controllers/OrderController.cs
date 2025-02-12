@@ -19,26 +19,10 @@ namespace OnlinePerfumes.Controllers
             _orderservice = orderservice;
             _productservice = productservice;
         }
-        public async Task<IActionResult> Details(int id)
+        [HttpGet]
+        public IActionResult Details(int id)
         {
-            var order=await _orderservice.GetOrderWithProductsById(id);
-            if(order == null)
-            {
-                return NotFound();
-            }
-            var viewModel = new OrderViewModel
-            {
-                Id = order.Id,
-                OrderDate = order.OrderDate,
-                Products = order.OrderProducts.Select(op => new ProductViewModel
-                {
-                    Id = op.ProductId,
-                    Name = op.Product.Name,
-                    Price = op.Product.Price,
-                    Quantity = op.Quantity
-                }).ToList()
-            };
-            return View(viewModel);
+            var model=_orderservice.GetAll().Where()
 
         }
         public async Task<IActionResult> Add()

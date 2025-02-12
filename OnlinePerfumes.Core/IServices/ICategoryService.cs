@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.IServices
 {
-    public interface ICategoryService:IService<Category>
+    public interface ICategoryService : IService<Category>
     {
-        Task Add(Category category);
-        Task Delete(int id);
-        Task Update(Category category);
-       IQueryable<Category> GetAll();
-        Task<Category> GetById(int id);
-        Task<List<Category>> Find(Expression<Func<Category, bool>> filter);
+        Task AddAsync(Category category);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(Category category);
+        IQueryable<Category> GetAll();
+        Category GetById(int id);
+        Task<IEnumerable<Category>> GetAllAsync();
+        Task<Category> GetByIdAsync(int id);
+        Task<Category> GetCategoryByName(string name);
     }
 }

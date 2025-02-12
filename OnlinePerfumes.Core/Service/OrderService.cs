@@ -15,78 +15,46 @@ namespace OnlinePerfumes.Core.Service
     public class OrderService : IOrderService
     {
         private readonly IRepository<Order> _repo;
-        private readonly IRepository<OrderProduct> _productRepository;
-        public OrderService(IRepository<Order> repo, IRepository<OrderProduct> productRepository)
+        //private readonly IRepository<OrderProduct> _productRepository;
+        public OrderService(IRepository<Order> repo)
         {
             this._repo = repo;
-            _productRepository = productRepository;
+            
         }
 
-        /* public bool ValidateOrder(Order order)
-         {
-             foreach (var item in order.Products)
-             {
-                 if (!ProductValidator.ProductExists(item.Id))
-                 {
-                     return false;
-                 }
-             }
-             if (!OrderValidator.ValidateInput(order.OrederDate))
-             {
-                 return false;
-             }
-             else
-             {
-                 return true;
-             }
-         }*/
-
-        public async Task Add(Order order)
+        public async Task AddAsync(Order order)
         {
-            await _repo.Add(order);
+            await _repo.AddAsync(order);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            await _repo.Delete(id);
-        }
-
-        public async Task Update(Order order)
-        {
-            await _repo.Update(order);
-        }
-
-        
-
-        public async Task<Order> GetById(int id)
-        {
-            return await _repo.GetById(id);
-        }
-
-        public Task<List<Order>> Find(Expression<Func<Order, bool>> filter)
-        {
-            return _repo.Find(filter);  
+           await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
         }
 
         public IQueryable<Order> GetAll()
         {
-           return _repo.GetAll();
+            throw new NotImplementedException();
         }
 
-        public async Task AddProductToOrder(int orderId, int productId, int quantity)
+        public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            var orderProduct = new OrderProduct
-            {
-                OrderId = orderId,
-                ProductId = productId,
-                Quantity = quantity
-            };
-            await _productRepository.Add(orderProduct);
+            return await _repo.GetAllAsync();
         }
 
-        public async Task<Order> GetOrderWithProductsById(int orderId)
+        public Order GetById(int id)
         {
-            return await _repo.GetAll().Where(x=>x.Id== orderId).Include(x=>x.OrderProducts).ThenInclude(x=>x.Product).FirstOrDefaultAsync();
+            throw new NotImplementedException();
+        }
+
+        public async Task<Order> GetByIdAsync(int id)
+        {
+           return await _repo.GetByIdAsync(id);
+        }
+
+        public async Task UpdateAsync(Order order)
+        {
+           await _repo.UpdateAsync(order);
         }
     }
 }

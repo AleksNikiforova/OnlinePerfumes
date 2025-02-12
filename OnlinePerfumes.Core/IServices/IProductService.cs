@@ -10,11 +10,12 @@ namespace OnlinePerfumes.Core.IServices
 {
     public interface IProductService:IService<Product>
     {
-        Task Add(Product product);
-        Task Delete(int id);
-        Task Update(Product product);
+        Task AddAsync(Product product);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(Product product);
         IQueryable<Product> GetAll();
-        Task<Product> GetById(int id);
-        Task<List<Product>> Find(Expression<Func<Product, bool>> filter );
+        Product GetById(int id);
+        Task<IEnumerable<Product>> GetAllAsync();
+        Task<Product>GetByIdAsync(int id);
     }
 }

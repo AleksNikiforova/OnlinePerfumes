@@ -28,9 +28,8 @@ namespace OnlinePerfumes.Controllers
             {
                 Id=x.Id,
                 Name=x.Name,
-                Price=x.Price,
-                Description=x.Description,
-                Quantity=x.StockQuantity,
+                Price=x.Price
+                
             }).ToList();
             return View(viewModel);
             /*var products =  _productService.GetAll();

@@ -18,52 +18,42 @@ namespace OnlinePerfumes.Core.Service
         {
             this._repo = repo;
         }
-        /*private bool ValidateProduct(Product Product)
-        {
-            if (!ProductValidator.ValidateInput(Product.Name, Product.Price))
-            {
-                return false;
-            }
-            else if (!CategoryValidator.CategoryExist(Product.CategoryId))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }*/
 
-
-        public async Task Add(Product product)
+        public async Task AddAsync(Product product)
         {
-            await _repo.Add(product);
+           await _repo.AddAsync(product);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            await _repo.Delete(id);
+            await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
         }
 
-        public async Task Update(Product product)
-        {
-            await _repo.Update(product);
-        }
-
-
-        public async Task<Product> GetById(int id)
-        {
-            return await _repo.GetById(id);
-        }
-
-        public async Task<List<Product>> Find(Expression<Func<Product, bool>> filter)
-        {
-            return await _repo.Find(filter);
-        }
+        
 
         public IQueryable<Product> GetAll()
         {
-            return _repo.GetAll();
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Product>> GetAllAsync()
+        {
+            return await _repo.GetAllAsync();
+        }
+
+        public Product GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Product> GetByIdAsync(int id)
+        {
+            return await _repo.GetByIdAsync(id);
+        }
+
+        public async Task UpdateAsync(Product product)
+        {
+            await _repo.UpdateAsync(product);
         }
     }
 }

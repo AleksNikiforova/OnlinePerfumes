@@ -10,44 +10,43 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
-    public class CustomerService : ICustomerrService
+    public class CustomerService : ICustomerService
     {
-        private readonly IRepository<Customer> _repo; 
-        public CustomerService(IRepository<Customer> repo)
+        private readonly IRepository<Customer> _repo;
+
+        public async Task AddAsync(Customer customer)
         {
-            _repo = repo;
+            await _repo.AddAsync(customer);
         }
 
-        public async Task Add(Customer user)
+        public async Task DeleteAsync(int id)
         {
-            await _repo.Add(user);
-        }
-
-        public async Task Delete(int id)
-        {
-            await _repo.Delete(id);
-        }
-
-        public async Task<List<Customer>> Find(Expression<Func<Customer, bool>> filter)
-        {
-           return await _repo.Find(filter);
+            await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
         }
 
         public IQueryable<Customer> GetAll()
         {
-            return _repo.GetAll();
+            throw new NotImplementedException();
         }
 
-        public async Task<Customer> GetById(int id)
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-           return await _repo.GetById(id);
+           return await _repo.GetAllAsync();
         }
 
-        public async Task Update(Customer user)
+        public Customer GetById(int id)
         {
-            await _repo.Update(user);
+            throw new NotImplementedException();
         }
 
-       
+        public async Task<Customer> GetByIdAsync(int id)
+        {
+           return await _repo.GetByIdAsync(id);
+        }
+
+        public async Task UpdateAsync(Customer customer)
+        {
+           await _repo.UpdateAsync(customer);
+        }
     }
 }

@@ -12,39 +12,44 @@ namespace OnlinePerfumes.Core
     public class Service<T> : IService<T> where T : class
     {
         private readonly IRepository<T> _repo;
-        public Service(IRepository<T> repo)
+
+        public async Task AddAsync(T entity)
         {
-            this._repo = repo;
-        }
-        public async Task Add(T entity)
-        {
-            await _repo.Add(entity);
+            await _repo.AddAsync(entity);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-           await _repo.Delete(id);
+            var entity=await _repo.GetByIdAsync(id);
+            if (entity != null)
+            {
+                await _repo.DeleteAsync(entity);
+            }
         }
 
-        public async Task<List<T>> Find(Expression<Func<T, bool>> filter)
+        public IQueryable<T> GetAll()
         {
-            return await _repo.Find(filter);
+           return _repo.GetAll();
         }
 
-        public  IQueryable<T> GetAll()
+        public Task<IEnumerable<T>> GetAllAsync()
         {
-           return  _repo.GetAll();
+            return _repo.GetAllAsync();
         }
 
-       public async Task<T> GetById(int id)
-       {
-            return await _repo.GetById(id);
-       }
-
-        public async Task Update(T entity)
+        public T GetById(int id)
         {
-            await _repo.Update(entity);
+            return _repo.GetById(id);   
         }
 
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _repo.GetByIdAsync(id);
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            await _repo.UpdateAsync(entity);
+        }
     }
 }

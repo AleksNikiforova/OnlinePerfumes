@@ -10,12 +10,14 @@ namespace OnlinePerfumes.DataAccess.Repository
     public interface IRepository<T> where T : class
     {
         
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Delete(int id);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
         IQueryable<T> GetAll();
-        Task<T> GetById(int id);
-        Task<List<T>> Find(Expression<Func<T, bool>> filter);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id);
+        T GetById(int id);
+        
 
     }
 }

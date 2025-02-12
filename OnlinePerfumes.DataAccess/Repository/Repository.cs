@@ -12,58 +12,51 @@ namespace OnlinePerfumes.DataAccess.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly ApplicationDbContext _context;
-        internal DbSet<T> dbset;
+        private readonly DbSet<T> dbset;
 
         public Repository(ApplicationDbContext context)
         {
             this._context = context;
             this.dbset = _context.Set<T>();
         }
-        public async Task Add(T entity)
+
+        public async Task AddAsync(T entity)
         {
             await dbset.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(T entity)
         {
-           var entity = await dbset.FindAsync(id);
-            if (entity == null)
-            {
-                throw new ArgumentException("Entity is null");
-            }
             dbset.Remove(entity);
-            await this._context.SaveChangesAsync();
-        }
-
-        public async Task<T> GetById(int id)
-        {
-            var entity=await dbset.FindAsync(id);
-            if(entity == null)
-            {
-                throw new ArgumentException("id is null");
-            }
-            return entity;
+            await _context.SaveChangesAsync();
 
         }
 
         public IQueryable<T> GetAll()
         {
-            return  dbset.AsQueryable();
+            return dbset.AsQueryable();
         }
 
-        public async Task Update(T entity)
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-           dbset.Update(entity);  
-           await _context.SaveChangesAsync();
-
+            return await dbset.ToListAsync();
         }
 
-        public async Task<List<T>> Find(Expression<Func<T, bool>> filter)
+        public T GetById(int id)
         {
-           return await dbset.Where(filter).ToListAsync();
+            return dbset.Find(id);
         }
 
-       
+        public async Task<T> GetByIdAsync(int id)
+        {
+           return await dbset.FindAsync(id);
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            dbset.Update(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 }
