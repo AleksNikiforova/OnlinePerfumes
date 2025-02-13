@@ -1,14 +1,11 @@
-﻿
-@using  OnlinePerfumes.Models;
-@using OnlinePerfumes.Models.ViewModels.Order
-@model OrderAddViewModel
+﻿@model OnlinePerfumes.Models.ViewModels.Order.OrderEditViewModel
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Order</title>
+    <title>Edit Order</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,7 +14,7 @@
             padding: 20px;
         }
 
-        .add-order-card {
+        .edit-order-card {
             background-color: white;
             border: 1px solid #dee2e6;
             border-radius: 12px;
@@ -27,7 +24,7 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
-            .add-order-card h1 {
+            .edit-order-card h1 {
                 text-align: center;
                 color: #4CAF50; /* Green for title */
                 margin-bottom: 20px;
@@ -92,10 +89,10 @@
     </style>
 </head>
 <body>
-    <div class="add-order-card">
-        <h1>Add New Order</h1>
+    <div class="edit-order-card">
+        <h1>Edit Order</h1>
 
-        <form asp-action="AddOrder" method="post">
+        <form asp-action="Edit" method="post">
             <div class="form-group">
                 <label for="OrderDate" class="form-label">Order Date</label>
                 <input type="date" asp-for="OrderDate" class="form-control" />
@@ -108,19 +105,11 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="CustomerId" class="form-label">Select Customer</label>
-                <select asp-for="CustomerId" asp-items="Model.CustomerList" class="form-control">
-                    <option value="">Select a Customer</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn-submit">Add Order</button>
+            <button type="submit" class="btn-submit">Save Changes</button>
         </form>
 
         <a asp-action="All" asp-controller="Order" class="back-button">Back to Orders</a>
     </div>
 </body>
 </html>
-
 

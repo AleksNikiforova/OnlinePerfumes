@@ -1,0 +1,150 @@
+﻿@using OnlinePerfumes.Models;
+@using OnlinePerfumes.Models.ViewModels.Order
+@model IEnumerable<OrderAllViewModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .order-card {
+            position: relative;
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            width: 300px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+            .order-card img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+
+            .order-card h3 {
+                font-size: 1.2em;
+                color: #4CAF50; /* Green for product name */
+                margin-bottom: 10px;
+            }
+
+            .order-card p {
+                font-size: 0.9em;
+                margin-bottom: 5px;
+            }
+
+        .card-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-details {
+            background-color: #4CAF50; /* Green for details */
+        }
+
+            .btn-details:hover {
+                opacity: 0.8;
+            }
+
+        .btn-edit {
+            background-color: #FFC107; /* Yellow for edit */
+        }
+
+            .btn-edit:hover {
+                opacity: 0.8;
+            }
+
+        .btn-add {
+            background-color: #4CAF50; /* Green for add button */
+            color: white;
+            display: inline-block;
+            font-size: 1em;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+            .btn-add:hover {
+                opacity: 0.8;
+            }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #F44336; /* Red for delete icon */
+        }
+
+            .delete-btn:hover {
+                color: #d32f2f;
+            }
+
+        .add-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="add-container">
+        <a asp-controller="Order" asp-action="AddOrder" class="btn-add">Add Order</a>
+    </div>
+
+    <div class="container">
+        @foreach (var order in Model)
+        {
+            <div class="order-card">
+                <a class="delete-btn" asp-controller="Order" asp-action="DeleteConfrimed" asp-route-id="@order.Id">
+                    &#128465;
+                </a>
+
+                <h3>@order.ProductName</h3>
+                <p><strong>Customer:</strong> @order.CustomerName</p>
+                <p><strong>Order Date:</strong> @order.OrderDate</p>
+                <p><strong>Price:</strong> $@order.Price</p>
+
+                <div class="card-buttons">
+                    <a asp-controller="Order" asp-action="Details" asp-route-id="@order.Id" class="btn btn-details">Details</a>
+                    <a asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id" class="btn btn-edit">Edit</a>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

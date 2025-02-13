@@ -1,21 +1,129 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h2>Order ID: @Model.OrderId</h2>
-<p>Date: @Model.OrderDate.ToShortDateString()</p>
+﻿
+@using OnlinePerfumes.Models
+@using OnlinePerfumes.Models.ViewModels.Order
+@model OrderDetailsViewModel
 
-<table>
-    <tr>
-        <th>Product</th>
-        <th>Price</th>
-    </tr>
-    @foreach (var product in Model.Products)
-    {
-        <tr>
-            <td>@product.Name</td>
-            <td>@product.Price.ToString("C")</td>        
-        </tr>
-    }
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .order-details-card {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+            .order-details-card h1 {
+                text-align: center;
+                color: #4CAF50; /* Green for title */
+                margin-bottom: 20px;
+            }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #4CAF50; /* Green for labels */
+        }
+
+        .detail-value {
+            font-size: 1.2em;
+            color: #212529;
+            margin-top: 5px;
+        }
+
+        .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #F44336; /* Red for price */
+        }
+
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px;
+            background-color: #FFC107; /* Yellow for button */
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+            .back-button:hover {
+                opacity: 0.8;
+            }
+    </style>
+</head>
+<body>
+    <div class="order-details-card">
+        <h1>Order Details</h1>
+
+        <div class="detail-section">
+            <div class="detail-label">Product Name:</div>
+            <div class="detail-value">@Model.ProductName</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Aroma:</div>
+            <div class="detail-value">@Model.Aroma</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Category:</div>
+            <div class="detail-value">@Model.CategoryName</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Order Date:</div>
+            <div class="detail-value">@Model.OrderDate</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Customer Name:</div>
+            <div class="detail-value">@Model.CustomerName</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Last Name:</div>
+            <div class="detail-value">@Model.LastName</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Email:</div>
+            <div class="detail-value">@Model.Email</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Phone:</div>
+            <div class="detail-value">@Model.Phone</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">Price:</div>
+            <div class="price">@Model.Price</div>
+        </div>
+
+        <a asp-action="All" asp-controller="Order" class="back-button">Back to Orders</a>
+    </div>
+</body>
+</html>
+

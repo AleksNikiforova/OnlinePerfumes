@@ -27,7 +27,7 @@ namespace OnlinePerfumes.Core.Service
 
         public IQueryable<Category> GetAll()
         {
-            throw new NotImplementedException();
+            return _repo.GetAll();
         }
 
         public async Task<IEnumerable<Category>> GetAllAsync()
@@ -37,7 +37,7 @@ namespace OnlinePerfumes.Core.Service
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+           return _repo.GetById(id);
         }
 
         public async Task<Category> GetByIdAsync(int id)
