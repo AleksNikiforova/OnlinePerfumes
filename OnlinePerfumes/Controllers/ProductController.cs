@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Models;
-using OnlinePerfumes.Models.ViewModels;
+using OnlinePerfumes.Models.ViewModels.Product;
 
 namespace OnlinePerfumes.Controllers
 {
@@ -12,7 +12,6 @@ namespace OnlinePerfumes.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        private readonly IService<Order> _orderService;
         public ProductController(IProductService productService,ICategoryService categoryService,IService<Order> orderService)
         {
             _productService = productService;

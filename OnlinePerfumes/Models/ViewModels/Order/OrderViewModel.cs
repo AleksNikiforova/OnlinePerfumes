@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using OnlinePerfumes.Models.ViewModels.Product;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlinePerfumes.Models.ViewModels
+namespace OnlinePerfumes.Models.ViewModels.Order
 {
     public class OrderViewModel
     {
