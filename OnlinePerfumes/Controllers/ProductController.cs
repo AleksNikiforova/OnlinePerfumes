@@ -12,82 +12,80 @@ namespace OnlinePerfumes.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        public ProductController(IProductService productService,ICategoryService categoryService,IService<Order> orderService)
+        public ProductController(IProductService productService,ICategoryService categoryService)
         {
             _productService = productService;
             _categoryService = categoryService;
-            _orderService = orderService;
         }
         
         public async Task<IActionResult> Index()
         {
            
-            var products=await _productService.GetAll().ToListAsync();
-            var viewModel=products.Select(x=>new ProductViewModel
+            var products=await _productService.GetAllAsync();
+            var productViewModel=new List<ProductAllViewModel>();
+            foreach (var product in products)
             {
-                Id=x.Id,
-                Name=x.Name,
-                Price=x.Price
-                
-            }).ToList();
-            return View(viewModel);
-            /*var products =  _productService.GetAll();
-            var query = products.AsQueryable();
-            if (filter.CategoryId != null)
-            {
-                query=query.Where(p=>p.CategoryId == filter.CategoryId.Value);
+                var category=await _categoryService.GetByIdAsync(product.CategoryId);
+                var viewModel = new ProductAllViewModel
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Aroma = product.Aroma,
+                    Price = product.Price,
+                    CategoryId = category.Id,
+                    CategoryName = category.Name,
+                    ImagePath = product.ImagePath
+                };
+                productViewModel.Add(viewModel);
             }
-            if(filter.MinPrice != null)
-            {
-                query=query.Where(p=>p.Price>=filter.MinPrice.Value);
-            }
-            if(filter.MaxPrice != null)
-            {
-                query=query.Where(p=>p.Price<=filter.MaxPrice.Value);
-            }
-            if (!string.IsNullOrEmpty(filter.SearchName))
-            {
-                query=query.Where(p=>p.Name.Contains(filter.SearchName));
-            }
-            var productList =  query.ToList();
-
-            // return View(productList);
-            var model = new ProductFilterViewModel
-            {
-                CategoryId = filter.CategoryId,
-                MinPrice = filter.MinPrice,
-                MaxPrice = filter.MaxPrice,
-                SearchName = filter.SearchName,
-                Categories = new SelectList((System.Collections.IEnumerable)_categoryService.GetAll(), "CategoryId", "Name"),
-                Products = query.Include(p => p.Category).ToList()
-            };
-            return View(model);*/
+            return View(productViewModel);
         }
 
-
-        public IActionResult Add()
+        [HttpGet]
+        public async Task<IActionResult> CreateProduct()
         {
-            var categories =  _categoryService.GetAll();
-            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
-            return View();
+
+            var categories = await _categoryService.GetAllAsync();
+            var viewModel = new ProductViewModel
+            {
+                Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList()
+            };
+            return View(viewModel);
         }
         [HttpPost]
-        public async Task<IActionResult>Add(ProductViewModel model)
+        public async Task<IActionResult>CreateProduct(ProductViewModel model,string ImageURL)
         {
             if(ModelState.IsValid)
             {
+                if (!string.IsNullOrEmpty(ImageURL))
+                {
+                    model.ImagePath = ImageURL;
+                }
                 var product = new Product
                 {
                     Name = model.Name,
                     Price = model.Price,
-                    CategoryId=model.CategoryId
+                    Aroma = model.Aroma,
+                    CategoryId = model.CategoryId,
+                    ImagePath = model.ImagePath
                 };
                 await _productService.AddAsync(product);
+                TempData["Success"] = "Парфюма е добавен успешно";
                 return RedirectToAction("Index");
             }
-            var categories=await _categoryService.GetAll().ToListAsync();
-            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
-            return View(model);
+            var categories = await _categoryService.GetAllAsync();
+            model.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            return View();
+
         }
         public async Task<IActionResult> Update(int id)
         {
@@ -97,16 +95,15 @@ namespace OnlinePerfumes.Controllers
                 return NotFound();
             }
 
+            var categories = await _categoryService.GetAllAsync();
             var viewModel = new ProductViewModel
             {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                CategoryId=product.CategoryId
+                Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList()
             };
-            var categories = await _categoryService.GetAll().ToListAsync();
-            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name", product.CategoryId);
-
             return View(viewModel);
         }
         [HttpPost]
