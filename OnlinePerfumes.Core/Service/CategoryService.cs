@@ -15,6 +15,11 @@ namespace OnlinePerfumes.Core.Service
     {
         private readonly IRepository<Category> _repo;
 
+        public CategoryService(IRepository<Category> repo)
+        {
+            _repo = repo;
+        }
+
         public async Task AddAsync(Category category)
         {
            await _repo.AddAsync(category);

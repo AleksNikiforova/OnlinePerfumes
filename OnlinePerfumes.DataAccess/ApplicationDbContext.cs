@@ -23,9 +23,21 @@ namespace OnlinePerfumes.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            
+            builder.Entity<Category>().HasData(
+         new Category { Id = 1, Name = "Парфюми за жени" },
+         new Category { Id = 2, Name = "Парфюми за мъже" },
+         new Category { Id = 3, Name = "Унисекс парфюми" },
+         new Category { Id = 4, Name = "Луксозни парфюми" }
+     );
 
-            builder.Entity<Product>().HasKey(x => new { x.CategoryId });
+            builder.Entity<Product>().HasData(
+    new Product { Id = 1, Name = "Chanel No.5", Price = 120, CategoryId = 1, Aroma = "Цветен" },
+    new Product { Id = 2, Name = "Dior", Price = 95, CategoryId = 2, Aroma = "Дървесен" },
+    new Product { Id = 3, Name = "Opium", Price = 100, CategoryId = 3, Aroma = "Цветен с ванилия" }
+    );
+
+           builder.Entity<Product>().HasKey(x => new { x.CategoryId });
             builder.Entity<Product>().HasOne(x=>x.Category)
                   .WithMany(x=>x.Products)
                   .HasForeignKey(x=>x.CategoryId)
@@ -42,10 +54,11 @@ namespace OnlinePerfumes.DataAccess
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-           /* builder.Entity<Order>()
-            .HasOne(o => o.Customer)
-            .WithMany(c => c.Orders)
-            .HasForeignKey(o => o.CustomerId);*/
+            /* builder.Entity<Order>()
+             .HasOne(o => o.Customer)
+             .WithMany(c => c.Orders)
+             .HasForeignKey(o => o.CustomerId);*/
+            base.OnModelCreating(builder);
 
 
 

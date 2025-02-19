@@ -1,0 +1,36 @@
+﻿@using OnlinePerfumes.Models.ViewModels.Customer
+@model CustomerViewModel
+<div class="container mt-5">
+    <h1 class="text-center">Add New Course</h1>
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" id="Name" class="form-control" asp-for="FirstName" />
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" asp-for="@Model.LastName" />
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" asp-for="@Model.Email" />
+
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Number</label>
+            <input type="text" class="form-control" asp-for="@Model.PhoneNumber" />
+
+        </div>
+
+
+
+        <div class="text-center">
+            <button asp-action="Edit" asp-controller="Customer" type="submit" class="btn btn-primary">Edit client</button>
+        </div>
+    </form>
+</div>

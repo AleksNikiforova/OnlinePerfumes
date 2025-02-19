@@ -1,0 +1,29 @@
+﻿@using OnlinePerfumes.Models.ViewModels.Customer
+@using OnlinePerfumes.Utility
+@model List<CustomerOrderViewModel>
+
+<h1 class="text-center">Поръчки на клиентите</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Номер на поръчка</th>
+            <th>Клиент</th>
+            <th>Email</th>
+            <th>Дата на поръчката</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a asp-controller="Order" asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-primary">@item.OrderId</a></td>
+                <td>@item.CustomerName</td>
+                <td>@item.Email</td>
+                <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -32,16 +32,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Add">AddProduct</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Add">AddCategory</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="GetAllCategories">Категории</a>
                         </li>
 
                         @if(User.IsInRole(SD.AdminRole) || User.IsInRole(SD.UserRole))
                         {
                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="AddOrder">Направи поръчка</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Add">Направи поръчка</a>
                             </li>
                         }
                         @if (User.IsInRole(SD.AdminRole))
@@ -53,6 +50,23 @@
                         else
                         {
                             <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/AccessDenied">Изтрий категория</a>
+                        }
+
+                        @if (User.IsInRole(SD.AdminRole))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Продукти
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("Create", "Product")">Добави продукт</a>
+                                    <a class="dropdown-item" href="@Url.Action("Delete", "Product")">Изтрий продукт</a>
+                                    <a class="dropdown-item" href="@Url.Action("Create", "Category", new { area = "Admin" })">Въведи категория</a>
+                                    <a class="dropdown-item" href="@Url.Action("DeleteCategory", "Category")">Изтрий категория</a>
+                                    <a class="dropdown-item" href="@Url.Action("Update", "Category")">Редактирай категория</a>
+
+                                </div>
+                            </li>
                         }
                     </ul>
                     <partial name="_LoginPartial"/>

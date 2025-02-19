@@ -24,10 +24,10 @@ namespace OnlinePerfumes.Controllers
         public IActionResult LogIn()=>View();
 
         [HttpPost]
-        public async Task<IActionResult> LogIn (LogInViewModel logInViewModel)
+        public async Task<IActionResult> Login (LogInViewModel logInViewModel)
         {
-            if(ModelState.IsValid)
-            {
+            //if(ModelState.IsValid)
+            //{
                 var user=await _userManager.FindByEmailAsync(logInViewModel.Email);
                 if (user==null)
                 {
@@ -42,8 +42,10 @@ namespace OnlinePerfumes.Controllers
                 }
                 TempData["Error"] = "Влизането не е успешно";
                 ModelState.AddModelError("", "Влизането не е успешно");
-            }
+            //}
             return View(logInViewModel);
+
+           
 
         }
         public IActionResult Register() => View();
@@ -51,20 +53,22 @@ namespace OnlinePerfumes.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    var customer = new Customer
+                
+                var customer = new Customer
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         UserId = user.Id  
                     };
-                    await _customerService.AddAsync(customer);
+                
+                await _customerService.AddAsync(customer);
                     await _userManager.AddToRoleAsync(user, SD.UserRole); 
                     await _signInManager.SignInAsync(user, isPersistent: true);
 
@@ -75,7 +79,7 @@ namespace OnlinePerfumes.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-            }
+            //}
             return View(model);
         }
 

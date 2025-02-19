@@ -1,0 +1,110 @@
+﻿@model OnlinePerfumes.Models.Category
+<style>
+    /* Цветова палитра */
+    :root {
+        --primary-color: #4CAF50; /* Зелен основен цвят */
+        --secondary-color: #FFC107; /* Жълт акцент */
+        --danger-color: #F44336; /* Червен цвят за изтриване */
+        --background-color: #f8f9fa; /* Светъл фон */
+        --text-color: #212529; /* Тъмен текст */
+        --border-color: #dee2e6; /* Цвят за граници */
+    }
+
+    /* Общи стилове */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Стилове за формата */
+    form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        form legend {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+    .mb-3 {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-color);
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        color: var(--text-color);
+        background-color: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.25);
+        }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+
+
+    .form-control {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+</style>
+<form asp-action="CreateCategory" asp-controller="Category1" method="post">
+
+    <legend>Create a Category</legend>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name">Name of category</label>
+        <input type="text" id="nameOfCategory" class="form-control" name="name" asp-for="Name" placeholder="Name of category">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+

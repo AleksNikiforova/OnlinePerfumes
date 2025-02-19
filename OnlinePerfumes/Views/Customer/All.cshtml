@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Customer>
+@{
+    ViewBag.Title = "All";
+}
+
+
+
+<h2>Responsive Table</h2>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th> First Name</th>
+                <th> Last Name</th>
+                <th>Email</th>
+                <th>Number</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cust in Model)
+            {
+                <tr>
+                    <td>@cust.FirstName</td>
+                    <td>@cust.LastName</td>
+                    <td>@cust.User.Email</td>
+                    <td>@cust.User.PhoneNumber</td>
+                    <td>  <form asp-action="DeleteCustomer" asp-controller="Customer" enctype="multipart/form-data"><button type="submit" class="btn btn-outline-dark" asp-action="DeleteCustomer" asp-controller="Customer" asp-route-id="@cust.Id">Delete</button></form></td>
+                    <td><a type="submit" class="btn btn-outline-dark" asp-action="Edit" asp-controller="Customer" asp-route-id="@cust.Id">Update</a></td>
+
+                </tr>
+            }
+        <tbody>
+    </table>
+</div>
+<a type="submit" class="btn btn-outline-dark" asp-action="Add" asp-controller="Customer">Add</a>
+
+<link rel="stylesheet" href="~/css/allCustomer.css" />

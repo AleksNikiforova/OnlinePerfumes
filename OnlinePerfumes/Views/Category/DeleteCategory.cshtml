@@ -1,0 +1,14 @@
+﻿@using OnlinePerfumes.Models
+@model Category
+<form method="post">
+    <h1>Изтриване на категория</h1>
+    <div class="mb-3">
+        <select asp-for="Id" asp-items="@ViewBag.Categories">
+            <option value="">Изберете категория</option>
+        </select>
+
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Запази</button>
+    </div>
+</form>

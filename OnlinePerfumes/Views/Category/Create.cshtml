@@ -1,0 +1,16 @@
+﻿@model Category
+@using Microsoft.AspNetCore.Identity
+@using OnlinePerfumes.Models
+
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Въведете име на категорията</label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Запази</button>
+    </div>
+</form>
+
