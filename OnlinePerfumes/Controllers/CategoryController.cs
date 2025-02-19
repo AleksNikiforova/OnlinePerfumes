@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Service;
@@ -13,45 +14,58 @@ namespace OnlinePerfumes.Controllers
         {
             _categoryService = categoryService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetAllCategories()
         {
-           var list= _categoryService.GetAll();
-           return View(list);
+            return View(await _categoryService.GetAllAsync());
+          
         }
-        public async Task<IActionResult> Add()
+        public IActionResult CreateCategory()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>Add(Category category)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateCategory(Category category)
         {
-            if(ModelState.IsValid)
-            {
-                await _categoryService.AddAsync(category);
-                return RedirectToAction("Index");
-            }
-            return View();
+            await _categoryService.AddAsync(category);
+            return RedirectToAction("GetAllCategories");
         }
-        public async Task<IActionResult> Update(int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateCategory(int id)
         {
-            var category = await _categoryService.GetByIdAsync(id);
-            return View(category);
+            return View(await _categoryService.GetByIdAsync(id));
         }
+
         [HttpPost]
-        public async Task<IActionResult> Update(Category category)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateCategory(Category category)
         {
-            if (ModelState.IsValid)
-            {
-                await _categoryService.UpdateAsync(category);
-                return RedirectToAction("Index");
-            }
-            return View();
+            await _categoryService.UpdateAsync(category);
+            return RedirectToAction("GetAllCategories");
         }
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryService.DeleteAsync(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("GetAllCategories");
+        }
+
+        public async Task<IActionResult> GetByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return View(null);
+            }
+
+            var category = await _categoryService.GetCategoryByName(name);
+            if (category == null)
+            {
+                ViewData["Error"] = $"Category with name '{name}' not found.";
+                return View(null);
+            }
+
+            return View(category);
+
         }
 
     }

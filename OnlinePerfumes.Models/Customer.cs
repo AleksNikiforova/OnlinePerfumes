@@ -28,7 +28,7 @@ namespace OnlinePerfumes.Models
         //public DateTime DateCreated {  get; set; }
 
         //public ICollection<Review> Reviews = new List<Review>();
-        ICollection<Order>Orders { get; set; }
+        public ICollection<Order>Orders { get; set; }
         //Swurzwane s identityuser
         public string UserId {  get; set; }
         public IdentityUser User { get; set; }

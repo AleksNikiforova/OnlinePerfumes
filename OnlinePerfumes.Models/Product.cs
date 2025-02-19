@@ -23,6 +23,7 @@ namespace OnlinePerfumes.Models
         [Required(ErrorMessage ="Price is mandatory")]
         [Range(0.01,100000,ErrorMessage ="Price must be between 0.01 and 100000")]
         public decimal Price {  get; set; }
+       
         public string? ImagePath {  get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
