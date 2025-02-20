@@ -14,7 +14,7 @@ namespace OnlinePerfumes
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,7 @@ namespace OnlinePerfumes
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
 
+
             // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
             builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
@@ -35,6 +36,7 @@ namespace OnlinePerfumes
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
            
@@ -46,6 +48,13 @@ namespace OnlinePerfumes
                 options.AddPolicy("CompanyPolicy", policy => policy.RequireRole("Company"));
             });
             var app = builder.Build();
+
+            // Call the Seed Method
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await DbInitializer.SeedAsync(services);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -60,9 +69,8 @@ namespace OnlinePerfumes
 
             app.UseRouting();
             app.UseAuthentication();
-
             app.UseAuthorization();
-            
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

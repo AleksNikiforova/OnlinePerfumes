@@ -21,7 +21,7 @@ namespace OnlinePerfumes.Models
         // [Required]
         //  public string Password { get; set; }
         // [Required]
-        public string Address { get; set; } = null;
+        public string? Address { get; set; } = "";
        // [Required]
         //public int PhoneNumber {  get; set; }
        // [Required]

@@ -38,7 +38,9 @@ namespace OnlinePerfumes.Controllers
                 if (result.Succeeded)
                 {
                     TempData["Success"] = "Влизането е успешно";
-                    return RedirectToAction("Index", "Home");
+                //return RedirectToAction();
+                Response.Redirect("https://localhost:7162/home");
+                //return RedirectToAction("Index", "Home");
                 }
                 TempData["Error"] = "Влизането не е успешно";
                 ModelState.AddModelError("", "Влизането не е успешно");
@@ -53,25 +55,22 @@ namespace OnlinePerfumes.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
-                {
-                
-                var customer = new Customer
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        UserId = user.Id  
-                    };
-                
-                await _customerService.AddAsync(customer);
+                {                
+                     var customer = new Customer
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            UserId = user.Id  
+                        };                
+                    await _customerService.AddAsync(customer);
                     await _userManager.AddToRoleAsync(user, SD.UserRole); 
                     await _signInManager.SignInAsync(user, isPersistent: true);
-
                     
                     return RedirectToAction("Index", "Home");
                 }
@@ -79,7 +78,8 @@ namespace OnlinePerfumes.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-            //}
+            }
+
             return View(model);
         }
 

@@ -12,8 +12,8 @@ using OnlinePerfumes.DataAccess;
 namespace OnlinePerfumes.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250219095011_NewMig")]
-    partial class NewMig
+    [Migration("20250220080306_Rebuild Database")]
+    partial class RebuildDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

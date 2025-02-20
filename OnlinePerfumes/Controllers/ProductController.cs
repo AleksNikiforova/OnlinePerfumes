@@ -43,7 +43,7 @@ namespace OnlinePerfumes.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+    
         public async Task<IActionResult> CreateProduct()
         {
 
@@ -59,7 +59,7 @@ namespace OnlinePerfumes.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+       
         public async Task<IActionResult>CreateProduct(ProductViewModel model,string ImageURL)
         {
             if(ModelState.IsValid)
@@ -90,7 +90,7 @@ namespace OnlinePerfumes.Controllers
             return View();
 
         }
-        [Authorize(Roles = "Admin")]
+       
         public async Task<IActionResult> Update(int id)
         {
             var product = await _productService.GetByIdAsync(id);
@@ -111,7 +111,7 @@ namespace OnlinePerfumes.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult>Update(ProductViewModel model)
         {
             if(ModelState.IsValid)
@@ -129,7 +129,7 @@ namespace OnlinePerfumes.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+       
         public async Task<IActionResult>Delete(int id)
         {
             var product = await _productService.GetByIdAsync(id);
