@@ -26,9 +26,9 @@
                 <td>@category.Id</td>
                 <td>@category.Name</td>
                 <td>
-                    <a type="button" class="btn btn-success" asp-action="Update" asp-controller="Category" asp-route-id="@category.Id">Update</a>
+                    <a type="button" class="btn btn-success" asp-action="UpdateCategory" asp-controller="Category" asp-route-id="@category.Id">Update</a>
                     <form method="post" asp-controller="Category" asp-action="Delete">
-                        <button type="submit" class="btn btn-danger" asp-action="Delete" asp-controller="Category" asp-route-id="@category.Id">Delete</button>
+                        <button type="submit" class="btn btn-danger" asp-action="DeleteCategory" asp-controller="Category" asp-route-id="@category.Id">Delete</button>
                     </form>
                 </td>
             </tr>

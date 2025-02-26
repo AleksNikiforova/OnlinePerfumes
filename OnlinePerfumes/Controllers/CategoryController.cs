@@ -25,26 +25,26 @@ namespace OnlinePerfumes.Controllers
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCategory(Category category)
         {
             await _categoryService.AddAsync(category);
             return RedirectToAction("GetAllCategories");
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id)
         {
             return View(await _categoryService.GetByIdAsync(id));
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory(Category category)
         {
             await _categoryService.UpdateAsync(category);
             return RedirectToAction("GetAllCategories");
         }
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await _categoryService.DeleteAsync(id);
