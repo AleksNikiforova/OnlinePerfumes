@@ -19,6 +19,7 @@ namespace OnlinePerfumes.Models.ViewModels.Product
         [Required]
         public int CategoryId { get; set; }
         public string? ImagePath { get; set; }
+        public IFormFile? ImageFile { get; set; }
         public IEnumerable<SelectListItem>? Categories { get; set; }
 
 

@@ -15,19 +15,19 @@ namespace OnlinePerfumes.Controllers
         private readonly IOrderService _orderservice;
         private readonly IProductService _productservice;
         private readonly ICustomerService _customerservice;
-        private readonly IOrderProductService _orderproductservice;
+        private readonly IOrderProductService _orderProductservice;
 
         public OrderController(IOrderService orderservice,IProductService productservice, ICustomerService customerservice, IOrderProductService orderproductservice)
         {
             _orderservice = orderservice;
             _productservice = productservice;
             _customerservice = customerservice;
-            _orderproductservice = orderproductservice;
+            _orderProductservice = orderproductservice;
         }
         [HttpGet]
         public async Task< IActionResult> All()
         {
-            var model = _orderproductservice.GetAll().Include(x => x.Product).Include(x => x.Order).ThenInclude(x => x.Customer).Select(x => new OrderAllViewModel()
+            var model = _orderProductservice.GetAll().Include(x => x.Product).Include(x => x.Order).ThenInclude(x => x.Customer).Select(x => new OrderAllViewModel()
             {
                 CustomerName = x.Order.Customer.FirstName,
                 OrderDate = x.Order.OrderDate.ToString(),
@@ -67,13 +67,13 @@ namespace OnlinePerfumes.Controllers
                 OrderId = order.Id,
                 ProductId = model.ProductId,
             };
-            await _orderproductservice.AddAsync(orderProduct);
+            await _orderProductservice.AddAsync(orderProduct);
             return RedirectToAction("All", "Order");
         }
         [HttpGet]
         public async Task<IActionResult>Update(int id)
         {
-           var model=_orderproductservice.GetAll().Where(x=>x.OrderId==id).Include(x=>x.Order).Include(x=>x.Product).Select(x=>new OrderEditViewModel()
+           var model=_orderProductservice.GetAll().Where(x=>x.OrderId==id).Include(x=>x.Order).Include(x=>x.Product).Select(x=>new OrderEditViewModel()
            {
                OrderDate=x.Order.OrderDate.ToString("yyyy-MM-dd"),
                ProductsList=new SelectList(_productservice.GetAll(),"Id","Name"),
@@ -105,13 +105,13 @@ namespace OnlinePerfumes.Controllers
             OrderProduct order1 = new OrderProduct();
             order1.OrderId = poruchka.Id;
             order1.ProductId = model.ProductId;
-            await _orderproductservice.AddAsync(order1);
+            await _orderProductservice.AddAsync(order1);
             return RedirectToAction("All", "Order");
         }
         [HttpGet]
         public async Task<IActionResult>DeleteConfrimed(int id)
         {
-           var model=_orderproductservice.GetAll().Where(x=>x.OrderId== id).Include(x=>x.Order).ThenInclude(x=>x.Customer).Include(x=>x.Product).ThenInclude(x=>x.Category)
+           var model=_orderProductservice.GetAll().Where(x=>x.OrderId== id).Include(x=>x.Order).ThenInclude(x=>x.Customer).Include(x=>x.Product).ThenInclude(x=>x.Category)
                 .Select(x=>new OrderDeleteConfrimedViewModel()
                 {
                     Id = id,
@@ -134,7 +134,7 @@ namespace OnlinePerfumes.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var model=_orderproductservice.GetAll().Where(x=>x.OrderId == id).Include(x=>x.Order).ThenInclude(x => x.Customer).Include(x => x.Product).ThenInclude(p => p.Category).Select(x => new OrderDetailsViewModel()
+            var model=_orderProductservice.GetAll().Where(x=>x.OrderId == id).Include(x=>x.Order).ThenInclude(x => x.Customer).Include(x => x.Product).ThenInclude(p => p.Category).Select(x => new OrderDetailsViewModel()
             {
                 Aroma = x.Product.Aroma,
                 CategoryName = x.Product.Category.Name,

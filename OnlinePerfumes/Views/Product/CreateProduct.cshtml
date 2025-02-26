@@ -35,8 +35,14 @@
     </div>
 
     <div class="form-group">
-        <label for="ImageUrl" class="font-weight-bold">Image URL</label>
-        <input type="text" class="form-control" id="ImageUrl" name="ImageUrl" placeholder="Enter image URL" />
+        <label class="font-weight-bold">Upload Image</label>
+        <input type="file" class="form-control" id="ImageFile" name="ImageFile" accept="image/*" onchange="previewImage(event)" />
+        <img id="imagePreview" class="mt-2" style="max-width: 200px; display: none;" />
+    </div>
+
+    <div class="form-group">
+        <label for="ImagePath" class="font-weight-bold">Or Enter Image URL</label>
+        <input type="text" class="form-control" id="ImageUrl" name="ImagePath" placeholder="Enter image URL" oninput="disableFileUpload()" />
     </div>
 
     <div class="form-group text-center">

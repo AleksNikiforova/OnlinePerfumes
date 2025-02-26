@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -33,6 +34,8 @@ namespace OnlinePerfumes.Models
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
        
     }

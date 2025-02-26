@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
 using OnlinePerfumes.Core.IServices;
+using OnlinePerfumes.Core.Service;
 using OnlinePerfumes.Models;
 using OnlinePerfumes.Models.ViewModels.Product;
 
@@ -13,12 +14,14 @@ namespace OnlinePerfumes.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        public ProductController(IProductService productService,ICategoryService categoryService)
+        private readonly CloudinaryService _cloudinaryService;
+        public ProductController(IProductService productService,ICategoryService categoryService, CloudinaryService cloudinaryService)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _cloudinaryService = cloudinaryService;
         }
-        
+
         public async Task<IActionResult> Index()
         {
            
@@ -63,12 +66,36 @@ namespace OnlinePerfumes.Controllers
        
         public async Task<IActionResult>CreateProduct(ProductViewModel model,string ImageURL)
         {
-          // if(ModelState.IsValid)
-           // {
-                if (!string.IsNullOrEmpty(ImageURL))
+            // Ако има качено изображение, ще се качи в Cloudinary 
+            if (model.ImageFile != null)
+            {
+                var uploadedImageUrl = await _cloudinaryService.UploadImageAsync(model.ImageFile);
+                if (!string.IsNullOrEmpty(uploadedImageUrl))
                 {
-                    model.ImagePath = ImageURL;
+                    model.ImagePath = uploadedImageUrl;
                 }
+            }
+            else if (!string.IsNullOrEmpty(model.ImagePath))
+            // Проверяваме дали е въведен URL 
+            {
+                model.ImagePath = model.ImagePath;
+                // Запазваме URL 
+            }
+            else
+            { 
+                ModelState.AddModelError("ImageFile", "Please upload an image or provide an image URL.");
+                var categories = await _categoryService.GetAllAsync();
+                model.Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList();
+                return View(model); // Връщаме формата с грешка 
+            }
+            if (!string.IsNullOrEmpty(ImageURL))
+            {
+                    model.ImagePath = ImageURL;
+            }
                 var product = new Product
                 {
                     Name = model.Name,
@@ -81,16 +108,6 @@ namespace OnlinePerfumes.Controllers
                 await _productService.AddAsync(product);
                 TempData["Success"] = "Парфюма е добавен успешно";
                 return RedirectToAction("Index");
-           // }
-            var categories = await _categoryService.GetAllAsync();
-            model.Categories = categories.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.Name
-            }).ToList();
-
-            return View(model);
-
         }
        
         public async Task<IActionResult> Update(int id)

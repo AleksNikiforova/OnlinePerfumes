@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using OnlinePerfumes.Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CloudinaryDotNet;
 
 namespace OnlinePerfumes
 {
@@ -27,6 +28,7 @@ namespace OnlinePerfumes
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<IOrderProductService, OrderProductService>();
 
 
             // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
@@ -47,6 +49,18 @@ namespace OnlinePerfumes
                 options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
                 options.AddPolicy("CompanyPolicy", policy => policy.RequireRole("Company"));
             });
+            builder.Services.AddScoped<CloudinaryService>();
+
+
+
+            //?????????????????Cloudinary???DI??????????? ???? 
+
+            var cloudinarySettings = builder.Configuration.GetSection("Cloudinary") .Get<CloudinarySettings>();
+            var account = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKey, cloudinarySettings.ApiSecret);
+            var cloudinary = new Cloudinary(account);
+            builder.Services.AddSingleton(cloudinary);
+           
+
             var app = builder.Build();
 
             // Call the Seed Method
