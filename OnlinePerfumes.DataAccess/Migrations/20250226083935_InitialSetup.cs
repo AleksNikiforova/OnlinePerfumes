@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace OnlinePerfumes.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class RebuildDatabase : Migration
+    public partial class InitialSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -197,17 +195,19 @@ namespace OnlinePerfumes.DataAccess.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Aroma = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    StockQuantity = table.Column<int>(type: "int", nullable: false),
+                    Countity = table.Column<int>(type: "int", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.CategoryId);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -256,28 +256,7 @@ namespace OnlinePerfumes.DataAccess.Migrations
                         name: "FK_OrdersProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "CategoryId");
-                });
-
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Парфюми за жени" },
-                    { 2, "Парфюми за мъже" },
-                    { 3, "Унисекс парфюми" },
-                    { 4, "Луксозни парфюми" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "CategoryId", "Aroma", "Id", "ImagePath", "Name", "Price" },
-                values: new object[,]
-                {
-                    { 1, "Цветен", 1, null, "Chanel No.5", 120m },
-                    { 2, "Дървесен", 2, null, "Dior", 95m },
-                    { 3, "Цветен с ванилия", 3, null, "Opium", 100m }
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -333,6 +312,11 @@ namespace OnlinePerfumes.DataAccess.Migrations
                 name: "IX_OrdersProducts_OrderId",
                 table: "OrdersProducts",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />

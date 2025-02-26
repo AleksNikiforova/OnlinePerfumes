@@ -19,6 +19,7 @@ namespace OnlinePerfumes.Controllers
             return View(await _categoryService.GetAllAsync());
           
         }
+        [HttpGet]
         public IActionResult CreateCategory()
         {
             return View();

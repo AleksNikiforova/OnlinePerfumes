@@ -236,28 +236,6 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Парфюми за жени"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Парфюми за мъже"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Унисекс парфюми"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Луксозни парфюми"
-                        });
                 });
 
             modelBuilder.Entity("OnlinePerfumes.Models.Customer", b =>
@@ -336,19 +314,22 @@ namespace OnlinePerfumes.DataAccess.Migrations
 
             modelBuilder.Entity("OnlinePerfumes.Models.Product", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Aroma")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("Countity")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
@@ -361,35 +342,14 @@ namespace OnlinePerfumes.DataAccess.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("CategoryId");
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            Aroma = "Цветен",
-                            Id = 1,
-                            Name = "Chanel No.5",
-                            Price = 120m
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            Aroma = "Дървесен",
-                            Id = 2,
-                            Name = "Dior",
-                            Price = 95m
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            Aroma = "Цветен с ванилия",
-                            Id = 3,
-                            Name = "Opium",
-                            Price = 100m
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -35,6 +35,7 @@ namespace OnlinePerfumes.Controllers
                     Price = product.Price,
                     CategoryId = category.Id,
                     CategoryName = category.Name,
+                    StockQuantity = product.StockQuantity,
                     ImagePath = product.ImagePath
                 };
                 productViewModel.Add(viewModel);
@@ -62,8 +63,8 @@ namespace OnlinePerfumes.Controllers
        
         public async Task<IActionResult>CreateProduct(ProductViewModel model,string ImageURL)
         {
-            if(ModelState.IsValid)
-            {
+          // if(ModelState.IsValid)
+           // {
                 if (!string.IsNullOrEmpty(ImageURL))
                 {
                     model.ImagePath = ImageURL;
@@ -74,12 +75,13 @@ namespace OnlinePerfumes.Controllers
                     Price = model.Price,
                     Aroma = model.Aroma,
                     CategoryId = model.CategoryId,
+                    StockQuantity= model.StockQuantity,
                     ImagePath = model.ImagePath
                 };
                 await _productService.AddAsync(product);
                 TempData["Success"] = "Парфюма е добавен успешно";
                 return RedirectToAction("Index");
-            }
+           // }
             var categories = await _categoryService.GetAllAsync();
             model.Categories = categories.Select(c => new SelectListItem
             {
@@ -87,7 +89,7 @@ namespace OnlinePerfumes.Controllers
                 Text = c.Name
             }).ToList();
 
-            return View();
+            return View(model);
 
         }
        

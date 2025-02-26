@@ -14,6 +14,7 @@ namespace OnlinePerfumes.Models.ViewModels.Product
         public string Name { get; set; }
         [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive number.")]
         public decimal Price { get; set; }
+        public int StockQuantity { get; set; }
         public string Aroma { get; set; }
         [Required]
         public int CategoryId { get; set; }

@@ -18,5 +18,6 @@ namespace OnlinePerfumes.Models.ViewModels.Product
         public int CategoryId { get; set; }
         public string? ImagePath { get; set; }
         public string CategoryName { get; set; }
+        public int StockQuantity { get; set; }
     }
 }
