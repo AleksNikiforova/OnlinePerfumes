@@ -32,5 +32,6 @@ namespace OnlinePerfumes.Models
         //Swurzwane s identityuser
         public string UserId {  get; set; }
         public IdentityUser User { get; set; }
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }

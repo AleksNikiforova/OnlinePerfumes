@@ -1,0 +1,51 @@
+﻿@model CartViewModel
+
+<h1 class="text-center my-4">Shopping Cart</h1>
+
+@if (Model.CartItems.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Product.Price.ToString("C")</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.Quantity * item.Product.Price)</td>
+                        <td>
+                            <form method="post" asp-action="RemoveFromCart" asp-controller="Cart" asp-route-cartItemId="@item.Id">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-right">
+        <h4>Total: @Model.TotalPrice</h4>
+        <form asp-controller="Cart" asp-action="Checkout" method="post">
+            <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+        </form>
+    </div>
+}
+else
+{
+    <p class="text-center">Your cart is empty!</p>
+}
+
+<div class="text-center">
+    <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Continue Shopping</a>
+</div>

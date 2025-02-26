@@ -37,6 +37,7 @@ namespace OnlinePerfumes.Models
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
-       
+        public ICollection<CartItem> CartItems { get; set; }
+
     }
 }

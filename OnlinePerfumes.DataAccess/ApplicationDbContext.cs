@@ -19,7 +19,8 @@ namespace OnlinePerfumes.DataAccess
         DbSet<Order> Orders { get; set; }
         DbSet<OrderProduct>OrdersProducts { get; set; }
         DbSet<Product> Products { get; set; }
-        
+        public DbSet<CartItem> CartItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -54,6 +55,12 @@ namespace OnlinePerfumes.DataAccess
                 .WithMany(x => x.OrderProducts)
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<CartItem>()
+                .HasOne(ci => ci.Customer)
+                .WithMany(c => c.CartItems)
+                .HasForeignKey(ci => ci.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             /* builder.Entity<Order>()
              .HasOne(o => o.Customer)
