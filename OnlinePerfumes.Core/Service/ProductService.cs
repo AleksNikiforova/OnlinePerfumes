@@ -1,4 +1,5 @@
-﻿using OnlinePerfumes.Core.IServices;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Validators;
 using OnlinePerfumes.DataAccess.Repository;
 using OnlinePerfumes.Models;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Core.Service
 {
+
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _repo;
@@ -29,7 +31,11 @@ namespace OnlinePerfumes.Core.Service
             await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
         }
 
-        
+        public async Task<List<Product>> Find(Expression<Func<Product, bool>> filter)
+        {
+            var products = await _repo.GetAllAsync(); 
+            return products.Where(filter.Compile()).ToList() ?? new List<Product>(); 
+        }
 
         public IQueryable<Product> GetAll()
         {
@@ -50,6 +56,11 @@ namespace OnlinePerfumes.Core.Service
         {
             return await _repo.GetByIdAsync(id);
         }
+
+        /*public Task NullifyCategories(int id)
+        {
+            throw new NotImplementedException();
+        }*/
 
         public async Task UpdateAsync(Product product)
         {

@@ -30,6 +30,10 @@ namespace OnlinePerfumes.Controllers
             foreach (var product in products)
             {
                 var category=await _categoryService.GetByIdAsync(product.CategoryId);
+                if (category == null)
+                {
+                    throw new Exception($"Category with ID {product.CategoryId} not found.");
+                }
                 var viewModel = new ProductAllViewModel
                 {
                     Id = product.Id,

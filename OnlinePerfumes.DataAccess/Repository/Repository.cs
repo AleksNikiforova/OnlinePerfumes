@@ -33,6 +33,11 @@ namespace OnlinePerfumes.DataAccess.Repository
 
         }
 
+        public async Task<List<T>> Find(Expression<Func<T, bool>> filter)
+        {
+            return await dbset.Where(filter).ToListAsync();
+        }
+
         public IQueryable<T> GetAll()
         {
             return dbset.AsQueryable();

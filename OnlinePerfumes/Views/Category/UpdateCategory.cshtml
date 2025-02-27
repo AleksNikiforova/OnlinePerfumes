@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model OnlinePerfumes.Models.Category
+﻿@model OnlinePerfumes.Models.Category
 
 @{
     ViewBag.Title = "Update Category";
@@ -11,7 +6,7 @@
 
 <h2>Update Category</h2>
 
-<form action="/Category/Update" method="post" class="form-horizontal" role="form">
+<form action="/Category/UpdateCategory" method="post" class="form-horizontal" role="form">
 
 
     <input type="hidden" asp-for="Id" />

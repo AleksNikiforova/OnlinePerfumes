@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlinePerfumes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,7 +18,8 @@ namespace OnlinePerfumes.DataAccess.Repository
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int id);
         T GetById(int id);
-        
+        Task<List<T>> Find(Expression<Func<T, bool>> filter);
+
 
     }
 }

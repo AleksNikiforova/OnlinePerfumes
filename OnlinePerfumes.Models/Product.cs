@@ -32,7 +32,7 @@ namespace OnlinePerfumes.Models
         public string? ImagePath { get; set; }
 
         [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }

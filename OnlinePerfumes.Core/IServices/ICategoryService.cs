@@ -16,7 +16,7 @@ namespace OnlinePerfumes.Core.IServices
         IQueryable<Category> GetAll();
         Category GetById(int id);
         Task<IEnumerable<Category>> GetAllAsync();
-        Task<Category> GetByIdAsync(int id);
+        Task<Category> GetByIdAsync(int? id);
         Task<Category> GetCategoryByName(string name);
     }
 }

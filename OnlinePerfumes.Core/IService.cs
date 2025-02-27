@@ -17,6 +17,7 @@ namespace OnlinePerfumes.Core
         T GetById(int id);
         Task<T> GetByIdAsync(int id);
         IQueryable<T> GetAll();
-        
+       
+
     }
 }

@@ -10,9 +10,11 @@ namespace OnlinePerfumes.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        private readonly IProductService _prodService;
+        public CategoryController(ICategoryService categoryService, IProductService prodService)
         {
             _categoryService = categoryService;
+            _prodService = prodService;
         }
         public async Task<IActionResult> GetAllCategories()
         {
@@ -47,6 +49,7 @@ namespace OnlinePerfumes.Controllers
        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
+            //await _prodService.NullifyCategories(id);
             await _categoryService.DeleteAsync(id);
             return RedirectToAction("GetAllCategories");
         }
