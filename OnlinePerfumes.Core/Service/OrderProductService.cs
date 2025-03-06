@@ -12,6 +12,12 @@ namespace OnlinePerfumes.Core.Service
     public class OrderProductService : IOrderProductService
     {
         private readonly IRepository<OrderProduct> _repo;
+
+        public OrderProductService(IRepository<OrderProduct> repo)
+        {
+            _repo = repo;
+        }
+
         public async Task AddAsync(OrderProduct orderProduct)
         {
             await _repo.AddAsync(orderProduct);

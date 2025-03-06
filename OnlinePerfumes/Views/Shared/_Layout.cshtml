@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlinePerfumes.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -38,13 +39,13 @@
                         @if(User.IsInRole(SD.AdminRole) || User.IsInRole(SD.UserRole))
                         {
                             <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Add">Направи поръчка</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="AddOrder">Направи поръчка</a>
                             </li>
                         }
                         @if (User.IsInRole(SD.AdminRole))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Delete">Изтрий категория</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="DeleteCategory">Изтрий категория</a>
                             </li>
                         }
                         else
@@ -59,17 +60,18 @@
                                     Продукти
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="@Url.Action("Create", "Product")">Добави продукт</a>
+                                    <a class="dropdown-item" href="@Url.Action("CreateProduct", "Product")">Добави продукт</a>
                                     <a class="dropdown-item" href="@Url.Action("Delete", "Product")">Изтрий продукт</a>
-                                    <a class="dropdown-item" href="@Url.Action("Create", "Category", new { area = "Admin" })">Въведи категория</a>
+                                    <a class="dropdown-item" href="@Url.Action("CreateCategory", "Category", new { area = "Admin" })">Въведи категория</a>
                                     <a class="dropdown-item" href="@Url.Action("DeleteCategory", "Category")">Изтрий категория</a>
-                                    <a class="dropdown-item" href="@Url.Action("Update", "Category")">Редактирай категория</a>
+                                    <a class="dropdown-item" href="@Url.Action("UpdateCategory", "Category")">Редактирай категория</a>
 
                                 </div>
                             </li>
                         }
                     </ul>
                     <partial name="_LoginPartial"/>
+                  
                 </div>
             </div>
         </nav>
@@ -88,6 +90,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="_Notification"></partial>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

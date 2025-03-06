@@ -1,7 +1,12 @@
-﻿@using Microsoft.IdentityModel.Tokens
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.IdentityModel.Tokens
 @using OnlinePerfumes.Models
 @using OnlinePerfumes.Models.ViewModels.Product
+@using System.Globalization
 @model IEnumerable<ProductAllViewModel>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 <!DOCTYPE html>
 <html lang="bg">
@@ -73,13 +78,29 @@
                         <div class="card-body">
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">Aroma: @product.Aroma</p>
-                            <p class="card-text">Price: @product.Price &euro;</p>
+                            <p class="card-text">Price: @product.Price.ToString("C", new CultureInfo("bg-BG")) ;</p>
                             <p class="card-text">Category: @product.CategoryName</p>
                             <p class="card-text">StockQuantity: @product.StockQuantity</p>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="productId" value="@product.Id" />
+                                        <div class="input-group mb-2">
+                                            <input type="number" name="quantity" min="1" max="@product.StockQuantity" value="1" class="form-control" required />
+                                            <button type="submit" class="btn btn-primary">Добави в количката</button>
+                                        </div>
+                                    </form>
+                                }
+                            }
                         </div>
-                        <div class="card-footer text-center">
-                            <a href="#" class="btn btn-primary">More Info</a>
-                        </div>
+                        
                     </div>
                 </div>
             }

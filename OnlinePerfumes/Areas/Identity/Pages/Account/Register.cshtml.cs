@@ -108,6 +108,10 @@ namespace OnlinePerfumes.Areas.Identity.Pages.Account
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }=new List<SelectListItem>();
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public InputModel Input { get; set; }
+
         }
 
 
@@ -152,15 +156,18 @@ namespace OnlinePerfumes.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    if(!string.IsNullOrEmpty(Input.Role))
+                    if (await _roleManager.RoleExistsAsync("User"))
                     {
-                        await _userManager.AddToRoleAsync(user, Input.Role);
+                        var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                        if (!roleResult.Succeeded)
+                        {
+                            foreach (var error in roleResult.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+                            return Page();
+                        }
                     }
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(user,SD.UserRole);
-                    }
-
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -193,27 +200,24 @@ namespace OnlinePerfumes.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
-            try
+            var user = new ApplicationUser
             {
-                return Activator.CreateInstance<IdentityUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
+                FirstName = Input.FirstName,
+                LastName = Input.LastName
+            };
+
+            return user;
         }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
+        private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<IdentityUser>)_userStore;
+            return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
 }

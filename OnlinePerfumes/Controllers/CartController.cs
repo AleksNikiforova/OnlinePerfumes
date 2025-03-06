@@ -114,5 +114,58 @@ namespace OnlinePerfumes.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> Checkout()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var customer = (await _customerService.GetAllAsync())
+                .FirstOrDefault(c => c.UserId == user.Id);
+
+            if (customer == null)
+            {
+                return BadRequest("Не е намерен клиентски профил.");
+            }
+
+            var cartItems = (_cartItemService.GetAll().Include(ci => ci.Product)) // Включване на продуктите
+                .Where(ci => ci.CustomerId == customer.Id)
+                .ToList();
+
+            if (!cartItems.Any())
+            {
+                return BadRequest("Количката е празна.");
+            }
+
+            // Използване на CartViewModel за изчисление на общата цена
+            var cartViewModel = new CartViewModel { CartItems = cartItems };
+
+            // 1. Създаване на нова поръчка
+            var order = new Order
+            {
+                CustomerId = customer.Id,
+                OrderDate = DateTime.UtcNow,
+                Status = "Изчаква обработка",
+                TotalAmount = cartViewModel.TotalPrice, // Използваме готовото изчислени
+                OrderProducts = cartItems.Select(ci => new OrderProduct
+                {
+                    ProductId = ci.ProductId,
+                    Quantity = ci.Quantity,
+                    Price = ci.Product.Price
+                }).ToList()
+            };
+
+            await _orderService.AddAsync(order); // Запазване в базата данни
+
+            // 2. Премахване на елементите от количката
+            foreach (var item in cartItems)
+            {
+                await _cartItemService.DeleteAsync(item.Id);
+            }
+
+            // 3. Добавяне на съобщение за клиента
+            TempData["SuccessMessage"] = "Вашата поръчка е приета!";
+
+            // 4. Изпращане на администратора към AdminOrdersController
+            return RedirectToAction("NewOrder", "Admin", new { orderId = order.Id });
+        }
     }
 }

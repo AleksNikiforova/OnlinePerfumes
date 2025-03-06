@@ -30,10 +30,10 @@ namespace OnlinePerfumes.Controllers
             foreach (var product in products)
             {
                 var category=await _categoryService.GetByIdAsync(product.CategoryId);
-                if (category == null)
+                /*if (category == null)
                 {
                     throw new Exception($"Category with ID {product.CategoryId} not found.");
-                }
+                }*/
                 var viewModel = new ProductAllViewModel
                 {
                     Id = product.Id,
@@ -51,7 +51,7 @@ namespace OnlinePerfumes.Controllers
         }
 
         [HttpGet]
-    
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateProduct()
         {
 
@@ -67,7 +67,7 @@ namespace OnlinePerfumes.Controllers
             return View(viewModel);
         }
         [HttpPost]
-       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult>CreateProduct(ProductViewModel model,string ImageURL)
         {
             // Ако има качено изображение, ще се качи в Cloudinary 
@@ -113,7 +113,7 @@ namespace OnlinePerfumes.Controllers
                 TempData["Success"] = "Парфюма е добавен успешно";
                 return RedirectToAction("Index");
         }
-       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id)
         {
             var product = await _productService.GetByIdAsync(id);
@@ -134,7 +134,7 @@ namespace OnlinePerfumes.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult>Update(ProductViewModel model)
         {
             if(ModelState.IsValid)
@@ -152,7 +152,7 @@ namespace OnlinePerfumes.Controllers
             return View(model);
         }
         [HttpPost]
-       
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult>Delete(int id)
         {
             var product = await _productService.GetByIdAsync(id);

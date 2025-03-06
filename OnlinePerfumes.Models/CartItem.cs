@@ -9,7 +9,6 @@ namespace OnlinePerfumes.Models
 {
     public class CartItem
     {
-        [Key]
         public int Id { get; set; }
 
         public int ProductId { get; set; }
@@ -21,3 +20,4 @@ namespace OnlinePerfumes.Models
         public Customer Customer { get; set; }
     }
 }
+

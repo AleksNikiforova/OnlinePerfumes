@@ -27,31 +27,39 @@ namespace OnlinePerfumes.Controllers
             return View();
         }
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCategory(Category category)
         {
             await _categoryService.AddAsync(category);
             return RedirectToAction("GetAllCategories");
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory(int id)
         {
             return View(await _categoryService.GetByIdAsync(id));
         }
 
         [HttpPost]
-       // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory(Category category)
         {
             await _categoryService.UpdateAsync(category);
             return RedirectToAction("GetAllCategories");
         }
-       // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            //await _prodService.NullifyCategories(id);
-            await _categoryService.DeleteAsync(id);
-            return RedirectToAction("GetAllCategories");
+            var products = await _prodService.Find(p => p.CategoryId == id); // Check if products exist
+            if (products.Any())
+            {
+               
+                TempData["Error"] = "Category cannot be deleted because it has associated products.";
+                return RedirectToAction("Index"); // Prevent deletion
+            }
+
+            await _categoryService.DeleteAsync(id); // Only delete if no products exist
+            TempData["Success"] = "Category deleted successfully.";
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> GetByName(string name)

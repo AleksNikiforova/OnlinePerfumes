@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
@@ -25,6 +26,7 @@ namespace OnlinePerfumes.Controllers
             _orderProductservice = orderproductservice;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task< IActionResult> All()
         {
             var model = _orderProductservice.GetAll().Include(x => x.Product).Include(x => x.Order).ThenInclude(x => x.Customer).Select(x => new OrderAllViewModel()
@@ -39,6 +41,7 @@ namespace OnlinePerfumes.Controllers
 
         }
         [HttpGet]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> AddOrder()
         {
             var model = new OrderAddViewModel();
@@ -47,6 +50,7 @@ namespace OnlinePerfumes.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult>AddOrder(OrderAddViewModel model)
         {
             if (ModelState.IsValid)
@@ -132,6 +136,7 @@ namespace OnlinePerfumes.Controllers
             return RedirectToAction("All", "Order");
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Details(int id)
         {
             var model=_orderProductservice.GetAll().Where(x=>x.OrderId == id).Include(x=>x.Order).ThenInclude(x => x.Customer).Include(x => x.Product).ThenInclude(p => p.Category).Select(x => new OrderDetailsViewModel()

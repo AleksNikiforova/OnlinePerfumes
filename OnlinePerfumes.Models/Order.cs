@@ -13,13 +13,14 @@ namespace OnlinePerfumes.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         [Required]
-        public int TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         [Required]
         public string ShippingAddress {  get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
+        public string Status { get; set; } = "Изчаква обработка";
     }
 }

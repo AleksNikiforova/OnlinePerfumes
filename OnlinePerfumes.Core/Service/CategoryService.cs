@@ -44,6 +44,8 @@ namespace OnlinePerfumes.Core.Service
             await _repo.DeleteAsync(category);
         }
 
+     
+
         public IQueryable<Category> GetAll()
         {
             return _repo.GetAll();

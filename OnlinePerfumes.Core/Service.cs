@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using OnlinePerfumes.DataAccess.Repository;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,10 @@ namespace OnlinePerfumes.Core
     public class Service<T> : IService<T> where T : class
     {
         private readonly IRepository<T> _repo;
+        public Service(IRepository<T> repo)
+        {
+            _repo = repo;
+        }
 
         public async Task AddAsync(T entity)
         {
@@ -32,9 +37,10 @@ namespace OnlinePerfumes.Core
            return _repo.GetAll();
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _repo.GetAllAsync();
+           
+            return await _repo.GetAll().ToListAsync();
         }
 
         public T GetById(int id)

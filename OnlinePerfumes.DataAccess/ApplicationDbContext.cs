@@ -43,7 +43,7 @@ namespace OnlinePerfumes.DataAccess
             builder.Entity<Product>().HasOne(x=>x.Category)
                   .WithMany(x=>x.Products)
                   .HasForeignKey(x=>x.CategoryId)
-                  .OnDelete(DeleteBehavior.NoAction);
+                  .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<OrderProduct>().HasKey(x => new {x.ProductId,x.OrderId});
             builder.Entity<OrderProduct>().HasOne(x=>x.Order)
@@ -55,7 +55,6 @@ namespace OnlinePerfumes.DataAccess
                 .WithMany(x => x.OrderProducts)
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.NoAction);
-
             builder.Entity<CartItem>()
                 .HasOne(ci => ci.Customer)
                 .WithMany(c => c.CartItems)
