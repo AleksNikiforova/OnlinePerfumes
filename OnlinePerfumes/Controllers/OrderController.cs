@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +18,15 @@ namespace OnlinePerfumes.Controllers
         private readonly IProductService _productservice;
         private readonly ICustomerService _customerservice;
         private readonly IOrderProductService _orderProductservice;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public OrderController(IOrderService orderservice,IProductService productservice, ICustomerService customerservice, IOrderProductService orderproductservice)
+        public OrderController(IOrderService orderservice,IProductService productservice, ICustomerService customerservice, IOrderProductService orderproductservice,UserManager<IdentityUser> userManager)
         {
             _orderservice = orderservice;
             _productservice = productservice;
             _customerservice = customerservice;
             _orderProductservice = orderproductservice;
+            _userManager = userManager;
         }
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -113,28 +116,55 @@ namespace OnlinePerfumes.Controllers
             return RedirectToAction("All", "Order");
         }
         [HttpGet]
-        public async Task<IActionResult>DeleteConfrimed(int id)
+        
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-           var model=_orderProductservice.GetAll().Where(x=>x.OrderId== id).Include(x=>x.Order).ThenInclude(x=>x.Customer).Include(x=>x.Product).ThenInclude(x=>x.Category)
-                .Select(x=>new OrderDeleteConfrimedViewModel()
+            // Намираме записите за изтриване с всички свързани данни
+            var model = await _orderProductservice.GetAll()
+                .Where(x => x.OrderId == id)
+                .Include(x => x.Order).ThenInclude(x => x.Customer)
+                .Include(x => x.Product).ThenInclude(x => x.Category)
+                .Select(x => new OrderDeleteConfrimedViewModel()
                 {
                     Id = id,
-                    CategoryName=x.Product.Category.Name,
-                    OrderDate=x.Order.OrderDate.ToString("yyyy-MM-dd"),
-                    CustomerName=x.Order.Customer.FirstName,
-                    Price=x.Product.Price,
-                    ProductName=x.Product.Name,
+                    CategoryName = x.Product.Category.Name,
+                    OrderDate = x.Order.OrderDate.ToString("yyyy-MM-dd"),
+                    CustomerName = x.Order.Customer.FirstName,
+                    Price = x.Product.Price,
+                    ProductName = x.Product.Name,
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync(); // Асинхронно!
+
+            // Ако не е намерен запис с това id, връщаме грешка
+            if (model == null)
+            {
+                return NotFound("Поръчката не е намерена.");
+            }
+
             return View(model);
         }
+
         public async Task<IActionResult> Delete(int id)
         {
-            var model = _orderservice.GetAll().Where(x => x.Id == id).FirstOrDefault();
+            var order = await _orderservice.GetAll()
+         .Where(x => x.Id == id)
+         .FirstOrDefaultAsync();
 
-            await _orderservice.DeleteAsync(model.Id);
+            if (order == null)
+            {
+                return NotFound("Поръчката не е намерена.");
+            }
+
+            // Изтриваме свързаните записи в OrdersProducts
+            await _orderProductservice.DeleteAsync(id);
+
+            // Now delete the order
+            var order1 = await _orderservice.GetByIdAsync(id);
+            await _orderservice.DeleteAsync(order1.Id);
+
             return RedirectToAction("All", "Order");
         }
+        
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult Details(int id)
@@ -152,6 +182,47 @@ namespace OnlinePerfumes.Controllers
             }).FirstOrDefault();
             return View(model);
         }
+       
+        public async Task<IActionResult> MyDetails()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var customer = (await _customerservice.GetAllAsync())
+                .FirstOrDefault(c => c.UserId == user.Id);
+
+            if (customer == null)
+            {
+                return BadRequest("Не е намерен клиентски профил.");
+            }
+
+            var orders = _orderservice.GetAll()
+                .Where(o => o.CustomerId == customer.Id)
+                .Include(o => o.OrderProducts)
+                    .ThenInclude(op => op.Product)
+                     .ThenInclude(p => p.Category)// Зарежда продуктите
+                .ToList();
+
+            var model = orders.SelectMany(o => o.OrderProducts.Select(op => new OrderDetailsViewModel
+            {
+                OrderDate = o.OrderDate.ToString("dd.MM.yyyy"),
+                CustomerName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = user.Email,
+                Phone = user.PhoneNumber,
+                Price = op.Price,
+                ProductName = op.Product.Name,
+                Aroma = op.Product.Aroma, // Ако полето съществува в модела
+                CategoryName = op.Product.Category.Name
+            })).ToList();
+
+
+            return View(model);
+        }
+
         public async Task<IActionResult> Index()
         {
             return View();

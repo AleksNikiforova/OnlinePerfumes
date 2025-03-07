@@ -1,0 +1,43 @@
+﻿@model List<OnlinePerfumes.Models.ViewModels.Order.OrderDetailsViewModel>
+
+<h2>Моите поръчки</h2>
+
+@if (!Model.Any())
+{
+    <p>Нямате направени поръчки.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Име</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Продукт</th>
+                <th>Аромат</th>
+                <th>Категория</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderDate</td>
+                    <td>@order.CustomerName</td>
+                    <td>@order.LastName</td>
+                    <td>@order.Email</td>
+                    <td>@order.Phone</td>
+                    <td>@order.ProductName</td>
+                    <td>@order.Aroma</td>
+                    <td>@order.CategoryName</td>
+                    <td>@order.Price лв.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

@@ -1,0 +1,68 @@
+﻿@using static OnlinePerfumes.Models.Order
+@model List<Order>
+
+@{
+    ViewData["Title"] = "Списък на поръчките";
+}
+
+<h2>Списък на поръчките</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Потребител</th>
+            <th>Email</th>
+            <th>Дата</th>
+            <th>Обща сума</th>
+            <th>Продукти</th>
+            <th>Статус</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.Customer.FirstName @order.Customer.LastName</td>
+                <td>@order.Customer.User.Email</td>
+                <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@order.TotalAmount лв.</td>
+                <td>
+                    <ul>
+                        @foreach (var item in order.OrderProducts)
+                        {
+                            <li>@item.Product.Name - @item.Quantity бр.</li>
+                        }
+                    </ul>
+                </td>
+                <td>@order.Status</td>
+                <td>
+                    @if (order.Status != "Потвърдена")
+                    {
+                        <form asp-action="ConfirmOrder" method="post">
+                            <input type="hidden" name="orderId" value="@order.Id" />
+                            <button type="submit" class="btn btn-success">Потвърди</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-success">✔ Потвърдена</span>
+                    }
+                </td>
+                <td>
+                    @if (order.Status != "Потвърдена")
+                    {
+                        <form asp-action="ConfirmOrder" method="post">
+                            <input type="hidden" name="orderId" value="@order.Id" />
+                            <button type="submit" class="btn btn-success">Изтрий</button>
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

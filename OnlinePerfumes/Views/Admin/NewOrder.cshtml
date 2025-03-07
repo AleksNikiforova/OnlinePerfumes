@@ -1,0 +1,18 @@
+﻿@model Order
+
+<h2>Детайли за поръчка</h2>
+
+<p><strong>Номер на поръчка:</strong> @Model.Id</p>
+<p><strong>Дата:</strong> @Model.OrderDate</p>
+<p><strong>Статус:</strong> @Model.Status</p>
+<p><strong>Обща сума:</strong> @Model.TotalAmount лв.</p>
+
+<h3>Продукти</h3>
+<ul>
+    @foreach (var item in Model.OrderProducts)
+    {
+        <li>@item.ProductId - @item.Quantity бр. - @item.Price лв.</li>
+    }
+</ul>
+
+<a href="@Url.Action("AdminPanel", "Admin")">Обратно към администраторския панел</a>

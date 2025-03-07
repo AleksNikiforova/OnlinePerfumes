@@ -49,7 +49,7 @@ namespace OnlinePerfumes.DataAccess
             builder.Entity<OrderProduct>().HasOne(x=>x.Order)
                 .WithMany(x=>x.OrderProducts)
                 .HasForeignKey(x=>x.OrderId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<OrderProduct>().HasOne(x => x.Product)
                 .WithMany(x => x.OrderProducts)

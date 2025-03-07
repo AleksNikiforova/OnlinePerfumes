@@ -116,7 +116,7 @@ namespace OnlinePerfumes.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Checkout()
-        {
+        { 
             var user = await _userManager.GetUserAsync(User);
             var customer = (await _customerService.GetAllAsync())
                 .FirstOrDefault(c => c.UserId == user.Id);
@@ -144,7 +144,7 @@ namespace OnlinePerfumes.Controllers
                 CustomerId = customer.Id,
                 OrderDate = DateTime.UtcNow,
                 Status = "Изчаква обработка",
-                TotalAmount = cartViewModel.TotalPrice, // Използваме готовото изчислени
+                TotalAmount = cartViewModel.TotalPrice,// Използваме готовото изчислени
                 OrderProducts = cartItems.Select(ci => new OrderProduct
                 {
                     ProductId = ci.ProductId,
@@ -165,7 +165,7 @@ namespace OnlinePerfumes.Controllers
             TempData["SuccessMessage"] = "Вашата поръчка е приета!";
 
             // 4. Изпращане на администратора към AdminOrdersController
-            return RedirectToAction("NewOrder", "Admin", new { orderId = order.Id });
+            return RedirectToAction("MyDetails", "Order", new { orderId = order.Id });
         }
     }
 }

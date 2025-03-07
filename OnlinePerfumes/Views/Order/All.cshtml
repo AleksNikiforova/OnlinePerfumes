@@ -122,10 +122,7 @@
     </style>
 </head>
 <body>
-    <div class="add-container">
-        <a asp-controller="Order" asp-action="AddOrder" class="btn-add">Add Order</a>
-    </div>
-
+   
     <div class="container">
         @foreach (var order in Model)
         {
@@ -141,7 +138,6 @@
 
                 <div class="card-buttons">
                     <a asp-controller="Order" asp-action="Details" asp-route-id="@order.Id" class="btn btn-details">Details</a>
-                    <a asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id" class="btn btn-edit">Edit</a>
                 </div>
             </div>
         }

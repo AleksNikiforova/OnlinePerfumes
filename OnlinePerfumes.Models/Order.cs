@@ -16,8 +16,6 @@ namespace OnlinePerfumes.Models
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         [Required]
         public decimal TotalAmount { get; set; }
-        [Required]
-        public string ShippingAddress {  get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
