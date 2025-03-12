@@ -8,7 +8,9 @@ using OnlinePerfumes.Core.IServices;
 using OnlinePerfumes.Core.Service;
 using OnlinePerfumes.Models;
 using OnlinePerfumes.Models.ViewModels;
+using OnlinePerfumes.Models.ViewModels.Customer;
 using OnlinePerfumes.Models.ViewModels.Order;
+using OnlinePerfumes.Models.ViewModels.OrderProduct;
 
 namespace OnlinePerfumes.Controllers
 {
@@ -183,44 +185,31 @@ namespace OnlinePerfumes.Controllers
             return View(model);
         }
        
-        public async Task<IActionResult> MyDetails()
+        public async Task<IActionResult> MyDetails(int orderId)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            
+            var order = await _orderservice.GetOrderById(orderId);
+            if (order == null)
             {
-                return RedirectToAction("Login", "Account");
+                return NotFound();
             }
-
-            var customer = (await _customerservice.GetAllAsync())
-                .FirstOrDefault(c => c.UserId == user.Id);
-
-            if (customer == null)
+            // Map Order entity to ViewModel in the Controller
+            var viewModel = new CustomerOrderDetailsViewModel
             {
-                return BadRequest("Не е намерен клиентски профил.");
-            }
+                OrderId = order.Id,
+                OrderDate = order.OrderDate,
+                Status = order.Status ,// Assuming OrderStatus has a Name
+                OrderProducts = order.OrderProducts.Select(op => new OrderProductViewModel
+                {
+                    ProductName = op.Product.Name,
+                    Aroma = op.Product.Aroma,
+                    CategoryName = op.Product.Category.Name,
+                    Price = op.Product?.Price ?? 0,
+                    Quantity = op.Quantity
+                }).ToList() ?? new List<OrderProductViewModel>()
+            };
 
-            var orders = _orderservice.GetAll()
-                .Where(o => o.CustomerId == customer.Id)
-                .Include(o => o.OrderProducts)
-                    .ThenInclude(op => op.Product)
-                     .ThenInclude(p => p.Category)// Зарежда продуктите
-                .ToList();
-
-            var model = orders.SelectMany(o => o.OrderProducts.Select(op => new OrderDetailsViewModel
-            {
-                OrderDate = o.OrderDate.ToString("dd.MM.yyyy"),
-                CustomerName = customer.FirstName,
-                LastName = customer.LastName,
-                Email = user.Email,
-                Phone = user.PhoneNumber,
-                Price = op.Price,
-                ProductName = op.Product.Name,
-                Aroma = op.Product.Aroma, // Ако полето съществува в модела
-                CategoryName = op.Product.Category.Name
-            })).ToList();
-
-
-            return View(model);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Index()

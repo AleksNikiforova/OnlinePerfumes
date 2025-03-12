@@ -52,9 +52,21 @@ namespace OnlinePerfumes.Core.Service
            return await _repo.GetByIdAsync(id);
         }
 
+        public async Task<Order> GetOrderById(int id)
+        {
+            var query = _repo
+                      .GetAll() // Get IQueryable from the repository
+                      .Where(o => o.Id == id)
+                      .Include(o => o.OrderProducts) // Eagerly load OrderProducts
+                      .ThenInclude(op => op.Product) // Eagerly load Product details
+                      .ThenInclude(p => p.Category);
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task UpdateAsync(Order order)
         {
            await _repo.UpdateAsync(order);
         }
+
     }
 }

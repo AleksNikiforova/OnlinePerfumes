@@ -66,7 +66,9 @@ namespace OnlinePerfumes.Controllers
                         {
                             FirstName = model.FirstName,
                             LastName = model.LastName,
-                            UserId = user.Id  
+                            UserId = user.Id ,
+                            Address = model.Address,
+                            City = model.City
                         };                
                     await _customerService.AddAsync(customer);
                     await _userManager.AddToRoleAsync(user, SD.UserRole); 

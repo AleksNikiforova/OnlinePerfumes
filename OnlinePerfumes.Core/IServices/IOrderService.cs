@@ -17,7 +17,8 @@ namespace OnlinePerfumes.Core.IServices
         Order GetById(int id);
         Task<IEnumerable<Order>> GetAllAsync();
         Task<Order>GetByIdAsync(int id);
-       
+        Task<Order>GetOrderById(int id);
+
 
     }
 }

@@ -22,6 +22,9 @@ namespace OnlinePerfumes.DataAccess.Repository
 
         public async Task AddAsync(T entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
             await dbset.AddAsync(entity);
             await _context.SaveChangesAsync();
         }

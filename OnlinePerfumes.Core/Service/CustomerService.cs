@@ -21,7 +21,11 @@ namespace OnlinePerfumes.Core.Service
 
         public async Task AddAsync(Customer customer)
         {
+            if (customer == null)
+                throw new ArgumentNullException(nameof(customer));
+
             await _repo.AddAsync(customer);
+
         }
 
         public async Task DeleteAsync(int id)
