@@ -81,8 +81,11 @@ namespace OnlinePerfumes.Controllers
                 await _cartItemService.AddAsync(cartItem); // Добавяне на нов елемент в количката
 
             }
+            product.StockQuantity -= quantity;
+            await _productService.UpdateAsync(product);
 
-            return RedirectToAction("Index");
+            TempData["CartMessage"] = "Продуктът беше добавен в количката!";
+            return RedirectToAction("Index","Product");
         }
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int cartItemId, int quantity)

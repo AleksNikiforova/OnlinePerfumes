@@ -1,7 +1,7 @@
 ﻿@model OnlinePerfumes.Models.ViewModels.Product.ProductViewModel
 @{
     <h1>Edit this product</h1>
-    <form method="post" asp-action="UpdateProduct" asp-controller="Product">
+    <form method="post" asp-action="Edit" asp-controller="Product">
         <label asp-for="Name">Name</label>
         <input type="text" placeholder="@Model.Name" asp-for="Name" />
         <span asp-validation-for="Name"></span>

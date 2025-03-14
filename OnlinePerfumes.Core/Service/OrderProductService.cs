@@ -4,6 +4,7 @@ using OnlinePerfumes.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,11 @@ namespace OnlinePerfumes.Core.Service
         public async Task DeleteAsync(int id)
         {
             await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
+        }
+
+        public async Task<List<OrderProduct>> Find(Expression<Func<OrderProduct, bool>> filter)
+        {
+          return  await _repo.Find(filter);
         }
 
         public IQueryable<OrderProduct> GetAll()

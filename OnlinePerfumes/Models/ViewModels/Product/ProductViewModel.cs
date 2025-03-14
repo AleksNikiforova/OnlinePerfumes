@@ -17,7 +17,7 @@ namespace OnlinePerfumes.Models.ViewModels.Product
         public int StockQuantity { get; set; }
         public string Aroma { get; set; }
         [Required]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public string? ImagePath { get; set; }
         public IFormFile? ImageFile { get; set; }
         public IEnumerable<SelectListItem>? Categories { get; set; }

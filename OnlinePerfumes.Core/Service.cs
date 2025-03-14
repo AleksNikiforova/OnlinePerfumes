@@ -32,6 +32,11 @@ namespace OnlinePerfumes.Core
             }
         }
 
+        public async Task<List<T>> Find(Expression<Func<T, bool>> filter)
+        {
+           return await _repo.Find(filter);
+        }
+
         public IQueryable<T> GetAll()
         {
            return _repo.GetAll();

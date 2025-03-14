@@ -33,6 +33,11 @@ namespace OnlinePerfumes.Core.Service
             await _repo.DeleteAsync(await _repo.GetByIdAsync(id));
         }
 
+        public async Task<List<Customer>> Find(Expression<Func<Customer, bool>> filter)
+        {
+            return await _repo.Find(filter);
+        }
+
         public IQueryable<Customer> GetAll()
         {
             return _repo.GetAll();

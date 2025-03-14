@@ -15,11 +15,13 @@ namespace OnlinePerfumes.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly CloudinaryService _cloudinaryService;
-        public ProductController(IProductService productService,ICategoryService categoryService, CloudinaryService cloudinaryService)
+        private readonly IOrderProductService _orderProductService;
+        public ProductController(IProductService productService,ICategoryService categoryService, CloudinaryService cloudinaryService, IOrderProductService orderProductService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _cloudinaryService = cloudinaryService;
+            _orderProductService = orderProductService; 
         }
 
         public async Task<IActionResult> Index()
@@ -113,18 +115,25 @@ namespace OnlinePerfumes.Controllers
                 TempData["Success"] = "Парфюма е добавен успешно";
                 return RedirectToAction("Index");
         }
+        [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var product = await _productService.GetByIdAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-
             var categories = await _categoryService.GetAllAsync();
             var viewModel = new ProductViewModel
             {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Aroma = product.Aroma,
+                CategoryId = product.CategoryId,
+                StockQuantity = product.StockQuantity,
+                ImagePath = product.ImagePath,
                 Categories = categories.Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
@@ -135,32 +144,66 @@ namespace OnlinePerfumes.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult>Update(ProductViewModel model)
+        public async Task<IActionResult>Edit(ProductViewModel model)
         {
-            if(ModelState.IsValid)
-            {
-                var product=await _productService.GetByIdAsync(model.Id);
-                if(product == null)
-                {
-                    return NotFound();
-                }
-                product.Name = model.Name;
-                product.Price = model.Price;
-                await _productService.UpdateAsync(product);
-                return RedirectToAction("Index");
-            }
-            return View(model);
-        }
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult>Delete(int id)
-        {
-            var product = await _productService.GetByIdAsync(id);
-            if(product == null)
+            var product = await _productService.GetByIdAsync(model.Id);
+            if (product == null)
             {
                 return NotFound();
             }
-            await _productService.DeleteAsync(id);
+
+            // Ако потребителят е качил ново изображение, качваме го в Cloudinary
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                var uploadResult = await _cloudinaryService.UploadImageAsync(model.ImageFile);
+                if (!string.IsNullOrEmpty(uploadResult))
+                {
+                    product.ImagePath = uploadResult; // Запазваме новото URL
+                }
+            }
+
+            // Актуализираме останалите полета
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.Aroma = model.Aroma;
+            product.CategoryId = model.CategoryId;
+            product.StockQuantity = model.StockQuantity;
+
+            await _productService.UpdateAsync(product);
+            TempData["Success"] = "Промените са запазени успешно";
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult>Delete(int id)
+        {
+
+            var product = await _productService.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            var hasOrders = await _orderProductService.Find(op => op.ProductId == id);
+
+            if (hasOrders.Any())
+            {
+                TempData["ErrorMessage"] = "Не може да изтриеш този продукт, защото има свързани поръчки.";
+                return RedirectToAction("Index");
+            }
+            var product = await _productService.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            await _productService.DeleteAsync(id); // Истинско изтриване
             return RedirectToAction("Index");
         }
     }

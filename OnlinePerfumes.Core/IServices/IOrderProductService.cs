@@ -17,5 +17,6 @@ namespace OnlinePerfumes.Core.IServices
         OrderProduct GetById(int id);
         Task<IEnumerable<OrderProduct>> GetAllAsync();
         Task<OrderProduct> GetByIdAsync(int id);
+        Task<List<OrderProduct>> Find(Expression<Func<OrderProduct, bool>> filter);
     }
 }

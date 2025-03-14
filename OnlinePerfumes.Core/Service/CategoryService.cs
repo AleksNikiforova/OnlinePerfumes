@@ -44,7 +44,10 @@ namespace OnlinePerfumes.Core.Service
             await _repo.DeleteAsync(category);
         }
 
-     
+        public async Task<List<Category>> Find(Expression<Func<Category, bool>> filter)
+        {
+           return await _repo.Find(filter);
+        }
 
         public IQueryable<Category> GetAll()
         {
