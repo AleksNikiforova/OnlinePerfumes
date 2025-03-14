@@ -4,7 +4,7 @@ namespace OnlinePerfumes.Models.ViewModels.Customer
 {
     public class CustomerOrderDetailsViewModel
     {
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
 
         public DateTime OrderDate { get; set; }
 

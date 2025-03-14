@@ -35,6 +35,7 @@ namespace OnlinePerfumes.Core.Service
         public async Task<List<Order>> Find(Expression<Func<Order, bool>> filter)
         {
             return await _repo.Find(filter);
+         
         }
 
         public IQueryable<Order> GetAll()
@@ -57,7 +58,7 @@ namespace OnlinePerfumes.Core.Service
            return await _repo.GetByIdAsync(id);
         }
 
-        public async Task<Order> GetOrderById(int id)
+        public async Task<Order> GetOrderById(int? id)
         {
             var query = _repo
                       .GetAll() // Get IQueryable from the repository

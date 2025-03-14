@@ -1,47 +1,53 @@
-﻿@model OnlinePerfumes.Models.ViewModels.Customer.CustomerOrderDetailsViewModel
-<h2>Order Details</h2>
+﻿@model List<OnlinePerfumes.Models.ViewModels.Customer.CustomerOrderDetailsViewModel>
 
-@if (Model == null)
+@{
+    ViewData["Title"] = "Моите Поръчки";
+}
+
+<h2>Моите Поръчки</h2>
+
+@if (Model.Any())
 {
-    <p>Order not found.</p>
+    @foreach (var order in Model)
+    {
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Поръчка № @order.OrderId</strong> - Дата: @order.OrderDate.ToString("dd/MM/yyyy")
+                <span class="badge bg-info">@order.Status</span>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Продукт</th>
+                            <th>Аромат</th>
+                            <th>Категория</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in order.OrderProducts)
+                        {
+                            <tr>
+                                <td>@product.ProductName</td>
+                                <td>@product.Aroma</td>
+                                <td>@product.CategoryName</td>
+                                <td>@product.Price.ToString("C")</td>
+                                <td>@product.Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
 }
 else
 {
-    <div class="card">
-        <div class="card-header">
-            <h4>Order ID: @Model.OrderId</h4>
-            <p><strong>Date:</strong> @Model.OrderDate.ToString("yyyy-MM-dd")</p>
-            <p><strong>Status:</strong> @Model.Status</p>
-            <p><strong>Total Amount:</strong> $@Model.TotalAmount</p>
-        </div>
-
-        <div class="card-body">
-            <h5>Products in this Order:</h5>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Aroma</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var product in Model.OrderProducts)
-                    {
-                        <tr>
-                            <td>@product.ProductName</td>
-                            <td>@product.Aroma</td>
-                            <td>@product.CategoryName</td>
-                            <td>$@product.Price</td>
-                            <td>@product.Quantity</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <p class="text-muted">Нямате направени поръчки.</p>
 }
+
+
 
 <a asp-action="Index"  asp-controller="Product" class="btn btn-secondary mt-3">Back to Products</a>

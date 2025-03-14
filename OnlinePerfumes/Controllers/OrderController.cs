@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using OnlinePerfumes.Models.ViewModels;
 using OnlinePerfumes.Models.ViewModels.Customer;
 using OnlinePerfumes.Models.ViewModels.Order;
 using OnlinePerfumes.Models.ViewModels.OrderProduct;
+using System.Security.Claims;
 
 namespace OnlinePerfumes.Controllers
 {
@@ -184,21 +186,31 @@ namespace OnlinePerfumes.Controllers
             }).FirstOrDefault();
             return View(model);
         }
-       
-        public async Task<IActionResult> MyDetails(int orderId)
+     
+        public async Task<IActionResult> MyDetails()
         {
-            
-            var order = await _orderservice.GetOrderById(orderId);
-            if (order == null)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var customer =( await _customerservice.Find(c => c.UserId == user.Id)).FirstOrDefault();
+            if (customer == null) return NotFound("Customer not found");
+
+            var orders = await _orderservice.Find(o => o.CustomerId == customer.Id)
+         .Include(o => o.OrderProducts)            // Включване на свързаните продукти
+         .ThenInclude(op => op.Product)            // Включване на продуктите в OrderProduct
+         .ThenInclude(p => p.Category)            // Включване на категорията на продукта
+         .ToListAsync();
+            if (orders == null || !orders.Any())
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Нямате направени поръчки.";
+                return RedirectToAction("Index", "Home");
             }
-            // Map Order entity to ViewModel in the Controller
-            var viewModel = new CustomerOrderDetailsViewModel
+
+            var viewModel = orders.Select(order => new CustomerOrderDetailsViewModel()
             {
                 OrderId = order.Id,
                 OrderDate = order.OrderDate,
-                Status = order.Status ,// Assuming OrderStatus has a Name
+                Status = order.Status,
                 OrderProducts = order.OrderProducts.Select(op => new OrderProductViewModel
                 {
                     ProductName = op.Product.Name,
@@ -206,11 +218,11 @@ namespace OnlinePerfumes.Controllers
                     CategoryName = op.Product.Category.Name,
                     Price = op.Product?.Price ?? 0,
                     Quantity = op.Quantity
-                }).ToList() ?? new List<OrderProductViewModel>()
-            };
-
+                }).ToList()
+            }).ToList() ;
             return View(viewModel);
         }
+        
 
         public async Task<IActionResult> Index()
         {
