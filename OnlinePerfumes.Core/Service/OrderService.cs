@@ -58,15 +58,9 @@ namespace OnlinePerfumes.Core.Service
            return await _repo.GetByIdAsync(id);
         }
 
-        public async Task<Order> GetOrderById(int? id)
+        public Task<Order> GetOrderById(int? id)
         {
-            var query = _repo
-                      .GetAll() // Get IQueryable from the repository
-                      .Where(o => o.Id == id)
-                      .Include(o => o.OrderProducts) // Eagerly load OrderProducts
-                      .ThenInclude(op => op.Product) // Eagerly load Product details
-                      .ThenInclude(p => p.Category);
-            return await query.FirstOrDefaultAsync();
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(Order order)
@@ -74,5 +68,9 @@ namespace OnlinePerfumes.Core.Service
            await _repo.UpdateAsync(order);
         }
 
+        IQueryable<Order> IOrderService.Find(Expression<Func<Order, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
