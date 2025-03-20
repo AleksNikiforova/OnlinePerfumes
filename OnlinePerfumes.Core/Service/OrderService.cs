@@ -38,6 +38,16 @@ namespace OnlinePerfumes.Core.Service
          
         }
 
+        public async Task<List<Order>> FindWithIncludesAsync(Expression<Func<Order, bool>> filter)
+        {
+            return await _repo.GetAll()
+           .Where(filter)
+           .Include(o => o.OrderProducts)
+               .ThenInclude(op => op.Product)
+                   .ThenInclude(p => p.Category)
+           .ToListAsync();
+        }
+
         public IQueryable<Order> GetAll()
         {
             return _repo.GetAll();
@@ -55,22 +65,39 @@ namespace OnlinePerfumes.Core.Service
 
         public async Task<Order> GetByIdAsync(int id)
         {
-           return await _repo.GetByIdAsync(id);
+            if (id == null)
+            {
+                return null;
+            }
+
+            var order = await _repo
+                              .GetAll() // Get IQueryable from the repository
+                              .Where(o => o.Id == id)
+                              .Include(o => o.OrderProducts) // Eagerly load OrderProducts
+                              .ThenInclude(op => op.Product) // Eagerly load Product details
+                              .ThenInclude(p => p.Category)
+                              .FirstOrDefaultAsync();
+
+            return order;
         }
 
-        public Task<Order> GetOrderById(int? id)
+        public async Task<Order> GetOrderById(int? id)
         {
-            throw new NotImplementedException();
+            var query = _repo
+                      .GetAll() // Get IQueryable from the repository
+                      .Where(o => o.Id == id)
+                      .Include(o => o.OrderProducts) // Eagerly load OrderProducts
+                      .ThenInclude(op => op.Product) // Eagerly load Product details
+                      .ThenInclude(p => p.Category);
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task UpdateAsync(Order order)
         {
            await _repo.UpdateAsync(order);
+            
         }
 
-        IQueryable<Order> IOrderService.Find(Expression<Func<Order, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

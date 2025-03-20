@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlinePerfumes.Core;
@@ -206,5 +207,32 @@ namespace OnlinePerfumes.Controllers
             await _productService.DeleteAsync(id); // Истинско изтриване
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult Search(ProductSearchViewModel searchModel)
+        {
+            var products = _productService.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(searchModel.Name))
+            {
+                products = products.Where(p => p.Name.Contains(searchModel.Name));
+            }
+
+            searchModel.Products = products.ToList();
+
+
+            return RedirectToAction("Index","Product");
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
     }
 }
+

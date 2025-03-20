@@ -173,7 +173,7 @@ namespace OnlinePerfumes.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Details(int id)
         {
-            var model=_orderProductservice.GetAll().Where(x=>x.OrderId == id).Include(x=>x.Order).ThenInclude(x => x.Customer).Include(x => x.Product).ThenInclude(p => p.Category).Select(x => new OrderDetailsViewModel()
+            var model=_orderProductservice.GetAll().Where(x=>x.OrderId == id).Include(x=>x.Order).ThenInclude(x => x.Customer).ThenInclude(c => c.User).Include(x => x.Product).ThenInclude(p => p.Category).Select(x => new OrderDetailsViewModel()
             {
                 Aroma = x.Product.Aroma,
                 CategoryName = x.Product.Category.Name,
@@ -182,7 +182,10 @@ namespace OnlinePerfumes.Controllers
                 Email = x.Order.Customer.User.Email,
                 CustomerName = x.Order.Customer.FirstName,
                 LastName = x.Order.Customer.LastName,
-                ProductName = x.Product.Name
+                ProductName = x.Product.Name,
+                Address=x.Order.Customer.Address,
+                City=x.Order.Customer.City,
+                Phone=x.Order.Customer.User.PhoneNumber
             }).FirstOrDefault();
             return View(model);
         }
@@ -195,11 +198,7 @@ namespace OnlinePerfumes.Controllers
             var customer =( await _customerservice.Find(c => c.UserId == user.Id)).FirstOrDefault();
             if (customer == null) return NotFound("Customer not found");
 
-            var orders = await _orderservice.Find(o => o.CustomerId == customer.Id)
-         .Include(o => o.OrderProducts)            // Включване на свързаните продукти
-         .ThenInclude(op => op.Product)            // Включване на продуктите в OrderProduct
-         .ThenInclude(p => p.Category)            // Включване на категорията на продукта
-         .ToListAsync();
+            var orders = await _orderservice.FindWithIncludesAsync(o => o.CustomerId == customer.Id);
             if (orders == null || !orders.Any())
             {
                 TempData["ErrorMessage"] = "Нямате направени поръчки.";
@@ -210,7 +209,7 @@ namespace OnlinePerfumes.Controllers
             {
                 OrderId = order.Id,
                 OrderDate = order.OrderDate,
-                Status = order.Status,
+                Status = order.Status.ToString(),
                 OrderProducts = order.OrderProducts.Select(op => new OrderProductViewModel
                 {
                     ProductName = op.Product.Name,
@@ -222,8 +221,8 @@ namespace OnlinePerfumes.Controllers
             }).ToList() ;
             return View(viewModel);
         }
-        
 
+        
         public async Task<IActionResult> Index()
         {
             return View();

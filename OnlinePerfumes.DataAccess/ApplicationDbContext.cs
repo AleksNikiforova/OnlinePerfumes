@@ -24,6 +24,7 @@ namespace OnlinePerfumes.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+           
 
           //   builder.Entity<Category>().HasData(
           //    new Category { Id = 1, Name = "Парфюми за жени" },

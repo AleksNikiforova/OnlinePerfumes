@@ -1,0 +1,35 @@
+﻿@* @model OnlinePerfumes.Models.ViewModels.Product.ProductSearchViewModel
+<link rel="stylesheet" href="~/css/Search.css" />
+
+<!-- Търсачка на началната страница -->
+<section class="search-section">
+    <h2>Търсете Вашият Парфюм</h2>
+
+    <form method="get" asp-action="Search" class="search-form">
+        <input type="text" name="name" value="@Model.Name" placeholder="Въведете име на парфюм..." class="search-input" />
+        <button type="submit" class="search-button">Търси</button>
+    </form>
+</section>
+
+<!-- Резултати от търсене -->
+@if (Model.Products != null && Model.Products.Any())
+{
+    <section class="search-results">
+        <h3>Резултати от търсенето</h3>
+        <ul class="product-list">
+            @foreach (var product in Model.Products)
+            {
+                <li class="product-item">
+                    <p>@product.Name - @product.Price</p>
+                </li>
+            }
+        </ul>
+    </section>
+}
+else if (Model.Products != null)
+{
+    <p>Няма намерени парфюми.</p>
+}
+   *@
+
+

@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using OnlinePerfumes.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OnlinePerfumes.Models.ViewModels.Product
 {
     public class ProductFilterViewModel
     {
-        public int? CategoryId { get; set; }
-        public decimal? MinPrice { get; set; }
-        public decimal? MaxPrice { get; set; }
-        public string? Aroma { get; set; }
-        public SelectList Categories { get; set; }
+        public int? CategoryId { get; set; } // Категория
+        public decimal? MinPrice { get; set; } // Минимална цена
+        public decimal? MaxPrice { get; set; } // Максимална цена
+        public string? Aroma { get; set; } // Аромат
+
+
+        public SelectList Categories { get; set; } // За попълване на падащото меню
         public List<Models.Product> Products { get; set; }
     }
 }

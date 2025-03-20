@@ -146,7 +146,7 @@ namespace OnlinePerfumes.Controllers
             {
                 CustomerId = customer.Id,
                 OrderDate = DateTime.UtcNow,
-                Status = "Изчаква обработка",
+                Status = OrderStatus.Oбработка,
                 TotalAmount = cartViewModel.TotalPrice,// Използваме готовото изчислени
                 OrderProducts = cartItems.Select(ci => new OrderProduct
                 {

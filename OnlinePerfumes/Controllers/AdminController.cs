@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using OnlinePerfumes.Core.IServices;
+using OnlinePerfumes.Core.Service;
+using OnlinePerfumes.Models;
 using OnlinePerfumes.Models.ViewModels;
 using OnlinePerfumes.Models.ViewModels.Customer;
+using OnlinePerfumes.Models.ViewModels.OrderProduct;
 using OnlinePerfumes.Utility;
 
 namespace OnlinePerfumes.Controllers
@@ -52,7 +55,7 @@ namespace OnlinePerfumes.Controllers
 
         public async Task<IActionResult> CustomerOrder()
         {
-            var list=await _customerService.GetAll().Include(x=>x.Orders).ToListAsync();
+            /*var list=await _customerService.GetAll().Include(x=>x.Orders).ToListAsync();
             var customerOrderList = new List<CustomerOrderViewModel>();
             foreach (var customer in list)
             {
@@ -69,6 +72,33 @@ namespace OnlinePerfumes.Controllers
                     });
                 }
             }
+            return View(customerOrderList);*/
+            var list = await _customerService.GetAll()
+                                             .Include(x => x.Orders)
+                                             .ThenInclude(o => o.OrderProducts)
+                                             .ThenInclude(op => op.Product)
+                                             .ThenInclude(p => p.Category)
+                                             .ToListAsync();
+
+            var customerOrderList = list
+                .SelectMany(customer => customer.Orders, (customer, order) => new CustomerOrderViewModel
+                {
+                    OrderId = order.Id,
+                    CustomerName = $"{customer.FirstName} {customer.LastName}",
+                    Email = customer.User?.Email,
+                    OrderDate = order.OrderDate,
+                    Status = order.Status.ToString(),
+                    OrderProducts = order.OrderProducts.Select(op => new OrderProductViewModel
+                    {
+                        ProductName = op.Product.Name,
+                        Aroma = op.Product.Aroma,
+                        CategoryName = op.Product.Category.Name,
+                        Price = op.Product.Price,
+                        Quantity = op.Quantity
+                    }).ToList()
+                })
+                .ToList();
+
             return View(customerOrderList);
         }
 
@@ -146,6 +176,40 @@ namespace OnlinePerfumes.Controllers
 
             TempData["Success"] = "Ролята е променена успешно.";
             return RedirectToAction("ListCustomers");
+        }
+        [HttpPost]
+        public async Task<IActionResult> ConfirmOrder(int id)
+        {
+            var order = await _orderService.GetByIdAsync(id);
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = "Поръчката не беше намерена!";
+                return RedirectToAction("CustomerOrder");
+            }
+
+            order.Status = OrderStatus.Потвърдена;
+            await _orderService.UpdateAsync(order);
+
+
+            TempData["SuccessMessage"] = "Поръчката беше потвърдена успешно!";
+            return RedirectToAction("CustomerOrder");
+        }
+        [HttpPost]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            var order = await _orderService.GetByIdAsync(id);
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = "Поръчката не беше намерена!";
+                return RedirectToAction("CustomerOrder");
+            }
+
+            // ✅ Променяме статуса на "Отказана"
+            order.Status = OrderStatus.Отказана;
+            await _orderService.UpdateAsync(order);
+
+            TempData["SuccessMessage"] = "Поръчката беше отказана успешно!";
+            return RedirectToAction("CustomerOrder");
         }
         public IActionResult Index()
         {

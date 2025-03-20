@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace OnlinePerfumes.Models
 {
+    public enum OrderStatus
+    {
+        Oбработка = 0,       // Изчаква потвърждение
+        Потвърдена = 1,     // Потвърдена
+        Отказана = 2       // Отказана
+
+    }
+
     public class Order
     {
         [Key]
@@ -19,6 +28,20 @@ namespace OnlinePerfumes.Models
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
-        public string Status { get; set; } = "Изчаква обработка";
+        //public string Status { get; set; }
+        [Required]
+        public virtual int OrderStatusId
+        {
+            get
+            {
+                return (int)this.Status;
+            }
+            set
+            {
+                Status = (OrderStatus)value;
+            }
+        }
+        [EnumDataType(typeof(OrderStatus))]
+        public OrderStatus Status { get; set; }
     }
 }

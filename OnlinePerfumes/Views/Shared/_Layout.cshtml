@@ -76,6 +76,13 @@
                                 </div>
                             </li>
                         }
+                        <!-- In your _Layout.cshtml or Master Page -->
+                        <div class="search-container">
+                            <form action="@Url.Action("Search", "Product")" method="post">
+                                <input type="text" name="searchModel" placeholder="Search for perfumes..." required>
+                                <button type="submit">Search</button>
+                            </form>
+                        </div>
                     </ul>
                     @if (User.IsInRole(SD.UserRole))
                     {
