@@ -27,8 +27,7 @@ namespace OnlinePerfumes.Controllers
 
         public async Task<IActionResult> Index()
         {
-           
-            var products=await _productService.GetAllAsync();
+            var products = await _productService.GetAllAsync();
             var productViewModel=new List<ProductAllViewModel>();
             foreach (var product in products)
             {
@@ -51,6 +50,7 @@ namespace OnlinePerfumes.Controllers
                 productViewModel.Add(viewModel);
             }
             return View(productViewModel);
+               
         }
 
         [HttpGet]
@@ -208,30 +208,66 @@ namespace OnlinePerfumes.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult Search(ProductSearchViewModel searchModel)
+        public async Task<IActionResult> Search(ProductSearchViewModel searchModel)
         {
-            var products = _productService.GetAll();
+            var productsQuery = _productService.GetAll();
 
+            // Изпълняваме заявката и я конвертираме в List
+            var productsList = await productsQuery.ToListAsync();
+
+            // Филтрираме продуктите в C# (не в базата, за да избегнем грешката)
             if (!string.IsNullOrWhiteSpace(searchModel.Name))
             {
-                products = products.Where(p => p.Name.Contains(searchModel.Name));
+                productsList = productsList
+                    .Where(p => p.Name.ToLower().Contains(searchModel.Name.ToLower()))
+                    .ToList();
             }
 
-            searchModel.Products = products.ToList();
+            // Подготвяме ViewModel списъка
+            var productViewModel = new List<ProductAllViewModel>();
+            foreach (var product in productsList)
+            {
+                var category = await _categoryService.GetByIdAsync(product.CategoryId);
 
+                var viewModel = new ProductAllViewModel
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Aroma = product.Aroma,
+                    Price = product.Price,
+                    CategoryId = category?.Id ?? 0, // Защита от null
+                    CategoryName = category?.Name ?? "Неизвестна категория",
+                    StockQuantity = product.StockQuantity,
+                    ImagePath = product.ImagePath
+                };
+                productViewModel.Add(viewModel);
+            }
 
-            return RedirectToAction("Index","Product");
+            return View("Index", productViewModel);
         }
+
+        
+
+        //    return RedirectToAction("Index","Product", listProd);
+        //}
         public async Task<IActionResult> Details(int id)
         {
             var product = await _productService.GetByIdAsync(id);
-
             if (product == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            var viewModel = new ProductDetailsViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                ImageUrl = product.ImagePath,
+                Price = product.Price,
+                Description = product.Description
+            };
+
+            return View(viewModel);
         }
     }
 }

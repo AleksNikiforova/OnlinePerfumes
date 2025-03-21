@@ -78,9 +78,9 @@
                         }
                         <!-- In your _Layout.cshtml or Master Page -->
                         <div class="search-container">
-                            <form action="@Url.Action("Search", "Product")" method="post">
-                                <input type="text" name="searchModel" placeholder="Search for perfumes..." required>
-                                <button type="submit">Search</button>
+                            <form asp-action="Search" asp-controller="Product" method="post">
+                                <input type="text" name="Name" class="form-control" placeholder="Търси продукт...">
+                                <button type="submit" class="btn btn-primary mt-2">Търси</button>
                             </form>
                         </div>
                     </ul>

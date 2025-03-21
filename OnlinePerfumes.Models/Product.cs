@@ -35,6 +35,7 @@ namespace OnlinePerfumes.Models
         [ForeignKey("Category")]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
+        
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
         public ICollection<OrderProduct> OrderProducts=new List<OrderProduct>();

@@ -14,32 +14,17 @@ namespace OnlinePerfumes.DataAccess
     public class ApplicationDbContext: IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        DbSet<Customer> Customer { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Order> Orders { get; set; }
-        DbSet<OrderProduct>OrdersProducts { get; set; }
-        DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct>OrdersProducts { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
            
-
-          //   builder.Entity<Category>().HasData(
-          //    new Category { Id = 1, Name = "Парфюми за жени" },
-          //    new Category { Id = 2, Name = "Парфюми за мъже" },
-          //    new Category { Id = 3, Name = "Унисекс парфюми" },
-          //    new Category { Id = 4, Name = "Луксозни парфюми" }
-          //);
-
-           /*  builder.Entity<Product>().HasData(
-             new Product { ProductId = 1, Name = "Chanel No.5", Price = 120, CategoryId = 1, Aroma = "Цветен" },
-             new Product { ProductId = 2, Name = "Dior", Price = 95, CategoryId = 2, Aroma = "Дървесен" },
-             new Product { ProductId = 3, Name = "Opium", Price = 100, CategoryId = 3, Aroma = "Цветен с ванилия" }
-      );*/
-            
-
             //builder.Entity<Product>().HasKey(x => new { x.CategoryId });
             builder.Entity<Product>().HasOne(x=>x.Category)
                   .WithMany(x=>x.Products)

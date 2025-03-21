@@ -96,7 +96,8 @@ namespace OnlinePerfumes
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                await DbInitializer.SeedAsync(services);
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                await DbInitializer.Initialize(context);
             }
 
             // Configure the HTTP request pipeline.

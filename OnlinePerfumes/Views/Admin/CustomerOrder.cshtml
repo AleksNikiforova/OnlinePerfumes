@@ -31,28 +31,25 @@
                             <li>@product.ProductName - @product.Aroma (@product.Quantity бр.)</li>
                         }
                     </ul>
-
-                    @if (order.Status != OrderStatus.Потвърдена.ToString())
-                        {
+                    @if (order.Status != OrderStatus.Потвърдена.ToString() && order.Status != OrderStatus.Отказана.ToString())
+                    {
                         <form asp-action="ConfirmOrder" asp-controller="Admin" method="post">
                             <input type="hidden" name="orderId" value="@order.OrderId" />
-                            <button type="submit" class="btn btn-success">Потвърди</button>
+                            <button type="submit" class="btn btn-success">Потвърдена</button>
                         </form>
-                        }
-                        else
-                        {
-                        <span class="text-success">✔ Потвърдена</span>
-                        }
-                
-                
-                        @if (order.Status != OrderStatus.Потвърдена.ToString())
-                        {
+
                         <form asp-action="CancelOrder" asp-controller="Admin" method="post">
                             <input type="hidden" name="orderId" value="@order.OrderId" />
-                            <button type="submit" class="btn btn-success">Отказана</button>
+                            <button type="submit" class="btn btn-danger">Отказана</button>
                         </form>
-                        }
-
+                    }
+                    else if (order.Status == OrderStatus.Отказана.ToString())
+                    {
+                        <span class="text-danger">❌ Отказана</span>
+                    }
+                    else{
+                        <span class="text-danger">✔ Потвърдена</span>
+                    }
                 
                 </td>
             </tr>

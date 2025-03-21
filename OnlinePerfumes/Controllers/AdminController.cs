@@ -178,9 +178,9 @@ namespace OnlinePerfumes.Controllers
             return RedirectToAction("ListCustomers");
         }
         [HttpPost]
-        public async Task<IActionResult> ConfirmOrder(int id)
+        public async Task<IActionResult> ConfirmOrder(int OrderId)
         {
-            var order = await _orderService.GetByIdAsync(id);
+            var order = await _orderService.GetByIdAsync(OrderId);
             if (order == null)
             {
                 TempData["ErrorMessage"] = "Поръчката не беше намерена!";
@@ -195,9 +195,9 @@ namespace OnlinePerfumes.Controllers
             return RedirectToAction("CustomerOrder");
         }
         [HttpPost]
-        public async Task<IActionResult> CancelOrder(int id)
+        public async Task<IActionResult> CancelOrder(int OrderId)
         {
-            var order = await _orderService.GetByIdAsync(id);
+            var order = await _orderService.GetByIdAsync(OrderId);
             if (order == null)
             {
                 TempData["ErrorMessage"] = "Поръчката не беше намерена!";
