@@ -1,0 +1,66 @@
+﻿@using System.Globalization
+@model OnlinePerfumes.Models.ViewModels.Product.ProductFilterViewModel
+
+<div class="container mt-4">
+    <h1 class="text-center">Филтрирай продукти</h1>
+
+    <!-- Форма за филтриране -->
+    <form method="get" asp-action="Filter">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label for="CategoryId">Категория</label>
+                <select asp-for="CategoryId" asp-items="Model.Categories.Distinct()" class="form-control">
+                    <option value="">Всички категории</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="MinPrice">Минимална цена</label>
+                <input type="number" id="MinPrice" name="MinPrice" class="form-control" min="0" step="0.01" value="@Model.MinPrice" />
+            </div>
+            <div class="col-md-4">
+                <label for="MaxPrice">Максимална цена</label>
+                <input type="number" id="MaxPrice" name="MaxPrice" class="form-control" min="0" step="0.01" value="@Model.MaxPrice" />
+            </div>
+        </div>
+        <div class="mb-4">
+            <label for="Aroma">Аромат</label>
+            <input type="text" id="Aroma" name="Aroma" class="form-control" value="@Model.Aroma" />
+        </div>
+        <button type="submit" class="btn btn-primary">Филтрирай</button>
+    </form>
+
+    <!-- Продукти, които отговарят на филтрите -->
+    @if (Model.Products != null && Model.Products.Any())
+    {
+        <h3 class="mt-5">Резултати от филтрирането</h3>
+        <div class="row">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(product.ImagePath))
+                        {
+                            <img src="@product.ImagePath" class="card-img-top" alt="@product.Name" />
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/250" class="card-img-top" alt="No image available" />
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">Aroma: @product.Aroma</p>
+                            <p class="card-text">Price: @product.Price.ToString("C", new CultureInfo("bg-BG"))</p>
+                            <p class="card-text">Category: @product.Category.Name</p>
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info">Виж детайли</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Няма продукти, които отговарят на зададените филтри.</p>
+    }
+</div>

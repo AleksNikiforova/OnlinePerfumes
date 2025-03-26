@@ -25,32 +25,73 @@ namespace OnlinePerfumes.Controllers
             _orderProductService = orderProductService; 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ProductFilterViewModel? filter)
         {
-            var products = await _productService.GetAllAsync();
-            var productViewModel=new List<ProductAllViewModel>();
-            foreach (var product in products)
+            var query = _productService.GetAll().AsQueryable();
+            if (filter.CategoryId != null)
             {
-                var category=await _categoryService.GetByIdAsync(product.CategoryId);
-                /*if (category == null)
-                {
-                    throw new Exception($"Category with ID {product.CategoryId} not found.");
-                }*/
-                var viewModel = new ProductAllViewModel
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Aroma = product.Aroma,
-                    Price = product.Price,
-                    CategoryId = category.Id,
-                    CategoryName = category.Name,
-                    StockQuantity = product.StockQuantity,
-                    ImagePath = product.ImagePath
-                };
-                productViewModel.Add(viewModel);
+                query = query.Where(p => p.CategoryId == filter.CategoryId.Value);
             }
-            return View(productViewModel);
-               
+            if (filter.MinPrice != null)
+            {
+                query = query.Where(p => p.Price >= filter.MinPrice.Value);
+            }
+            if (filter.MaxPrice != null)
+            {
+                query = query.Where(p => p.Price <= filter.MaxPrice.Value);
+            }
+            if (!string.IsNullOrEmpty(filter.Aroma))
+            {
+                query = query.Where(p => p.Aroma.Contains(filter.Aroma));
+            }
+            var categories = _categoryService.GetAll()
+    .Select(c => new { c.Id, c.Name })
+    .Distinct()
+    .ToList();
+            var model = new ProductFilterViewModel
+            {
+                CategoryId = filter.CategoryId,
+                MinPrice = filter.MinPrice,
+                MaxPrice = filter.MaxPrice,
+                Aroma = filter.Aroma,
+                Categories = categories.Any() ? new SelectList(categories, "Id", "Name") : new SelectList(new List<Category>()),
+                Products = query.Include(p => p.Category).ToList(),
+                ProductsAll = await query.Select(p => new ProductAllViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Aroma = p.Aroma,
+                    ImagePath = p.ImagePath,
+                    CategoryName = p.Category.Name
+                }).ToListAsync()
+            };
+            return View(model);
+
+            //var products = await _productService.GetAllAsync();
+            //var productViewModel=new List<ProductAllViewModel>();
+            //foreach (var product in products)
+            //{
+            //    var category=await _categoryService.GetByIdAsync(product.CategoryId);
+            //    /*if (category == null)
+            //    {
+            //        throw new Exception($"Category with ID {product.CategoryId} not found.");
+            //    }*/
+            //    var viewModel = new ProductAllViewModel
+            //    {
+            //        Id = product.Id,
+            //        Name = product.Name,
+            //        Aroma = product.Aroma,
+            //        Price = product.Price,
+            //        CategoryId = category.Id,
+            //        CategoryName = category.Name,
+            //        StockQuantity = product.StockQuantity,
+            //        ImagePath = product.ImagePath
+            //    };
+            //    productViewModel.Add(viewModel);
+            //}
+            //return View(productViewModel);
+
         }
 
         [HttpGet]
@@ -207,48 +248,112 @@ namespace OnlinePerfumes.Controllers
             await _productService.DeleteAsync(id); // Истинско изтриване
             return RedirectToAction("Index");
         }
-        [HttpPost]
-        public async Task<IActionResult> Search(ProductSearchViewModel searchModel)
+
+        //[HttpPost]
+        public async Task<IActionResult> Search(string Name)
         {
+            ViewData["SearchQuery"] = Name;
+
             var productsQuery = _productService.GetAll();
-
-            // Изпълняваме заявката и я конвертираме в List
             var productsList = await productsQuery.ToListAsync();
-
-            // Филтрираме продуктите в C# (не в базата, за да избегнем грешката)
-            if (!string.IsNullOrWhiteSpace(searchModel.Name))
+            if (!string.IsNullOrWhiteSpace(Name))
             {
+
+                var searchWords = Name
+                .Split(new char[] { ' ', ',', '.' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(word => word.ToLower())
+                .ToList();
+
                 productsList = productsList
-                    .Where(p => p.Name.ToLower().Contains(searchModel.Name.ToLower()))
-                    .ToList();
+                .Where(p => searchWords.All(word => p.Name.ToLower().Contains(word)))
+                .ToList();
             }
 
-            // Подготвяме ViewModel списъка
-            var productViewModel = new List<ProductAllViewModel>();
-            foreach (var product in productsList)
+
+            var productViewModel = productsList.Select(product => new ProductAllViewModel
             {
-                var category = await _categoryService.GetByIdAsync(product.CategoryId);
+                Id = product.Id,
+                Name = product.Name,
+                Aroma = product.Aroma,
+                Price = product.Price,
+                //CategoryId = category.Id,
+                //CategoryName = category.Name,
+                StockQuantity = product.StockQuantity,
+                ImagePath = product.ImagePath
+            }).ToList();
 
-                var viewModel = new ProductAllViewModel
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Aroma = product.Aroma,
-                    Price = product.Price,
-                    CategoryId = category?.Id ?? 0, // Защита от null
-                    CategoryName = category?.Name ?? "Неизвестна категория",
-                    StockQuantity = product.StockQuantity,
-                    ImagePath = product.ImagePath
-                };
-                productViewModel.Add(viewModel);
-            }
-
-            return View("Index", productViewModel);
+            return View("Search", productViewModel);
         }
+            //var productsQuery = _productService.GetAll();
+
+            //// Изпълняваме заявката и я конвертираме в List
+            //var productsList = await productsQuery.ToListAsync();
+
+            //// Филтрираме продуктите в C# (не в базата, за да избегнем грешката)
+            //if (!string.IsNullOrWhiteSpace(searchModel.Name))
+            //{
+            //    productsList = productsList
+            //        .Where(p => p.Name.ToLower().Contains(searchModel.Name.ToLower()))
+            //        .ToList();
+            //}
+
+            //// Подготвяме ViewModel списъка
+            //var productViewModel = new List<ProductSearchViewModel>();
+            //foreach (var product in productsList)
+            //{
+            //   // var category = await _categoryService.GetByIdAsync(product.CategoryId);
+
+            //    var viewModel = new ProductSearchViewModel
+            //    {
+            //        Name = product.Name,
+            //        Aroma = product.Aroma,
+            //        Price = product.Price
+            //    };
+            //    productViewModel.Add(viewModel);
+            //}
+
+        //    //return View("Search", productViewModel);
+        //}
 
         
 
         //    return RedirectToAction("Index","Product", listProd);
+        //}
+
+        //public async Task<IActionResult> Filter(ProductFilterViewModel? filter)
+        //{
+    //        var query = _productService.GetAll().AsQueryable();
+    //        if (filter.CategoryId != null)
+    //        {
+    //            query = query.Where(p => p.CategoryId == filter.CategoryId.Value);
+    //        }
+    //        if(filter.MinPrice != null)
+    //        {
+    //            query=query.Where(p=>p.Price>=filter.MinPrice.Value);
+    //        }
+    //        if(filter.MaxPrice != null)
+    //        {
+    //            query=query.Where(p=>p.Price<=filter.MaxPrice.Value);
+    //        }
+    //        if(!string.IsNullOrEmpty(filter.Aroma))
+    //        {
+    //            query=query.Where(p=>p.Aroma.Contains(filter.Aroma));
+    //        }
+    //        var categories = _categoryService.GetAll()
+    //.Select(c => new { c.Id, c.Name })
+    //.Distinct()
+    //.ToList(); 
+    //        var products = query.Include(p => p.Category).ToList();
+    //        var model = new ProductFilterViewModel
+    //        {
+    //            CategoryId = filter.CategoryId,
+    //            MinPrice = filter.MinPrice,
+    //            MaxPrice = filter.MaxPrice,
+    //            Aroma = filter.Aroma,
+    //            Categories = categories.Any() ? new SelectList(categories, "Id", "Name") : new SelectList(new List<Category>()),
+    //            Products = products ?? new List<Product>()
+    //        };
+    //        return View(model);
         //}
         public async Task<IActionResult> Details(int id)
         {

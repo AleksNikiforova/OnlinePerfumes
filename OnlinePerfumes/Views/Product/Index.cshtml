@@ -3,11 +3,13 @@
 @using OnlinePerfumes.Models
 @using OnlinePerfumes.Models.ViewModels.Product
 @using System.Globalization
-@model IEnumerable<ProductAllViewModel>
+@model OnlinePerfumes.Models.ViewModels.Product.ProductFilterViewModel
 @using Microsoft.AspNetCore.Identity
 @using OnlinePerfumes.Utility
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+
+
 
 <!DOCTYPE html>
 <html lang="bg">
@@ -72,6 +74,57 @@
                 </div>
             </div>
         </div>
+        <form method="get" asp-action="Index">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <label for="CategoryId">Категория</label>
+                    <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control">
+                        <option value="">Всички категории</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="MinPrice">Минимална цена</label>
+                    <input type="number" id="MinPrice" name="MinPrice" class="form-control" min="0" step="0.01" value="@Model.MinPrice" />
+                </div>
+                <div class="col-md-4">
+                    <label for="MaxPrice">Максимална цена</label>
+                    <input type="number" id="MaxPrice" name="MaxPrice" class="form-control" min="0" step="0.01" value="@Model.MaxPrice" />
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="Aroma">Аромат</label>
+                <input type="text" id="Aroma" name="Aroma" class="form-control" value="@Model.Aroma" />
+            </div>
+            <button type="submit" class="btn btn-primary">Филтрирай</button>
+        </form>
+        <div class="row">
+            @foreach (var product in Model.ProductsAll)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="@product.ImagePath" class="card-img-top" alt="@product.Name" />
+
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">Аромат: @product.Aroma</p>
+                            <p class="card-text">Цена: @product.Price.ToString("C", new CultureInfo("bg-BG"))</p>
+                            <p class="card-text">Категория: @product.CategoryName</p>
+                            @if (User.IsInRole(SD.AdminRole))
+                            {
+                                <p class="card-text">StockQuantity: @product.StockQuantity</p>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
+                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
+                            }
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info">Виж детайли</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+       @*  
         <h1 class="text-center mb-4">All Products</h1>
         <div class="row">
             @foreach (var product in Model)
@@ -110,7 +163,7 @@
                         
                     </div>
                 </div>
-            }
+            } *@
         </div>
     </div>
     <script>

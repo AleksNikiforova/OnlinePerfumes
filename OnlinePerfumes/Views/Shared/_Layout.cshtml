@@ -77,12 +77,13 @@
                             </li>
                         }
                         <!-- In your _Layout.cshtml or Master Page -->
-                        <div class="search-container">
-                            <form asp-action="Search" asp-controller="Product" method="post">
+                         <div class="search-container">
+                            <form asp-action="Search" asp-controller="Product" method="get">
                                 <input type="text" name="Name" class="form-control" placeholder="Търси продукт...">
                                 <button type="submit" class="btn btn-primary mt-2">Търси</button>
                             </form>
-                        </div>
+                        </div> 
+
                     </ul>
                     @if (User.IsInRole(SD.UserRole))
                     {
