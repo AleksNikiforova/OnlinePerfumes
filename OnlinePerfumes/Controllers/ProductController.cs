@@ -63,7 +63,8 @@ namespace OnlinePerfumes.Controllers
                     Price = p.Price,
                     Aroma = p.Aroma,
                     ImagePath = p.ImagePath,
-                    CategoryName = p.Category.Name
+                    CategoryName = p.Category.Name,
+                    StockQuantity=p.StockQuantity
                 }).ToListAsync()
             };
             return View(model);
