@@ -1,4 +1,5 @@
-﻿@model OnlinePerfumes.Models.ViewModels.Product.ProductDetailsViewModel
+﻿@using OnlinePerfumes.Utility
+@model OnlinePerfumes.Models.ViewModels.Product.ProductDetailsViewModel
 
 <div class="container mt-5">
     <div class="card">
@@ -11,14 +12,20 @@
                     <h2 class="card-title">@Model.Name</h2>
                     <h4 class="text-primary">Цена: @Model.Price лв.</h4>
                     <p class="card-text">@Model.Description</p>
-                    <form asp-action="AddToCart" asp-controller="Cart" method="post">
-                        <input type="hidden" name="productId" value="@Model.Id" />
-                        <label for="quantity">Количество:</label>
-                        <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control mb-2" style="width: 80px;" />
-                        <button type="submit" class="btn btn-success">
-                            🛒 Добави в количката
-                        </button>
-                    </form>
+                    @if (User.IsInRole(SD.UserRole))
+                    {
+
+
+                        <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                            <input type="hidden" name="productId" value="@Model.Id" />
+                            <label for="quantity">Количество:</label>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" class="form-control mb-2" style="width: 80px;" />
+                            <button type="submit" class="btn btn-success">
+                                🛒 Добави в количката
+                            </button>
+                        </form>
+                    }
+                    
                     <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Назад</a>
                 </div>
             </div>
