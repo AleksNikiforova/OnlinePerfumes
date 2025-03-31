@@ -83,7 +83,7 @@
                          <div class="search-container">
                             <form asp-action="Search" asp-controller="Product" method="get">
                                 <input type="text" name="Name" class="form-control" placeholder="Търси продукт...">
-                                <button type="submit" class="btn btn-primary mt-2">Търси</button>
+                                <button type="submit" class="btn btn-primary mt-2" clip-path: padding-box;>Търси</button>
                             </form>
                         </div> 
 
@@ -110,6 +110,56 @@
             @RenderBody()
         </main>
     </div>
+    <style>
+        .navbar {
+            padding: 1rem 2rem; /* More spacious padding */
+            background-color: #1a1a1a; /* Darker, sleek background */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: chocolate !important;
+            transition: color 0.3s;
+        }
+
+            .navbar-brand:hover {
+                color: chocolate !important; /* Highlight color on hover */
+            }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            padding: 0.5rem 1.5rem; /* Better spacing */
+            transition: all 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: chocolate !important;
+                background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+                border-radius: 5px;
+            }
+
+        .navbar-nav .nav-item {
+            margin: 0 0.5rem; /* Space between items */
+        }
+
+        /* Ensure dropdowns look good */
+        .dropdown-menu {
+            background-color: #1a1a1a;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-item {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+            .dropdown-item:hover {
+                background-color: #4CAF50;
+                color: #fff;
+            }
+    </style>
     @* <footer class="site-footer">
         <div class="container"><p class="m-0 small">Copyright &copy; Your Website 2025</p></div>
     </footer>
