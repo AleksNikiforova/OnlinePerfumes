@@ -97,7 +97,7 @@ body {
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
-    color: var(--bs-body-color);
+    color: white;
     text-align: var(--bs-body-text-align);
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
@@ -1993,7 +1993,7 @@ progress {
 .table {
     --bs-table-color: var(--bs-body-color);
     --bs-table-bg: transparent;
-    --bs-table-border-color: var(--bs-border-color);
+    /*--bs-table-border-color: var(--bs-border-color);*/
     --bs-table-accent-bg: transparent;
     --bs-table-striped-color: var(--bs-body-color);
     --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
@@ -3154,7 +3154,7 @@ textarea.form-control-lg {
     user-select: none;
     border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
     border-radius: var(--bs-btn-border-radius);
-    background-color: var(--bs-btn-bg);
+    background-color: rgba(165, 42, 42, 1);
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -3209,20 +3209,20 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-    --bs-btn-color: #000;
-    --bs-btn-bg: #e6a756;
-    --bs-btn-border-color: #e6a756;
-    --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #eab46f;
-    --bs-btn-hover-border-color: #e9b067;
+    --bs-btn-color: #654321;
+    --bs-btn-bg: #654321;
+    --bs-btn-border-color: #654321;
+    --bs-btn-hover-color: #654321;
+    --bs-btn-hover-bg: #654321;
+    --bs-btn-hover-border-color: #654321;
     --bs-btn-focus-shadow-rgb: 196, 142, 73;
-    --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #ebb978;
-    --bs-btn-active-border-color: #e9b067;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #e6a756;
-    --bs-btn-disabled-border-color: #e6a756;
+    --bs-btn-active-color: #654321;
+    --bs-btn-active-bg: #654321;
+    --bs-btn-active-border-color: #654321;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(165, 42, 42, 1);
+    --bs-btn-disabled-color: #654321;
+    --bs-btn-disabled-bg: #654321;
+    --bs-btn-disabled-border-color: #654321;
 }
 
 .btn-secondary {
@@ -4711,7 +4711,7 @@ textarea.form-control-lg {
 .card-body {
     flex: 1 1 auto;
     padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
-    color: var(--bs-card-color);
+    color: #654321;
 }
 
 .card-title {
@@ -8436,6 +8436,7 @@ textarea.form-control-lg {
 
 .mb-0 {
     margin-bottom: 0 !important;
+    color:black;
 }
 
 .mb-1 {
@@ -8448,6 +8449,7 @@ textarea.form-control-lg {
 
 .mb-3 {
     margin-bottom: 1rem !important;
+    color:black;
 }
 
 .mb-4 {
@@ -12415,6 +12417,7 @@ body {
     background-size: cover;
 }
 
+
 p {
     line-height: 1.75;
 }
@@ -12456,12 +12459,14 @@ p {
         display: block;
         font-size: 1rem;
         font-weight: 800;
+        color:black;
     }
 
     .section-heading .section-heading-lower {
         display: block;
         font-size: 3rem;
         font-weight: 100;
+        color:black;
     }
 
 .bg-faded {
@@ -12934,5 +12939,133 @@ svg {
     border: 1px solid #F1D4B5;
     background-color: #F1D4B5;
 }
+/* General body styling for context */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f4f0; /* Light creamy background */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    color: #5c4033; /* Rich brown */
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Specific styling for the perfume form */
+.perfume-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fffaf0; /* Floral white - only for this form */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.15); /* Soft brown shadow */
+    border: 1px solid #d4a373; /* Light gold border */
+}
+
+    /* Form group styling within perfume form */
+    .perfume-form .form-group {
+        margin-bottom: 25px;
+    }
+
+        /* Label styling within perfume form */
+        .perfume-form .form-group label {
+            display: block;
+            color: #8b4513; /* Saddle brown */
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+    /* Input, select, and file input styling within perfume form */
+    .perfume-form .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cd853f; /* Peru brown */
+        border-radius: 6px;
+        background-color: #fef8f2; /* Very light peach */
+        font-size: 1rem;
+        color: #5c4033; /* Dark brown text */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .perfume-form .form-control:focus {
+            outline: none;
+            border-color: #8b4513; /* Darker brown */
+            box-shadow: 0 0 8px rgba(139, 69, 19, 0.3);
+        }
+
+    /* Specific styling for number input within perfume form */
+    .perfume-form input[type="number"] {
+        -moz-appearance: textfield; /* Remove spinners in Firefox */
+    }
+
+        .perfume-form input[type="number"]::-webkit-inner-spin-button,
+        .perfume-form input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none; /* Remove spinners in Chrome */
+            margin: 0;
+        }
+
+    /* File input styling within perfume form */
+    .perfume-form input[type="file"] {
+        padding: 8px; /* Adjust padding for file input */
+        border: none; /* Remove default border */
+        background-color: transparent;
+    }
+
+    /* Select dropdown styling within perfume form */
+    .perfume-form select.form-control {
+        appearance: none; /* Remove default arrow */
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%238b4513" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom brown arrow */
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        padding-right: 30px; /* Space for the arrow */
+    }
+
+    /* Placeholder styling within perfume form */
+    .perfume-form .form-control::placeholder {
+        color: #a9a19a;
+        opacity: 0.8;
+    }
+
+    /* Button styling within perfume form */
+    .perfume-form .btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background-color: #8b4513; /* Saddle brown */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .perfume-form .btn:hover {
+            background-color: #a0522d; /* Lighter brown */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        .perfume-form .btn:active {
+            transform: translateY(0); /* Reset on click */
+        }
+
+    /* Primary button specific styling within perfume form */
+    .perfume-form .btn-primary {
+        background-color: #8b4513;
+    }
+
+        .perfume-form .btn-primary:hover {
+            background-color: #a0522d;
+        }
+
 
 

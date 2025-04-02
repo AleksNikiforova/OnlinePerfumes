@@ -150,6 +150,7 @@ namespace OnlinePerfumes.Controllers
                     Name = model.Name,
                     Price = model.Price,
                     Aroma = model.Aroma,
+                    Description=model.Description,
                     CategoryId = model.CategoryId,
                     StockQuantity= model.StockQuantity,
                     ImagePath = model.ImagePath

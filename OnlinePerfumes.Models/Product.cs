@@ -23,6 +23,7 @@ namespace OnlinePerfumes.Models
         [Required(ErrorMessage = "Description is mandatory")]
         [StringLength(100, ErrorMessage = "Description must be 100 words")]
         public string Aroma { get; set; }
+        [Required(ErrorMessage = "Description is mandatory")]
         public string Description {  get; set; }
 
         [Required(ErrorMessage = "Price is mandatory")]

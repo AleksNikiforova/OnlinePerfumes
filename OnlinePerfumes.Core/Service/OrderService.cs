@@ -65,11 +65,7 @@ namespace OnlinePerfumes.Core.Service
 
         public async Task<Order> GetByIdAsync(int id)
         {
-            if (id == null)
-            {
-                return null;
-            }
-
+           
             var order = await _repo
                               .GetAll() // Get IQueryable from the repository
                               .Where(o => o.Id == id)
@@ -80,6 +76,8 @@ namespace OnlinePerfumes.Core.Service
 
             return order;
         }
+
+       
 
         public async Task<Order> GetOrderById(int? id)
         {

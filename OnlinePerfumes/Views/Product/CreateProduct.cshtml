@@ -2,7 +2,7 @@
 
 <h1 class="text-center my-4">Add Product</h1>
 
-<form method="post" asp-action="CreateProduct" asp-controller="Product" enctype="multipart/form-data">
+<form method="post" asp-action="CreateProduct" asp-controller="Product" enctype="multipart/form-data" class="perfume-form">
     <div class="form-group">
         <label asp-for="Name" class="font-weight-bold">Name</label>
         <input type="text" class="form-control" placeholder="Name..." asp-for="Name" />
@@ -11,21 +11,27 @@
 
     <div class="form-group">
         <label asp-for="Price" class="font-weight-bold">Price</label>
-        <input type="text" class="form-control" placeholder="Price..." asp-for="Price" />
+        <input type="number" class="form-control" placeholder="Price..." asp-for="Price" step="0.01" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="StockQuantity" class="font-weight-bold">StockQuantity</label>
-        <input type="text" class="form-control" placeholder="StockQuantity..." asp-for="StockQuantity" />
+        <input type="number" class="form-control" placeholder="StockQuantity..." asp-for="StockQuantity" />
         <span asp-validation-for="StockQuantity" class="text-danger"></span>
     </div>
+
 
     <div class="form-group">
         <label asp-for="Aroma" class="font-weight-bold">Aroma</label>
         <input type="text" class="form-control" placeholder="Aroma..." asp-for="Aroma" />
         <span asp-validation-for="Aroma" class="text-danger"></span>
     </div>
-
+    <div class="form-group">
+        <label asp-for="Description" class="font-weight-bold">Description</label>
+        <input type="text" class="form-control" placeholder="Description..." asp-for="Description" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="CategoryId" class="font-weight-bold">Category</label>
         <select asp-for="CategoryId" asp-items="@Model.Categories" class="form-control">

@@ -3,16 +3,101 @@
 @{
     ViewBag.Title = "Update Category";
 }
+<style>
+    /* Style for the specific create category form */
+    .create-category-form {
+        /* max-width: 400px; */
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f5f1ed; /* Light beige background - only for this form */
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(139, 69, 19, 0.1); /* Subtle brown shadow */
+    }
 
-<h2>Update Category</h2>
+        /* Legend styling */
+        .create-category-form legend {
+            font-size: 1.5rem;
+            color: #8b4513; /* Saddle brown */
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding: 0 10px;
+        }
 
-<form action="/Category/UpdateCategory" method="post" class="form-horizontal" role="form">
+    /* Margin bottom for form elements */
+    .mb-3 {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Label styling */
+    .form-label {
+        display: block;
+        color: #a0522d; /* Sienna brown */
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    /* Input field styling */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cd853f; /* Peru brown */
+        border-radius: 5px;
+        background-color: #fffaf0; /* Floral white for contrast */
+        font-size: 1rem;
+        color: #5c4033; /* Darker brown text */
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #8b4513; /* Darker brown on focus */
+            box-shadow: 0 0 5px rgba(139, 69, 19, 0.3);
+        }
+
+        /* Placeholder text styling */
+        .form-control::placeholder {
+            color: #a9a19a;
+            opacity: 0.7;
+        }
+
+    /* Button styling */
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #8b4513; /* Saddle brown */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn:hover {
+            background-color: #a0522d; /* Lighter brown on hover */
+        }
+
+    /* Primary button specific styling */
+    .btn-primary {
+        background-color: #8b4513;
+    }
+
+        .btn-primary:hover {
+            background-color: #a0522d;
+        }
+
+    }
+</style>
 
 
+
+<form action="/Category/UpdateCategory" method="post" class="create-category-form">
+
+    <legend>Update Category</legend>
     <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
-        <label asp-for="Name" class="control-label col-md-2"></label>
+        <label asp-for="Name" class="form-label"></label>
         <div class="col-md-10">
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>

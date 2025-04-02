@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlinePerfumes.Models", "On
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlinePerfumes.Utility", "OnlinePerfumes.Utility\OnlinePerfumes.Utility.csproj", "{D410938F-62AD-4284-9DDE-14A699D8FB0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlinePerfumes.Tests", "OnlinePerfumes.Tests\OnlinePerfumes.Tests.csproj", "{D446C466-AFE8-40A0-A364-6BD8DD9AFCAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D410938F-62AD-4284-9DDE-14A699D8FB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D410938F-62AD-4284-9DDE-14A699D8FB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D410938F-62AD-4284-9DDE-14A699D8FB0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D446C466-AFE8-40A0-A364-6BD8DD9AFCAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D446C466-AFE8-40A0-A364-6BD8DD9AFCAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D446C466-AFE8-40A0-A364-6BD8DD9AFCAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D446C466-AFE8-40A0-A364-6BD8DD9AFCAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

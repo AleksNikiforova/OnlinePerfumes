@@ -1,102 +1,90 @@
 ﻿@model OnlinePerfumes.Models.Category
+
 <style>
-    /* Цветова палитра */
-    :root {
-        --primary-color: #A5673F; /* Зелен основен цвят */
-        --secondary-color: #D2B48C; /* Жълт акцент */
-        --danger-color: #F44336; /* Червен цвят за изтриване */
-        --background-color: #f8f9fa; /* Светъл фон */
-        --text-color: #212529; /* Тъмен текст */
-        --border-color: #dee2e6; /* Цвят за граници */
-    }
-
-    /* Общи стилове */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
-        margin: 0;
-        padding: 20px;
-    }
-
-    /* Стилове за формата */
-    form {
-        max-width: 500px;
+    /* Style for the specific create category form */
+    .create-category-form {
+        /* max-width: 400px; */
         margin: 20px auto;
         padding: 20px;
-        background-color: #fff;
-        border: 1px solid var(--border-color);
+        background-color: #f5f1ed; /* Light beige background - only for this form */
         border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgba(139, 69, 19, 0.1); /* Subtle brown shadow */
     }
 
-        form legend {
+        /* Legend styling */
+        .create-category-form legend {
             font-size: 1.5rem;
+            color: #8b4513; /* Saddle brown */
             font-weight: bold;
-            color: var(--primary-color);
             margin-bottom: 15px;
+            padding: 0 10px;
         }
 
+    /* Margin bottom for form elements */
     .mb-3 {
-        margin-bottom: 15px;
+        margin-bottom: 1.5rem;
     }
 
+    /* Label styling */
     .form-label {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--text-color);
         display: block;
+        color: #a0522d; /* Sienna brown */
+        font-weight: 500;
         margin-bottom: 5px;
     }
 
+    /* Input field styling */
     .form-control {
         width: 100%;
         padding: 10px;
+        border: 1px solid #cd853f; /* Peru brown */
+        border-radius: 5px;
+        background-color: #fffaf0; /* Floral white for contrast */
         font-size: 1rem;
-        color: var(--text-color);
-        background-color: #fff;
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        color: #5c4033; /* Darker brown text */
         transition: border-color 0.3s ease;
     }
 
         .form-control:focus {
-            border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.25);
+            border-color: #8b4513; /* Darker brown on focus */
+            box-shadow: 0 0 5px rgba(139, 69, 19, 0.3);
         }
 
-    .btn-primary {
-        background-color: var(--primary-color);
-        color: #fff;
-        border: none;
+        /* Placeholder text styling */
+        .form-control::placeholder {
+            color: #a9a19a;
+            opacity: 0.7;
+        }
+
+    /* Button styling */
+    .btn {
+        display: inline-block;
         padding: 10px 20px;
+        background-color: #8b4513; /* Saddle brown */
+        color: white;
+        border: none;
+        border-radius: 5px;
         font-size: 1rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
-        .btn-primary:hover {
-            background-color: #A5673F;
+        .btn:hover {
+            background-color: #a0522d; /* Lighter brown on hover */
         }
 
-
-
-    .form-control {
-        font-size: 0.9rem;
-    }
-
+    /* Primary button specific styling */
     .btn-primary {
-        font-size: 0.9rem;
-        padding: 8px 15px;
+        background-color: #8b4513;
     }
 
+        .btn-primary:hover {
+            background-color: #a0522d;
+        }
+}
 </style>
-<form asp-action="CreateCategory" asp-controller="Category" method="post">
+<form asp-action="CreateCategory" asp-controller="Category" method="post" class="create-category-form">
 
     <legend>Create a Category</legend>
 
