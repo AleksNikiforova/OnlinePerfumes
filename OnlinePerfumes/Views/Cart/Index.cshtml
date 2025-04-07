@@ -1,4 +1,5 @@
-﻿@model OnlinePerfumes.Models.ViewModels.Cart.CartViewModel
+﻿@using System.Globalization
+@model OnlinePerfumes.Models.ViewModels.Cart.CartViewModel
 
 <h1 class="text-center my-4">Shopping Cart</h1>
 
@@ -8,11 +9,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Actions</th>
+                    <th>Продукт</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Крайна Цена</th>
+                    <th>Изтриване</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,12 +21,12 @@
                 {
                     <tr>
                         <td>@item.Product.Name</td>
-                        <td>@item.Product.Price.ToString("C")</td>
+                        <td>@item.Product.Price.ToString("C", new CultureInfo("bg-BG"))</td>
                         <td>@item.Quantity</td>
                         <td>@(item.Quantity * item.Product.Price)</td>
                         <td>
                             <form method="post" asp-action="RemoveFromCart" asp-controller="Cart" asp-route-cartItemId="@item.Id">
-                                <button type="submit" class="btn btn-danger">Remove</button>
+                                <button type="submit" class="btn btn-danger">Изтрий</button>
                             </form>
                         </td>
                     </tr>
@@ -36,17 +37,17 @@
     
 
     <div class="text-right">
-        <h4>Total: @Model.TotalPrice</h4>
+        <h4>Крайна цена: @Model.TotalPrice</h4>
         <form asp-controller="Cart" asp-action="Checkout" method="post">
-            <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+            <button type="submit" class="btn btn-success">Завършване на поръчката</button>
         </form>
     </div>
 }
 else
 {
-    <p class="text-center">Your cart is empty!</p>
+    <p class="text-center">Количката е празна!</p>
 }
 
 <div class="text-center">
-    <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Continue Shopping</a>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Продължи с пазаруването</a>
 </div>

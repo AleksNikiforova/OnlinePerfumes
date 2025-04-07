@@ -9027,6 +9027,7 @@ textarea.form-control-lg {
 
 .rounded {
     border-radius: var(--bs-border-radius) !important;
+    background-color: rgba(227, 203, 178, 1) !important;
 }
 
 .rounded-0 {

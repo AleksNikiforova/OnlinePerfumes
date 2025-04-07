@@ -12,7 +12,7 @@ using OnlinePerfumes.DataAccess;
 namespace OnlinePerfumes.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250402105229_Initial")]
+    [Migration("20250407053654_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
