@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="MockQueryable.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="MockQueryable.Moq" Version="7.0.3" />
@@ -25,6 +25,7 @@
     <ProjectReference Include="..\OnlinePerfumes.Core\OnlinePerfumes.Core.csproj" />
     <ProjectReference Include="..\OnlinePerfumes.DataAccess\OnlinePerfumes.DataAccess.csproj" />
     <ProjectReference Include="..\OnlinePerfumes.Models\OnlinePerfumes.Models.csproj" />
+    <ProjectReference Include="..\OnlinePerfumes.Utility\OnlinePerfumes.Utility.csproj" />
     <ProjectReference Include="..\OnlinePerfumes\OnlinePerfumes.csproj" />
   </ItemGroup>
 

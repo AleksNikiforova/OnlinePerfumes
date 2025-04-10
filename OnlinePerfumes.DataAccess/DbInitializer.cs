@@ -62,7 +62,7 @@ namespace OnlinePerfumes
                         Price=389.99m,
                         StockQuantity=300,
                         CategoryId = context.Categories.First(c => c.Name == "Мъжки парфюми").Id,
-                        ImagePath="https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/c/h/0703f900d8bac7d3cdfd9ce6a07912fb/christian-dior-sauvage-parfyumen-ekstrakt--60-ml-30.jpg"
+                        ImagePath="https://cdn.sheeel.com/catalog/product/cache/074f467fdf747a38ab5e8f88243fd86f/c/h/christian_dior_sauvage_elixir_60ml_extrait_de_parfum_for_men.jpg"
 
                     },
                     new Product
@@ -76,7 +76,7 @@ namespace OnlinePerfumes
                         Price=194.99m,
                         StockQuantity=200,
                         CategoryId=context.Categories.First(c=>c.Name=="Женски парфюми").Id,
-                        ImagePath="https://www.heinemann-shop.com/medias/527Wx527H-null?context=bWFzdGVyfGltYWdlc3w0Njk0OXxpbWFnZS9qcGVnfGFHRTBMMmczTnk4eE1USTROVEE0TnpJeU16Z3pPQzgxTWpkWGVEVXlOMGhmYm5Wc2JBfDhkZTNjN2I3NGJjMTUxMzJlMzFlMzc0NTcxZDNiMzcxNDUyMDVjMzE4NDA5YTU4NjQ0ZGMxNGVhODI2MDdiMTE&v=1729305233675"
+                        ImagePath="https://cdn.sheeel.com/catalog/product/cache/074f467fdf747a38ab5e8f88243fd86f/g/u/gucci_guilty_elixir_de_parfum_pour_femme_60ml_for_women_by_gucci.jpg"
 
                     },
                     new Product
@@ -90,7 +90,7 @@ namespace OnlinePerfumes
                         Price=74.99m,
                         StockQuantity=50,
                         CategoryId=context.Categories.First(c=>c.Name=="Унисекс парфюми").Id,
-                        ImagePath="https://parfium.bg/27249-medium_default/lattafa-khamrah-qahwa-uniseks-parfyumna-voda-edp.jpg"
+                        ImagePath="https://cdn.sheeel.com/catalog/product/cache/074f467fdf747a38ab5e8f88243fd86f/l/a/lattafa_khamrah_qahwa.jpg"
                     },
                     new Product
                     {
@@ -103,7 +103,7 @@ namespace OnlinePerfumes
                         Price=74.99m,
                         StockQuantity=130,
                         CategoryId=context.Categories.First(c=>c.Name=="Арабски парфюми").Id,
-                        ImagePath="https://parfium.bg/12202-medium_default/afnan-9pm-uniseks-parfyumna-voda-edp.jpg"
+                        ImagePath="https://cdn.sheeel.com/catalog/product/cache/074f467fdf747a38ab5e8f88243fd86f/a/f/afnan_9pm_100ml_edp_for_men.jpg"
                     },
                     new Product
                     {
@@ -116,7 +116,7 @@ namespace OnlinePerfumes
                         Price=339.99m,
                         StockQuantity=70,
                         CategoryId=context.Categories.First(c=>c.Name=="Нишови парфюми").Id,
-                        ImagePath="https://parfium.bg/25160-medium_default/xerjoff-erba-pura-uniseks-parfyum-edp.jpg"
+                        ImagePath="https://cdn.sheeel.com/catalog/product/cache/074f467fdf747a38ab5e8f88243fd86f/8/0/8033488156329.jpg"
                     },
                     new Product
                     {
@@ -129,7 +129,7 @@ namespace OnlinePerfumes
                         Price=214.99m,
                         StockQuantity=90,
                         CategoryId=context.Categories.First(c=>c.Name=="Луксозни парфюми").Id,
-                        ImagePath="https://parfium.bg/25649-medium_default/jean-paul-gaultier-le-male-elixir-parfyum-za-maje-edp.jpg"
+                        ImagePath="https://cdn.sheeel.com/catalog/product/cache/074f467fdf747a38ab5e8f88243fd86f/j/e/jean_paul_gaultier_le_male_elixir_125ml_edp_for_men_-_new_product_damage_box.jpg"
                     }
                     
                 };

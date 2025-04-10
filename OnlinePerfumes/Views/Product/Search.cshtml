@@ -38,7 +38,6 @@
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">Aroma: @product.Aroma</p>
                             <p class="card-text">Price: @product.Price.ToString("C", new CultureInfo("bg-BG")) ;</p>
-                            <p class="card-text">Category: @product.CategoryName</p>
                             @if (User.IsInRole(SD.AdminRole))
                             {
                                 <p class="card-text">StockQuantity: @product.StockQuantity</p>

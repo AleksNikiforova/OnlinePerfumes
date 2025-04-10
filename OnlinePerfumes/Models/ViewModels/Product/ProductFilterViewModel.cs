@@ -13,5 +13,13 @@ namespace OnlinePerfumes.Models.ViewModels.Product
         public SelectList Categories { get; set; } // За попълване на падащото меню
         public List<Models.Product> Products { get; set; }
         public List<ProductAllViewModel> ProductsAll { get; set; } = new List<ProductAllViewModel>();
+
+        public string? ImagePath { get; set; }
+        public string? Name { get; set; }
+        public int Price { get; set; }
+        public int StockQuantity { get; set; }
+
+        public string? CategoryName { get; set; }
+        public string? Id { get; set; }
     }
 }
