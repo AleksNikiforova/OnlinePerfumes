@@ -4425,6 +4425,8 @@ textarea.form-control-lg {
 
             .navbar-expand-lg .navbar-nav .dropdown-menu {
                 position: absolute;
+                top: 100%;
+                background-color: #361e16;
             }
 
             .navbar-expand-lg .navbar-nav .nav-link {
@@ -12946,7 +12948,6 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f4f0; /* Light creamy background */
     margin: 0;
-    padding: 20px;
 }
 
 /* Heading styling */

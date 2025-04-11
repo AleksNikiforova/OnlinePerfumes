@@ -4,24 +4,44 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
+
+    <li class="nav-item">
+        <!-- In your _Layout.cshtml or Master Page -->
+        <div class="search-container">
+            <form asp-action="Search" asp-controller="Product" method="get" class="navbar-search-form">
+                <input type="text" name="Name" class="form-control" placeholder="Търси продукт...">
+                <button type="submit" class="btn btn-primary mt-0" clip-path: padding-box;>Търси</button>
+            </form>
+        </div>
+    </li>
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
+    
+    <li class="nav-item d-flex flex-row">
+            <div class="cart-icon-container d-flex flex-column justify-content-center">
+            <a asp-controller="Cart" asp-action="Index">
+                <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="3" fill="none" stroke="#FFFFFF" class="icon">
+                    <circle r="1.5" cy="21" cx="9" fill="#FFFFFF"></circle>
+                    <circle r="1.5" cy="21" cx="20" fill="#FFFFFF"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="#FFFFFF"></path>
+                </svg>
+            </a>
+         </div>
         <a id="manage" class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравейте, @UserManager.GetUserName(User)!</a>
     </li>
     <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-controller="Account" asp-action="Logout">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-light border-0">Logout</button>
+                <button id="logout" type="submit" class="nav-link btn btn-link text-light border-0 mt-0">Logout</button>
         </form>
     </li>
 }
 else
 {
     <li class="nav-item">
-            <a class="nav-link text-light" id="register" asp-controller="Account" asp-action="Register">Sign up</a>
+            <a class="nav-link text-light mt-0" id="register" asp-controller="Account" asp-action="Register">Sign up</a>
     </li>
     <li class="nav-item">
-            <a class="nav-link text-light" id="login" asp-controller="Account" asp-action="Login">Sign in</a>
+            <a class="nav-link text-light mt-0" id="login" asp-controller="Account" asp-action="Login">Sign in</a>
     </li>
 }
 </ul>

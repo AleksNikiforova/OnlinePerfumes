@@ -10,6 +10,8 @@
             <th>Фамилия</th>
             <th>Email</th>
             <th>Телефон</th>
+            <th>Адрес</th>
+            <th>Град</th>
             <th>Роля</th>
             <th>Действие</th>
         </tr>
@@ -23,6 +25,8 @@
                 <td>@customer.LastName</td>
                 <td>@customer.Email</td>
                 <td>@customer.PhoneNumber</td>
+                <td>@customer.Address</td>
+                <td>@customer.City</td>
                 <td>@customer.Role</td>
                 <td>
                     @if (customer.Role != SD.AdminRole) // Само ако не е вече администратор

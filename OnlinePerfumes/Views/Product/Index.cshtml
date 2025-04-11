@@ -19,102 +19,6 @@
     <title>All Products</title>
     <!-- Äîáàâÿìå Bootstrap çà ñòèëîâå -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    @* <style>
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-            .card:hover {
-                transform: scale(1.05);
-            }
-
-        .card-img-top {
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-        }
-
-        .card-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #ddd;
-        }
-
-        .btn-primary {
-            background-color: #F1D4B5;
-            border-color: #F1D4B5;
-        }
-
-            .btn-primary:hover {
-                background-color: #F1D4B5;
-                border-color: #F1D4B5;
-            }
-
-        /* Additional Styles for Custom Template */
-        .card .card-img {
-            background: #f5f5f5;
-            height: 200px;
-        }
-
-        .card-info {
-            padding: 10px;
-        }
-
-        .card-footer .card-button svg {
-            width: 25px;
-            height: 25px;
-            fill: #F1D4B5;
-        }
-    </style> *@
-    @* <style>
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-            .card:hover {
-                transform: scale(1.05);
-            }
-
-        .card-img-top {
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-        }
-
-        .card-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #ddd;
-        }
-
-        .btn-primary {
-            background-color: #F1D4B5;
-            border-color: #F1D4B5;
-        }
-
-            .btn-primary:hover {
-                background-color: #F1D4B5;
-                border-color: #F1D4B5;
-            }
-    </style> *@
 </head>
 <body>
     <div class="container mt-4">
@@ -196,34 +100,6 @@
                 }
             </div>
         </div>
-       @*  <div class="row">
-            @foreach (var product in Model.ProductsAll)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="@product.ImagePath" class="card-img-top" alt="@product.Name" />
-
-                        <div class="card-body">
-                            <h5 class="card-title">@product.Name</h5>
-                            <p class="card-text">Аромат: @product.Aroma</p>
-                            <p class="card-text">Цена: @product.Price.ToString("C", new CultureInfo("bg-BG"))</p>
-                            <p class="card-text">Категория: @product.CategoryName</p>
-                            @if (User.IsInRole(SD.AdminRole))
-                            {
-                                <p class="card-text">StockQuantity: @product.StockQuantity</p>
-                            }
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning">Edit</a>
-                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
-                            }
-                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info">Виж детайли</a>
-                        </div>
-                    </div>
-                </div>
-            } *@
-
-      
         </div>
     </div>
     <script>

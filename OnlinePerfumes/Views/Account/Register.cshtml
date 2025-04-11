@@ -1,56 +1,164 @@
 ﻿@using OnlinePerfumes.Models.ViewModels
 @model RegisterViewModel
+<style>
+    /* From Uiverse.io by AdoGamer17 */
+    .card {
+        height: auto;
+        width: 240px;
+        padding: 1.9rem 1.2rem;
+        text-align: center;
+        background: #2a2b38;
+        display: flex;
+    }
 
-<h2 class="text-center">Sign up</h2>
+    /*Inputs*/
+    .field {
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+        background-color: #1f2029;
+        border-radius: 4px;
+        padding: 0.5em 1em;
+    }
 
-<form asp-action="Register" method="post" class="w-50 mx-auto border p-4 rounded shadow-sm bg-light">
-    <div class="mb-3">
-        <label asp-for="FirstName" class="form-label"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
+    .input-icon {
+        height: 1em;
+        width: 1em;
+        fill: #ffeba7;
+        stroke: #ffeba7;
+    }
 
-    <div class="mb-3">
-        <label asp-for="LastName" class="form-label"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
+    .input-field {
+        background: none;
+        border: none;
+        outline: none;
+        width: 100%;
+        color: #d3d3d3;
+    }
 
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+    /*Text*/
+    .title {
+        margin-bottom: 1rem;
+        font-size: 1.5em;
+        font-weight: 500;
+        color: black;
+    }
 
-    <div class="mb-3">
-        <label asp-for="PhoneNumber" class="form-label"></label>
-        <input asp-for="PhoneNumber" class="form-control" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
+    /*Buttons*/
+    .btn-login {
+        cursor: pointer;
+        border: none;
+        border-radius: 4px !important;
+        font-weight: bold;
+        font-size: 0.8em;
+        text-transform: uppercase;
+        padding: 0.6em 1.2em;
+        background-color: #ffeba7;
+        color: #5e6681;
+        box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+        transition: all 0.3s ease-in-out;
+    }
 
-    <div class="mb-3">
-        <label asp-for="Address" class="form-label"></label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
+    .btn-link {
+        color: #f5f5f5;
+        display: block;
+        font-size: 0.75em;
+        transition: color 0.3s ease-out;
+    }
 
-    <div class="mb-3">
-        <label asp-for="City" class="form-label"></label>
-        <input asp-for="City" class="form-control" />
-        <span asp-validation-for="City" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+    /*Hover & focus*/
+    .field input:focus::placeholder {
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
 
-    <div class="mb-3">
-        <label asp-for="ConfirmPassword" class="form-label"></label>
-        <input asp-for="ConfirmPassword" type="password" class="form-control" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
+    .btn:hover {
+        background-color: #5e6681;
+        color: #ffeba7;
+        box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+    }
 
-    <button type="submit" class="btn btn-primary w-100">Submit</button>
-</form>
+    .btn-link:hover {
+        color: #ffeba7;
+    }
+
+</style>
+
+
+</style>
+
+
+<div class="card w-50 mx-auto border p-4 rounded shadow bg-light animate__animated animate__fadeIn mt-3">
+    <p class="title text-center">Sign up</p>
+    <form asp-action="Register" method="post">
+        <div class="field mb-3">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="6" r="4" stroke="#ffeba7" stroke-width="1.5"></circle> <path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634" stroke="#ffeba7" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+            <input asp-for="FirstName" class="input-field form-control" placeholder="FirstName" autocomplete="off" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="field mb-3">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="6" r="4" stroke="#ffeba7" stroke-width="1.5"></circle> <path d="M19.9975 18C20 17.8358 20 17.669 20 17.5C20 15.0147 16.4183 13 12 13C7.58172 13 4 15.0147 4 17.5C4 19.9853 4 22 12 22C14.231 22 15.8398 21.8433 17 21.5634" stroke="#ffeba7" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+            <input asp-for="LastName" class="input-field form-control" placeholder="LastName" autocomplete="off" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="field mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" class="input-icon">
+                <path d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"></path>
+            </svg>
+            <input asp-for="Email" class="input-field form-control" placeholder="Email" autocomplete="off" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="field mb-3">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="input-icon"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 5V1H7V5L4.5 7.5L8.5 11.5L11 9H15V15H11C5.47715 15 1 10.5228 1 5Z" fill="#000000"></path> </g></svg>
+            
+            <input asp-for="PhoneNumber" class="input-field form-control" placeholder="PhoneNumber" autocomplete="off" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="field mb-3">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18 9H14M18 12H14M12 15.5C11.7164 14.3589 10.481 13.5 9 13.5C7.519 13.5 6.28364 14.3589 6 15.5M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19ZM10 9.5C10 10.0523 9.55228 10.5 9 10.5C8.44772 10.5 8 10.0523 8 9.5C8 8.94772 8.44772 8.5 9 8.5C9.55228 8.5 10 8.94772 10 9.5Z" stroke="#ffeba7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            <input asp-for="Address" class="input-field form-control" placeholder="Address" autocomplete="off" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="field mb-3">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style>.cls-1{fill:none;}.cls-2{fill:#ffeba7;}.cls-3{fill:#ffeba7ff4a64;}</style> </defs> <title></title> <g id="location"> <rect class="cls-1" height="32" id="bg" width="32"></rect> <path class="cls-2" d="M16,29.49c-6,0-10-12.08-10-17a10,10,0,0,1,20,0C26,17.41,22,29.49,16,29.49Zm0-25a8,8,0,0,0-8,8c0,4.68,3.87,15,8,15s8-10.3,8-15A8,8,0,0,0,16,4.51Z"></path> <circle class="cls-3" cx="16" cy="12.64" r="3.99"></circle> <path class="cls-2" d="M16,17.63a5,5,0,1,1,5-5A5,5,0,0,1,16,17.63Zm0-8a3,3,0,1,0,3,3A3,3,0,0,0,16,9.66Z"></path> </g> </g></svg>
+            <input asp-for="City" class="input-field form-control" placeholder="City" autocomplete="off" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        
+        <div class="field mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" class="input-icon">
+                <path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"></path>
+            </svg>
+            <div class="input-group">
+                <input asp-for="Password" type="password" class="input-field form-control" placeholder="Password" autocomplete="off" id="passwordInput" />
+                <button type="button" class="btn-login btn-outline-secondary" onclick="togglePassword()">
+
+
+                    <svg fill="#000000" height="200px" width="200px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="m494.8,241.4l-50.6-49.4c-50.1-48.9-116.9-75.8-188.2-75.8s-138.1,26.9-188.2,75.8l-50.6,49.4c-11.3,12.3-4.3,25.4 0,29.2l50.6,49.4c50.1,48.9 116.9,75.8 188.2,75.8s138.1-26.9 188.2-75.8l50.6-49.4c4-3.8 11.7-16.4 0-29.2zm-238.8,84.4c-38.5,0-69.8-31.3-69.8-69.8 0-38.5 31.3-69.8 69.8-69.8 38.5,0 69.8,31.3 69.8,69.8 0,38.5-31.3,69.8-69.8,69.8zm-195.3-69.8l35.7-34.8c27-26.4 59.8-45.2 95.7-55.4-28.2,20.1-46.6,53-46.6,90.1 0,37.1 18.4,70.1 46.6,90.1-35.9-10.2-68.7-29-95.7-55.3l-35.7-34.7zm355,34.8c-27,26.3-59.8,45.1-95.7,55.3 28.2-20.1 46.6-53 46.6-90.1 0-37.2-18.4-70.1-46.6-90.1 35.9,10.2 68.7,29 95.7,55.4l35.6,34.8-35.6,34.7z"></path> </g> </g></svg>
+                </button>
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="field mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" class="input-icon">
+                <path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"></path>
+            </svg>
+            <div class="input-group">
+                <input asp-for="ConfirmPassword" type="password" class="input-field form-control" placeholder="ConfirmPassword" autocomplete="off" id="passwordInput" />
+                <button type="button" class="btn-login btn-outline-secondary" onclick="togglePassword()">
+
+
+                    <svg fill="#000000" height="200px" width="200px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="m494.8,241.4l-50.6-49.4c-50.1-48.9-116.9-75.8-188.2-75.8s-138.1,26.9-188.2,75.8l-50.6,49.4c-11.3,12.3-4.3,25.4 0,29.2l50.6,49.4c50.1,48.9 116.9,75.8 188.2,75.8s138.1-26.9 188.2-75.8l50.6-49.4c4-3.8 11.7-16.4 0-29.2zm-238.8,84.4c-38.5,0-69.8-31.3-69.8-69.8 0-38.5 31.3-69.8 69.8-69.8 38.5,0 69.8,31.3 69.8,69.8 0,38.5-31.3,69.8-69.8,69.8zm-195.3-69.8l35.7-34.8c27-26.4 59.8-45.2 95.7-55.4-28.2,20.1-46.6,53-46.6,90.1 0,37.1 18.4,70.1 46.6,90.1-35.9-10.2-68.7-29-95.7-55.3l-35.7-34.7zm355,34.8c-27,26.3-59.8,45.1-95.7,55.3 28.2-20.1 46.6-53 46.6-90.1 0-37.2-18.4-70.1-46.6-90.1 35.9,10.2 68.7,29 95.7,55.4l35.6,34.8-35.6,34.7z"></path> </g> </g></svg>
+                </button>
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+
+        <button type="submit" class="btn-login w-100">Submit</button>
+    </form>
+</div>
+
 

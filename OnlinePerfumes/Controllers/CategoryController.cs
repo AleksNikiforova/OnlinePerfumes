@@ -54,12 +54,12 @@ namespace OnlinePerfumes.Controllers
             {
                
                 TempData["Error"] = "Category cannot be deleted because it has associated products.";
-                return RedirectToAction("Index"); // Prevent deletion
+                return RedirectToAction("GetAllCategories"); // Prevent deletion
             }
 
             await _categoryService.DeleteAsync(id); // Only delete if no products exist
             TempData["Success"] = "Category deleted successfully.";
-            return RedirectToAction("Index");
+            return RedirectToAction("GetAllCategories");
         }
 
         public async Task<IActionResult> GetByName(string name)

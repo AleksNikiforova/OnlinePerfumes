@@ -46,6 +46,8 @@ namespace OnlinePerfumes.Controllers
                     LastName = customer.LastName,
                     PhoneNumber = customer.User.PhoneNumber,
                     Email = customer.User.Email,
+                    Address=customer.Address,
+                    City=customer.City,
                     Role = role
                 });
 
